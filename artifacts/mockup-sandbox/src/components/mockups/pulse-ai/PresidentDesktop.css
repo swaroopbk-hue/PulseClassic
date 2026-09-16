@@ -1,0 +1,116 @@
+.president-editorial{
+  --paper:#f5f3ed;
+  --panel:#fbfaf6;
+  --ink:#172f40;
+  --deep:#0a3a5d;
+  --blue:#0a3a5d;
+  --blue-soft:#e8eef0;
+  --line:#d2d7d7;
+  --muted:#6d787c;
+  --ochre:#b58b49;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"DM Sans","Avenir Next",sans-serif;
+}
+.president-editorial .shell{grid-template-columns:204px minmax(0,1fr)}
+.president-editorial .rail{padding:28px 16px 20px;background:#0a3a5d}
+.president-editorial .rail-label{margin-top:43px}
+.president-editorial .rail button{border-radius:0;padding:10px 12px;margin:1px 0}
+.president-editorial .rail button:hover,
+.president-editorial .rail button.active{background:#154d70;transform:none}
+.president-editorial .main{padding:30px 44px 52px;max-width:1440px}
+.president-editorial .topbar{padding-bottom:26px;border-bottom:1px solid #cdd3d3}
+.president-editorial .eyebrow{font-size:9px;letter-spacing:.18em}
+.president-editorial h1{font-size:35px;letter-spacing:-.04em;color:#17374a}
+.president-editorial .subtle{font-size:12px;color:#788286}
+.president-editorial .controls{gap:8px}
+.president-editorial .control{border:0;border-bottom:1px solid #c5cdce;background:transparent;border-radius:0;padding:8px 7px;color:#526268}
+.president-editorial .control.active{border-bottom-color:var(--deep);background:transparent;color:var(--deep)}
+.president-editorial .avatar{background:#d8c294;border-radius:50%}
+
+/* The KPI summary reads like a report header, not four isolated widgets. */
+.president-editorial .section-head{margin:28px 0 11px}
+.president-editorial .section-head h2{font-size:14px;letter-spacing:.01em}
+.president-editorial .section-head span{font-size:10px}
+.president-editorial .kpis{
+  display:grid;
+  grid-template-columns:1.35fr 1fr 1fr 1fr;
+  gap:0;
+  background:transparent;
+  border:0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.president-editorial .kpi{
+  min-height:108px;
+  padding:15px 22px 14px 0;
+  margin-right:22px;
+  background:transparent;
+  border-right:1px solid var(--line);
+}
+.president-editorial .kpi:last-child{border-right:0;margin-right:0}
+.president-editorial .kpi:first-child{background:transparent;color:var(--ink)}
+.president-editorial .kpi-label{color:#69767a;opacity:1;font-size:9px;font-weight:700}
+.president-editorial .kpi-value{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:27px;color:var(--deep);margin:12px 0 6px}
+.president-editorial .kpi-note{font-size:10px;color:var(--muted)}
+.president-editorial .kpi:first-child .kpi-note{color:var(--muted)}
+.president-editorial .up{color:#476d62}
+
+/* A ranked scan strip keeps all seven businesses glanceable without seven cards. */
+.president-editorial .groups{
+  grid-template-columns:repeat(7,minmax(100px,1fr));
+  border-top:0;
+  border-bottom:1px solid var(--line);
+}
+.president-editorial .group{
+  min-height:104px;
+  padding:13px 12px 11px 0;
+  margin-right:13px;
+  text-align:left;
+  border-right:1px solid var(--line);
+  transition:background .2s,transform .2s;
+}
+.president-editorial .group:last-child{border-right:0;margin-right:0}
+.president-editorial .group:hover,
+.president-editorial .group.selected{background:transparent;border-color:var(--line);transform:translateY(-2px)}
+.president-editorial .group.selected .group-name{color:var(--deep);text-decoration:underline;text-decoration-color:#c3a36e;text-underline-offset:4px}
+.president-editorial .group-name{font-size:12px}
+.president-editorial .group-value{font-family:Georgia,"Times New Roman",serif;font-size:16px;margin:17px 0 4px;color:#23455a}
+.president-editorial .group-meta{font-size:9px}
+.president-editorial .status{font-size:9px;margin-top:8px;color:#547367}
+.president-editorial .status.watch{color:#9a713a}
+
+.president-editorial .president-workspace{margin-top:27px;grid-template-columns:minmax(0,1.55fr) minmax(300px,.8fr);gap:30px}
+.president-editorial .ask{padding:22px 24px;background:var(--deep);border-radius:1px}
+.president-editorial .ask-title{font-family:Georgia,"Times New Roman",serif;font-size:20px}
+.president-editorial .ask-title svg{color:#d8b978}
+.president-editorial .ask p{max-width:560px;font-size:11px;margin:7px 0 18px;color:#c3d1d7}
+.president-editorial .ask-form{background:#0d4264;border:1px solid #59758a;border-radius:0;padding:4px}
+.president-editorial .ask-form button{background:#d2ad6b}
+.president-editorial .suggestions{gap:16px;margin-top:12px}
+.president-editorial .suggestions button{border:0;border-bottom:1px solid #58768a;padding:5px 0;color:#ccd9dd}
+.president-editorial .answer{border-left:1px solid #d4b26f}
+.president-editorial .attention{padding:0 0 0 21px;border:0;border-left:1px solid var(--line);background:transparent}
+.president-editorial .attention h3{font-family:Georgia,"Times New Roman",serif;font-size:17px;font-weight:500;margin:1px 0 12px}
+.president-editorial .attn{padding:12px 0;border-top:1px solid var(--line);grid-template-columns:7px 1fr auto}
+.president-editorial .attn-title{font-size:11px}
+.president-editorial .attn-copy{font-size:10px}
+.president-editorial .attn button{border-bottom:1px solid #aab9bc;padding-bottom:2px}
+
+.president-editorial .lower{gap:32px;margin-top:25px}
+.president-editorial .panel{padding:15px 0;border-top:1px solid var(--line)}
+.president-editorial .panel h3{font-size:13px;font-weight:700}
+.president-editorial .insight{border-left:1px solid var(--ochre);font-size:12px}
+.president-editorial .doc{padding:10px 0}
+
+@media(max-width:900px){
+  .president-editorial .main{padding:20px 16px 90px}
+  .president-editorial .kpis{grid-template-columns:1fr 1fr}
+  .president-editorial .kpi{padding:14px 13px 12px 0;margin-right:13px}
+  .president-editorial .kpi:nth-child(2){border-right:0;margin-right:0}
+  .president-editorial .kpi:nth-child(3){border-top:1px solid var(--line);padding-top:14px}
+  .president-editorial .kpi:nth-child(4){border-top:1px solid var(--line);padding-top:14px}
+  .president-editorial .groups{margin-right:-16px;padding-right:16px}
+  .president-editorial .group{min-width:112px}
+  .president-editorial .attention{padding:18px 0 0;border-left:0;border-top:1px solid var(--line)}
+}
