@@ -1,0 +1,282 @@
+Add Life Through Motion
+
+I want the page to have subtle but noticeable motion.
+
+Use animations such as:
+
+Numbers counting up when the page loads
+Charts drawing themselves in
+Progress lines animating toward targets
+Business groups gently moving or shifting
+Smooth transitions when changing MTD / QTD / YTD
+Hover interactions on businesses
+Animated KPI indicators
+Sliding insights
+Smooth drill-down transitions
+Subtle parallax or depth where appropriate
+Sections revealing naturally while scrolling
+
+The animations must feel expensive and controlled, not playful or gimmicky.
+
+Think:
+
+Executive luxury + intelligent motion
+
+not:
+
+Gaming UI or flashy AI animation
+
+Make the Opening Screen Impressive
+
+When the President logs in, create a strong opening moment.
+
+For example:
+
+Good morning, Mr. Jasim
+
+Then a dynamic executive statement:
+
+Your businesses are performing 4.8% ahead of YTD plan.
+
+Below it, the seven businesses can animate into view.
+
+Then show:
+
+5 On Track · 1 Ahead · 1 Needs Attention
+
+Important numbers such as Revenue, Profit, Budget and Forecast can appear naturally within the composition rather than inside four large boxes.
+
+The President should immediately feel:
+
+“This is my entire business, alive in front of me.”
+
+Make Data More Visual
+
+Do not rely only on rectangular cards and tables.
+
+Use:
+
+animated lines
+flowing progress indicators
+radial progress
+compact data visualizations
+moving trend lines
+mini charts
+target markers
+animated comparisons
+visual performance bands
+subtle gradients
+elegant data trails
+
+For example:
+
+Revenue QAR 18.4B
+
+Instead of just showing a number, allow the trend line behind or beside it to subtly animate and show where performance is heading.
+
+Use More Color
+
+The page currently feels too neutral.
+
+Introduce more controlled color.
+
+Keep #0A3A5D as the dominant Pulse identity.
+
+Use gold for premium highlights.
+
+Then assign subtle complementary colors to the business groups or performance states.
+
+For example:
+
+UCC — Blue
+Estithmar — Gold
+Assets — Teal
+Aura — Violet
+PIH — Deep Cyan
+Baladna — Warm Green
+TMT — Coral / Orange
+
+These are only examples. Choose a sophisticated enterprise palette.
+
+Do not make the interface look like a rainbow.
+
+Color should help users understand the businesses and data quickly.
+
+Ask Pulse Should Feel Alive
+
+Make Ask Pulse one of the most attractive interactive elements.
+
+Instead of a plain search box, make it feel like the intelligence engine of the platform.
+
+Example:
+
+Ask Pulse
+
+What would you like to know about your business?
+
+A clean animated input can gently expand when selected.
+
+Suggested questions can rotate or transition naturally:
+
+“Which business changed the most this week?”
+
+“Why is Assets below forecast?”
+
+“Where are we outperforming budget?”
+
+“What needs my attention today?”
+
+When the user starts typing, the interface can smoothly transition into a focused AI experience.
+
+Do not use AI sparkles or cliché AI graphics.
+
+The intelligence should come from interaction, not decoration.
+
+Needs Your Attention
+
+Make this section visually engaging too.
+
+Instead of a static notification list, create a focused executive decision stream.
+
+Items can slide or expand based on priority.
+
+Example:
+
+Forecast Risk
+
+Assets Group
+Revenue projected 7.2% below target
+
+Impact
+QAR 38M
+
+[Explore]
+
+Another:
+
+Approval Required
+
+UCC Infrastructure
+CapEx Request — QAR 42M
+
+[Review] [Approve]
+
+High-impact items should naturally receive more visual prominence.
+
+Create Depth
+
+The interface should not feel completely flat.
+
+Use subtle depth through:
+
+layered sections
+floating visual elements
+controlled shadows
+blurred background accents
+soft gradients
+foreground/background separation
+gentle motion
+
+But keep it corporate.
+
+Avoid excessive glassmorphism.
+
+Scroll Experience
+
+As the President scrolls, the story should unfold.
+
+Possible flow:
+
+Your Business Today
+
+↓
+
+Seven Business Groups
+
+↓
+
+What Changed
+
+↓
+
+Ask Pulse
+
+↓
+
+Needs Your Attention
+
+↓
+
+Performance Insights
+
+↓
+
+Forecast & Opportunities
+
+↓
+
+Documents & Reports
+
+Each section should have a slightly different visual character so the user does not feel like they are scrolling through repeated cards.
+
+Premium Interaction
+
+Add small details that make the experience feel polished.
+
+Examples:
+
+numbers smoothly updating when filters change
+animated tooltips
+subtle hover elevation
+business logo/icon transitions
+fluid chart transformations
+smooth transitions between enterprise and group views
+animated comparison states
+elegant loading states
+responsive micro-interactions
+
+These details should make Pulse.ai feel carefully crafted.
+
+Mobile
+
+The mobile experience should also feel animated and premium.
+
+The seven businesses can become a horizontally swipeable interactive strip.
+
+The user should be able to swipe between businesses and immediately see:
+
+Revenue
+Profit
+Achievement
+Forecast
+Alerts
+
+Keep Ask Pulse accessible at all times.
+
+Do not simply stack every desktop section vertically.
+
+Final Direction
+
+The result should feel:
+
+Colorful, but not childish.
+
+Animated, but not distracting.
+
+Modern, but not generic.
+
+Corporate, but not boring.
+
+AI-powered, but not visually screaming AI.
+
+Premium, interactive, and memorable.
+
+I want Pulse.ai to feel like a living executive intelligence platform.
+
+The seven businesses should become one of the strongest visual identities of the product.
+
+When someone sees this interface, they should immediately feel that this is not another BI dashboard.
+
+Keep the Pulse.ai logo and #0A3A5D brand identity unchanged.
+
+For everything else, take creative freedom and surprise me with a stronger, more vibrant, animated premium experience.

@@ -34,13 +34,13 @@ type Group = {
 };
 
 const groups: Group[] = [
-  { name: "UCC", revenue: "5.82B", achievement: "96%", growth: "+7.4%", forecast: "5.99B", status: "On track", driver: "Infrastructure contract wins", risk: "Hospitality occupancy", source: "UCC monthly performance · 17 Jun", color: "#7e9d9b", points: [32, 38, 37, 44, 43, 53, 56] },
-  { name: "Estithmar", revenue: "3.46B", achievement: "101%", growth: "+9.1%", forecast: "3.58B", status: "Ahead", driver: "CapEx conversion", risk: "Project phasing", source: "Estithmar forecast review · 17 Jun", color: "#b08b50", points: [26, 32, 30, 40, 44, 43, 55] },
-  { name: "Assets", revenue: "2.91B", achievement: "88%", growth: "-2.8%", forecast: "2.74B", status: "Watch", driver: "Hospitality occupancy", risk: "Commercial leasing", source: "Assets operating report · 17 Jun", color: "#b3685e", points: [54, 53, 49, 46, 42, 40, 37] },
-  { name: "Aura", revenue: "1.74B", achievement: "94%", growth: "+4.6%", forecast: "1.80B", status: "On track", driver: "Portfolio mix", risk: "Retail footfall", source: "Aura group pulse · 18 Jun", color: "#8b95a4", points: [28, 34, 32, 36, 38, 43, 46] },
-  { name: "PIH", revenue: "1.38B", achievement: "97%", growth: "+5.8%", forecast: "1.42B", status: "On track", driver: "Margin discipline", risk: "Input costs", source: "PIH management report · 17 Jun", color: "#7c8e7f", points: [25, 30, 29, 35, 38, 42, 44] },
-  { name: "Baladna", revenue: "1.62B", achievement: "111%", growth: "+12.2%", forecast: "1.69B", status: "Ahead", driver: "Domestic sales", risk: "Distribution capacity", source: "Baladna sales pulse · 18 Jun", color: "#b08b50", points: [20, 27, 34, 37, 43, 48, 55] },
-  { name: "TMT", revenue: "1.47B", achievement: "91%", growth: "+1.1%", forecast: "1.52B", status: "Watch", driver: "Renewal pipeline", risk: "Enterprise churn", source: "TMT forecast model · 17 Jun", color: "#a87972", points: [47, 46, 44, 43, 40, 41, 40] },
+  { name: "UCC", revenue: "5.82B", achievement: "96%", growth: "+7.4%", forecast: "5.99B", status: "On track", driver: "Infrastructure contract wins", risk: "Hospitality occupancy", source: "UCC monthly performance · 17 Jun", color: "#4f91b7", points: [32, 38, 37, 44, 43, 53, 56] },
+  { name: "Estithmar", revenue: "3.46B", achievement: "101%", growth: "+9.1%", forecast: "3.58B", status: "Ahead", driver: "CapEx conversion", risk: "Project phasing", source: "Estithmar forecast review · 17 Jun", color: "#c69a4a", points: [26, 32, 30, 40, 44, 43, 55] },
+  { name: "Assets", revenue: "2.91B", achievement: "88%", growth: "-2.8%", forecast: "2.74B", status: "Watch", driver: "Hospitality occupancy", risk: "Commercial leasing", source: "Assets operating report · 17 Jun", color: "#e06f63", points: [54, 53, 49, 46, 42, 40, 37] },
+  { name: "Aura", revenue: "1.74B", achievement: "94%", growth: "+4.6%", forecast: "1.80B", status: "On track", driver: "Portfolio mix", risk: "Retail footfall", source: "Aura group pulse · 18 Jun", color: "#8d7ac5", points: [28, 34, 32, 36, 38, 43, 46] },
+  { name: "PIH", revenue: "1.38B", achievement: "97%", growth: "+5.8%", forecast: "1.42B", status: "On track", driver: "Margin discipline", risk: "Input costs", source: "PIH management report · 17 Jun", color: "#4ba4a0", points: [25, 30, 29, 35, 38, 42, 44] },
+  { name: "Baladna", revenue: "1.62B", achievement: "111%", growth: "+12.2%", forecast: "1.69B", status: "Ahead", driver: "Domestic sales", risk: "Distribution capacity", source: "Baladna sales pulse · 18 Jun", color: "#6ea277", points: [20, 27, 34, 37, 43, 48, 55] },
+  { name: "TMT", revenue: "1.47B", achievement: "91%", growth: "+1.1%", forecast: "1.52B", status: "Watch", driver: "Renewal pipeline", risk: "Enterprise churn", source: "TMT forecast model · 17 Jun", color: "#df8568", points: [47, 46, 44, 43, 40, 41, 40] },
 ];
 
 const questions = ["Why is this position moving?", "What happens by December?", "Compare the two strongest groups"];
@@ -67,6 +67,7 @@ function ProfileSurface() {
 export function PresidentEnterpriseAtlas() {
   const [period, setPeriod] = useState("YTD");
   const [selectedName, setSelectedName] = useState("Assets");
+  const [hoveredName, setHoveredName] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
   const [approved, setApproved] = useState(false);
@@ -97,12 +98,12 @@ export function PresidentEnterpriseAtlas() {
 
       <section className="atlas-stage">
         <div className="stage-head"><div><span className="section-tag">01 / ENTERPRISE POSITION</span><h2>Seven businesses, one connected pulse</h2></div><span className="stage-note">Select a node to reveal its story <ChevronRight size={14} /></span></div>
-        <div className="atlas-canvas">
+        <div className={`atlas-canvas ${hoveredName ? "has-focus" : ""}`}>
           <div className="enterprise-core"><span>CONSOLIDATED REVENUE</span><strong>18.4<small>B QAR</small></strong><b><ArrowUpRight size={13} /> 8.2% YoY</b><div className="core-rule"><i /></div><small>94% of target · 5 pts ahead of time</small></div>
           <div className="orbit orbit-a" /><div className="orbit orbit-b" />
           {groups.map((group, index) => {
             const isSelected = group.name === selectedName;
-            return <button key={group.name} className={`atlas-node node-${index + 1} ${isSelected ? "selected" : ""}`} style={{ "--node": group.color } as React.CSSProperties} onClick={() => { setSelectedName(group.name); setLayer("group"); setAnswer(""); }}>
+            return <button key={group.name} className={`atlas-node node-${index + 1} ${isSelected ? "selected" : ""} ${hoveredName && hoveredName !== group.name ? "dimmed" : ""}`} style={{ "--node": group.color } as React.CSSProperties} onMouseEnter={() => setHoveredName(group.name)} onMouseLeave={() => setHoveredName(null)} onFocus={() => setHoveredName(group.name)} onBlur={() => setHoveredName(null)} onClick={() => { setSelectedName(group.name); setLayer("group"); setAnswer(""); }}>
               <span className="node-stem" /><span className="node-name">{group.name}</span><strong>QAR {group.revenue}</strong><small>{group.achievement} target · {group.growth}</small><Sparkline points={group.points} color={group.color} /><i className={`node-status ${group.status === "Watch" ? "watch" : ""}`} />
             </button>;
           })}
