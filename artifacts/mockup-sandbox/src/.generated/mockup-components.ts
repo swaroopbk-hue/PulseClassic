@@ -6,6 +6,7 @@ export const modules: ModuleMap = {
   "./components/mockups/pulse-ai/PresidentBriefingDesk.tsx": () => import("../components/mockups/pulse-ai/PresidentBriefingDesk.tsx"),
   "./components/mockups/pulse-ai/PresidentDecisionDesk.tsx": () => import("../components/mockups/pulse-ai/PresidentDecisionDesk.tsx"),
   "./components/mockups/pulse-ai/PresidentDesktop.tsx": () => import("../components/mockups/pulse-ai/PresidentDesktop.tsx"),
+  "./components/mockups/pulse-ai/PresidentEnterpriseAtlas.tsx": () => import("../components/mockups/pulse-ai/PresidentEnterpriseAtlas.tsx"),
   "./components/mockups/pulse-ai/PresidentMobile.tsx": () => import("../components/mockups/pulse-ai/PresidentMobile.tsx"),
   "./components/mockups/pulse-ai/PresidentMorningLedger.tsx": () => import("../components/mockups/pulse-ai/PresidentMorningLedger.tsx"),
   "./components/mockups/pulse-ai/PulseShared.tsx": () => import("../components/mockups/pulse-ai/PulseShared.tsx")
