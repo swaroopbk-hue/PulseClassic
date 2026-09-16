@@ -1,0 +1,598 @@
+Design a premium, modern, enterprise-grade responsive web platform called **Pulse.ai**.
+
+Pulse.ai is an **AI-powered Business Analytics and Data Intelligence Platform** for a large enterprise group. It should give senior leadership a real-time view of business performance while also allowing them to interact with enterprise data conversationally using AI.
+
+The overall experience should feel like an **Executive Command Center**, not a traditional BI dashboard. It must be clean, highly structured, corporate, intelligent, and suitable for Presidents, CEOs, and Group Leaders.
+
+### Business Structure
+
+The organization contains multiple business groups:
+
+* UCC
+* Estithmar
+* Assets
+* Aura
+* PIH
+* Baladna
+* TMT
+
+The application will use **SSO authentication** and support two primary roles:
+
+**1. President**
+The President has enterprise-wide access and can see consolidated information across all business groups.
+
+**2. Group Leader**
+A Group Leader should only see the business group assigned to them and its underlying companies/business units.
+
+After SSO login, detect the user's role automatically and provide a different dashboard experience for each role.
+
+---
+
+# 1. PRESIDENT EXPERIENCE
+
+The President landing page should act as an **Enterprise Pulse / Executive Command Center**.
+
+The President should immediately understand:
+
+* How the entire organization is performing
+* Which groups are performing well
+* Which groups require attention
+* Revenue performance
+* Profitability
+* Budget performance
+* Forecast
+* Achievement %
+* MTD performance
+* YTD performance
+* Time elapsed vs achievement
+* Variance vs budget
+* Variance vs forecast
+* Growth compared with previous periods
+* Major risks
+* Major opportunities
+* AI-generated insights
+* Important approvals
+* Important documents or attachments
+
+Do not overload the screen with dozens of KPI cards.
+
+Create a strong information hierarchy.
+
+## Executive Header
+
+At the top, show something similar to:
+
+**Good morning, Mr. Jasim**
+*Here is the pulse of your business today.*
+
+Include:
+
+* Current reporting period
+* MTD / QTD / YTD selector
+* Date filter
+* Notifications
+* Profile
+* Last data refresh indicator
+
+The experience should immediately feel personalized and executive-level.
+
+---
+
+# 2. ENTERPRISE GLANCE
+
+The first major section should be called something like:
+
+**Enterprise at a Glance**
+
+Show approximately 4–6 critical consolidated KPIs such as:
+
+* Revenue
+* EBITDA / Profit
+* Budget Achievement
+* Forecast
+* Overall Growth
+* YTD Achievement
+
+Each KPI should include useful context rather than only a number.
+
+Example:
+
+**Revenue**
+QAR 18.4B
+↑ 8.2% YoY
+94% of YTD Target
+
+Use sophisticated but minimal micro visualizations such as:
+
+* progress indicators
+* tiny trends
+* variance indicators
+* sparklines
+* target markers
+
+Avoid making every KPI look like a generic card.
+
+---
+
+# 3. BUSINESS GROUP OVERVIEW
+
+Below the executive KPIs, show all business groups:
+
+UCC | Estithmar | Assets | Aura | PIH | Baladna | TMT
+
+Each group should have a concise executive summary showing:
+
+* Revenue
+* Profit
+* Achievement %
+* Forecast status
+* Trend
+* Business health/status
+
+For example:
+
+**UCC**
+Revenue: QAR 5.8B
+Achievement: 96%
+Profit: +7.4%
+Status: On Track
+
+Use subtle status indicators such as:
+
+* On Track
+* Watch
+* Attention Required
+* Ahead of Plan
+
+Do not make the status excessively colorful.
+
+The President should be able to click any group to drill into its detailed analytics.
+
+Consider showing the groups as elegant horizontal business cards, a compact grid, or another more innovative executive visualization.
+
+---
+
+# 4. AI — ASK ANYTHING
+
+One of the most important elements of Pulse.ai should be a prominent conversational AI experience.
+
+Place a large, elegant search/AI interaction area around the middle of the dashboard.
+
+Example heading:
+
+**Ask Pulse**
+
+Subtext:
+
+*Ask anything about your business.*
+
+Search placeholder:
+
+**“Why is Assets revenue below forecast this month?”**
+
+Other examples:
+
+* Compare Baladna revenue against budget.
+* Which business requires my attention today?
+* Why did UCC profitability decline?
+* Show companies likely to miss their annual target.
+* Compare Q3 performance across all groups.
+* What changed since yesterday?
+* Which businesses exceeded forecast?
+* Give me a summary of TMT performance.
+
+The AI response should not simply provide text.
+
+Depending on the question, Pulse.ai should dynamically generate:
+
+* KPI cards
+* tables
+* comparison cards
+* charts
+* trend graphs
+* timelines
+* variance analysis
+* forecasts
+* recommendations
+* supporting documents
+* citations/source references
+* suggested follow-up questions
+
+The conversational experience should feel deeply integrated into the analytics platform.
+
+---
+
+# 5. NEEDS YOUR ATTENTION
+
+Create a section:
+
+**Needs Your Attention**
+
+This section should proactively surface important matters rather than requiring the executive to search for them.
+
+Examples:
+
+**Budget Approval**
+UCC Infrastructure
+QAR 42M
+Awaiting your approval
+
+[Review] [Approve]
+
+---
+
+**Forecast Risk**
+Assets Group
+Projected revenue is 7.2% below annual target.
+
+[View Analysis]
+
+---
+
+**Performance Alert**
+Baladna
+Operating margin declined 3.1% this month.
+
+[Investigate]
+
+---
+
+**Investment Approval**
+Estithmar
+CapEx request — QAR 18.4M
+
+[Review]
+
+Items can include:
+
+* Approvals
+* Budget approvals
+* CapEx requests
+* Forecast risks
+* Performance anomalies
+* Revenue risks
+* Target misses
+* Compliance items
+* Operational alerts
+
+AI should prioritize these items based on business impact.
+
+---
+
+# 6. AI EXECUTIVE INSIGHTS
+
+Include an intelligent section called something like:
+
+**Pulse Insights**
+
+Instead of showing raw charts, automatically explain what matters.
+
+Example:
+
+**Assets revenue is 6.8% below forecast**
+
+Primary contributors:
+
+* Hospitality occupancy ↓ 4.2%
+* Retail footfall ↓ 7.1%
+* Commercial leasing revenue ↓ QAR 12M
+
+AI Recommendation:
+
+*Current trajectory indicates approximately QAR 38M potential annual revenue exposure if the trend continues.*
+
+[Explore Insight]
+
+Another example:
+
+**Baladna is outperforming its YTD target by 11.4%.**
+
+Primary driver:
+Domestic sales increased significantly during the current quarter.
+
+The AI should focus on explaining **why something happened**, not simply displaying metrics.
+
+---
+
+# 7. ATTACHMENTS / DOCUMENT INTELLIGENCE
+
+Create a section for recent or important business documents.
+
+Possible title:
+
+**Business Documents**
+
+Examples:
+
+* Monthly Performance Report
+* Board Report
+* Budget Review
+* Forecast Report
+* Group Performance Deck
+* Financial Statement
+* Management Report
+
+Show:
+
+* Document name
+* Business group
+* Document type
+* Date
+* Short AI-generated summary
+
+Actions:
+
+[View]
+[Ask Pulse]
+
+Selecting **Ask Pulse** should allow the executive to ask questions specifically about that document.
+
+---
+
+# 8. GROUP LEADER EXPERIENCE
+
+The Group Leader dashboard should follow the same design language but focus only on their assigned business group.
+
+For example, if the user is the **UCC Group Leader**, show:
+
+**UCC Business Pulse**
+
+The dashboard should include:
+
+* Revenue
+* Profit
+* Budget
+* Forecast
+* Achievement
+* MTD
+* YTD
+* Time elapsed
+* Variance
+* Growth
+* Business unit/company performance
+* Operational KPIs
+* AI insights
+* Alerts
+* Approvals
+* Attachments
+
+Instead of showing all enterprise groups, show the companies or business units belonging to the selected group.
+
+Group Leaders must not see data belonging to other groups unless specifically permitted.
+
+---
+
+# 9. DRILL-DOWN EXPERIENCE
+
+Everything should be interactive.
+
+The hierarchy can follow:
+
+**Enterprise → Group → Company → KPI → Transaction / Source Data**
+
+For example:
+
+Assets
+→ Hospitality
+→ Hotel Portfolio
+→ Revenue
+→ Monthly Trend
+→ Revenue Drivers
+→ Supporting Transactions
+
+The user should progressively drill deeper without leaving the overall Pulse.ai experience.
+
+Use smooth transitions rather than opening completely disconnected dashboards.
+
+---
+
+# 10. BUSINESS DETAIL PAGE
+
+When a business/group is selected, create a comprehensive Business Overview page.
+
+Possible navigation:
+
+* Overview
+* Financial Performance
+* Operations
+* Forecast
+* Insights
+* Risks
+* Documents
+
+Overview can include:
+
+* Revenue
+* Profit
+* Budget
+* Forecast
+* Achievement
+* Growth
+* Margin
+* MTD
+* YTD
+* Time Gone
+* Target Remaining
+
+Also show:
+
+**What's Driving Performance**
+
+Separate positive and negative contributors.
+
+Example:
+
+Positive Drivers
+
+* QAR 42M Contract Wins
+* QAR 18M Cost Optimization
+
+Negative Drivers
+
+* QAR 24M Delayed Projects
+* QAR 11M Revenue Slippage
+
+---
+
+# 11. TIME GONE VS ACHIEVEMENT
+
+Create an elegant visualization comparing:
+
+**Time Gone vs Target Achieved**
+
+Example:
+
+Year Progress: 71%
+Revenue Target Achieved: 76%
+
+Status:
+
+**5% Ahead of Time**
+
+Or:
+
+Year Progress: 71%
+Revenue Target Achieved: 63%
+
+Status:
+
+**8% Behind Expected Pace**
+
+This should become one of Pulse.ai's recognizable executive analytics patterns.
+
+---
+
+# 12. RESPONSIVE MOBILE EXPERIENCE
+
+Pulse.ai must be fully responsive.
+
+Do not simply shrink the desktop dashboard.
+
+On mobile:
+
+* Prioritize the most important KPIs
+* Stack sections vertically
+* Allow horizontal swiping for business groups
+* Keep **Ask Pulse** highly accessible
+* Use bottom navigation or a compact menu where appropriate
+* Make approvals easy to perform
+* Keep charts readable
+* Convert large tables into mobile-friendly summaries/cards
+
+Suggested mobile navigation:
+
+Home
+Businesses
+Ask Pulse
+Attention
+Profile
+
+The mobile experience should feel intentionally designed for senior executives checking their business while travelling.
+
+---
+
+# 13. NAVIGATION
+
+Desktop navigation could include:
+
+* Home
+* Businesses
+* Performance
+* Forecast
+* Insights
+* Attention
+* Reports
+* Ask Pulse
+
+However, keep the navigation concise and avoid unnecessary menu items.
+
+Pulse.ai should feel simpler than traditional analytics software.
+
+---
+
+# 14. VISUAL DESIGN DIRECTION
+
+The design should be:
+
+* Enterprise-grade
+* Premium
+* Executive
+* AI-first
+* Minimal
+* Highly structured
+* Sophisticated
+* Calm
+* Data-rich without feeling crowded
+
+Avoid:
+
+* Generic admin-dashboard design
+* Excessive cards
+* Excessive rounded corners
+* Huge typography
+* Too many gradients
+* Neon AI aesthetics
+* Excessive shadows
+* Too many colors
+* Overloading the user with charts
+* Consumer-app styling
+
+Use:
+
+* Strong whitespace
+* Clear typographic hierarchy
+* Refined spacing
+* Subtle borders
+* Minimal radius
+* Sophisticated data visualization
+* Compact executive analytics
+* High-quality icons
+* Clean corporate typography
+
+Think of the experience as a combination of:
+
+**Enterprise BI + Executive Command Center + Conversational AI.**
+
+The main philosophy should be:
+
+**Don't show executives more data. Show them what matters, why it matters, and what they should do next.**
+
+---
+
+# 15. PRODUCT STORY
+
+The platform experience should communicate this story:
+
+The President opens Pulse.ai in the morning.
+
+Within a few seconds, he understands the overall health of the organization.
+
+He sees which business groups are ahead of plan and which ones require attention.
+
+Pulse.ai proactively highlights a forecast risk within Assets.
+
+Instead of navigating through multiple dashboards, he asks:
+
+**“Why is Assets below forecast?”**
+
+Pulse.ai analyzes the underlying data and immediately explains the major drivers.
+
+He then asks:
+
+**“What happens if this trend continues until December?”**
+
+Pulse.ai generates a forecast and identifies the likely financial impact.
+
+A budget approval appears under **Needs Your Attention**.
+
+He reviews the underlying numbers and approves it directly from Pulse.ai.
+
+Before leaving, he asks:
+
+**“Give me the 5 things I should know today.”**
+
+Pulse.ai returns a concise executive briefing across the entire organization.
+
+The entire experience should make Pulse.ai feel less like a dashboard and more like an **AI Business Intelligence Companion for enterprise leadership.**
+
+Create both the **President Dashboard** and **Group Leader Dashboard**, including desktop and responsive mobile layouts, while maintaining one consistent Pulse.ai design system.
