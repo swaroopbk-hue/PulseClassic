@@ -164,8 +164,12 @@ export function PulseReference3DDark() {
                  <div>76% <span>achieved</span></div>
                </div>
                <div className="metric-progress">
-                 <div className="metric-progress-fill" style={{ width: '76%' }}></div>
-                 <div className="metric-progress-marker" style={{ left: '71%' }}></div>
+                  <div className="metric-progress-elapsed">
+                    <span className="metric-elapsed-marker" style={{ left: '71%' }} />
+                  </div>
+                  <div className="metric-progress-achieved" style={{ width: '76%' }}>
+                    <span className="metric-achieved-marker" />
+                  </div>
                </div>
                <div className="metric-sub">5% ahead of expected pace</div>
             </div>

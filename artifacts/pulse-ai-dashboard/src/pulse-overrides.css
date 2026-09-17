@@ -326,28 +326,46 @@
 }
 
 .metric-progress {
-  margin: 10px 0;
-  height: 2px;
-  background: var(--exe-line);
+  margin: 14px 0 18px;
+  height: 14px;
   position: relative;
   width: 100%;
 }
 
-.metric-progress-fill {
+.metric-progress-elapsed,
+.metric-progress-achieved {
   position: absolute;
-  top: 0;
   left: 0;
+  height: 3px;
+}
+
+.metric-progress-elapsed {
+  top: 0;
+  width: 100%;
+  background: color-mix(in srgb, var(--exe-ink-light) 42%, var(--exe-line));
+}
+
+.metric-progress-achieved {
   bottom: 0;
   background: var(--exe-blue-dark);
 }
 
-.metric-progress-marker {
+.metric-elapsed-marker,
+.metric-achieved-marker {
   position: absolute;
-  top: -4px;
-  bottom: -4px;
+  top: -5px;
+  height: 10px;
   width: 2px;
-  background: var(--exe-accent);
   z-index: 2;
+}
+
+.metric-elapsed-marker {
+  background: color-mix(in srgb, var(--exe-ink-light) 55%, var(--exe-line));
+}
+
+.metric-achieved-marker {
+  right: 0;
+  background: var(--exe-accent);
 }
 
 .metric-split-labels {
