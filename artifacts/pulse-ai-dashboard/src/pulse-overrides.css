@@ -39,7 +39,7 @@
   filter: var(--logo-filter, none);
 }
 .pulse-ref3d.dark .exe-logo {
-  --logo-filter: brightness(1.2) saturate(0.8);
+  filter: none;
 }
 
 .exe-edition {

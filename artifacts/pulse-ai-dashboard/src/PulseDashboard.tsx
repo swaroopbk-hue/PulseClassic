@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Bell, ChevronRight, Clock, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
+import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
 
@@ -76,7 +77,11 @@ export function PulseReference3DDark() {
     <div className={`pulse-ref3d ${theme}`} data-testid="pulse-dashboard">
       <header className="exe-header">
         <div className="exe-logo-area">
-          <img src="/images/pulse-ai-official.png" alt="Pulse.ai" className="exe-logo" />
+          <img
+            src={theme === "dark" ? darkPulseLogo : "/images/pulse-ai-official.png"}
+            alt="Pulse.ai"
+            className="exe-logo"
+          />
           <span className="exe-edition">EXECUTIVE EDITION</span>
         </div>
         <div className="exe-header-actions">
@@ -231,7 +236,6 @@ export function PulseReference3DDark() {
                </div>
              ) : (
              <div className="group-chart">
-              <div className="group-axis"><span>100K</span><span>80K</span><span>60K</span><span>40K</span><span>20K</span></div>
               <div className="group-columns">
                 {groupPerformance.map((group, index) => (
                   <div

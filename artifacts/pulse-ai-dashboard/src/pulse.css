@@ -257,7 +257,7 @@
   position: relative;
   display: flex;
   min-height: 240px;
-  padding: 6px 12px 0 38px;
+  padding: 6px 12px 0;
 }
 
 .group-axis {
