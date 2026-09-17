@@ -114,13 +114,24 @@
   background: transparent;
   color: var(--ink);
   text-align: left;
-  cursor: pointer;
+  cursor: default;
   transition: background-color .22s ease, transform .22s ease;
 }
 
 .group-column:last-child { border-right: 0; }
-.group-column:hover, .group-column.selected { background: color-mix(in srgb, var(--blue) 7%, transparent); }
+.group-column:hover { background: color-mix(in srgb, var(--blue) 7%, transparent); }
 .group-column:hover { transform: translateY(-2px); }
+.group-column:hover::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 72%;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, #56a9ff 9%, transparent), transparent 72%);
+  box-shadow: inset 0 0 22px color-mix(in srgb, #56a9ff 11%, transparent);
+}
 
 .group-column-name {
   min-height: 22px;
@@ -159,14 +170,93 @@
 }
 
 .group-bar-wrap i {
+  position: relative;
   display: block;
   width: 100%;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 12px, 100% 100%, 0 100%);
   background: repeating-linear-gradient(135deg, rgba(255,255,255,.56) 0 1px, transparent 1px 6px), linear-gradient(180deg, #1978ea, #3e9bf0 65%, rgba(137,199,246,.22));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 -4px 12px rgba(35,137,238,.22);
   transition: height .3s ease, filter .3s ease;
 }
 
-.group-column.selected .group-bar-wrap i { filter: saturate(1.35) brightness(1.12); }
+.group-column:hover .group-bar-wrap i {
+  filter: saturate(1.55) brightness(1.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.82),
+    0 -5px 18px rgba(66,157,255,.42),
+    0 0 22px rgba(66,157,255,.2);
+}
+
+.group-hover-tooltip {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: max-content;
+  padding: 8px 11px;
+  transform: translate(-50%, -100%);
+  border: 1px solid rgba(123, 181, 255, .34);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 84%, rgba(80, 152, 255, .2));
+  box-shadow:
+    0 10px 22px rgba(3, 24, 47, .26),
+    0 0 18px rgba(78, 157, 255, .16),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  backdrop-filter: blur(13px);
+  color: var(--muted);
+  font-size: 8px;
+  white-space: nowrap;
+  animation: tooltipIn .18s ease both;
+  pointer-events: none;
+}
+
+.group-hover-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: 1px solid rgba(123, 181, 255, .28);
+  border-bottom: 1px solid rgba(123, 181, 255, .28);
+  background: #243742;
+}
+
+.group-hover-tooltip b {
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.group-hover-tooltip span strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.group-hover-tooltip i {
+  width: 1px;
+  height: 10px;
+  background: color-mix(in srgb, var(--line) 84%, transparent);
+}
+
+.light .group-hover-tooltip {
+  background: rgba(248, 252, 255, .9);
+  border-color: rgba(78, 137, 207, .2);
+  box-shadow: 0 10px 22px rgba(27, 85, 136, .16), 0 0 18px rgba(78, 157, 255, .12);
+}
+
+.light .group-hover-tooltip::after {
+  background: #f7fbff;
+  border-color: rgba(78, 137, 207, .18);
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translate(-50%, calc(-100% + 5px)); }
+  to { opacity: 1; transform: translate(-50%, -100%); }
+}
 
 .group-chat {
   position: absolute;

@@ -39,6 +39,7 @@ export function PulseReference3DDark() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [insightIndex, setInsightIndex] = useState(0);
   const [groupIndex, setGroupIndex] = useState(2);
+  const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groupChatOpen, setGroupChatOpen] = useState(true);
   const [groupQuestion, setGroupQuestion] = useState("");
 
@@ -175,20 +176,30 @@ export function PulseReference3DDark() {
               <div className="group-axis"><span>100K</span><span>80K</span><span>60K</span><span>40K</span><span>20K</span></div>
               <div className="group-columns">
                 {groupPerformance.map((group, index) => (
-                  <button
-                    className={`group-column ${groupIndex === index ? "selected" : ""}`}
+                  <div
+                    className="group-column"
                     key={group.name}
-                    onClick={() => {
+                    onMouseEnter={() => {
                       setGroupIndex(index);
-                      notify(`${group.name} selected`);
+                      setHoveredGroup(index);
                     }}
-                    aria-label={`Inspect ${group.name}`}
+                    onMouseLeave={() => setHoveredGroup(null)}
                   >
                     <span className="group-column-name">{group.short}</span>
                     <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : "↓"} {group.change}</span>
                     <strong>{group.value}</strong>
                     <span className="group-bar-wrap"><i style={{ height: `${group.height}%` }} /></span>
-                  </button>
+                    {hoveredGroup === index && (
+                      <div className="group-hover-tooltip" role="status">
+                        <b>{group.value}</b>
+                        <span>transactions</span>
+                        <i />
+                        <span>Conversion: <strong>{index === 2 ? "89%" : index % 2 === 0 ? "86%" : "82%"}</strong></span>
+                        <i />
+                        <span>Drop-off: <strong>{group.direction === "down" ? "-11%" : "-8%"}</strong></span>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
