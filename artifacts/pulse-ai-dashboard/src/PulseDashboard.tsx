@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, ChevronRight, Clock, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
+import { Bell, ChevronRight, Clock, Maximize2, Minimize2, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
@@ -43,6 +43,7 @@ export function PulseReference3DDark() {
   const [groupChatOpen, setGroupChatOpen] = useState(true);
   const [groupQuestion, setGroupQuestion] = useState("");
   const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
+  const [assistantExpanded, setAssistantExpanded] = useState(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -196,7 +197,6 @@ export function PulseReference3DDark() {
                <div className="group-view-actions" aria-label="Group performance views">
                  <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
                  <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
-                 <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">&middot;&middot;&middot;</button>
                </div>
             </div>
              {groupView === "orbit" ? (
@@ -295,8 +295,18 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="ref-bottom">
-             <section className="ref-card assistant-card">
-               <div className="card-head assistant-heading"><h2>AI Assistant</h2><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">&middot;&middot;&middot;</button></div>
+             <section className={`ref-card assistant-card ${assistantExpanded ? "assistant-expanded" : ""}`}>
+               <div className="card-head assistant-heading">
+                 <h2>AI Assistant</h2>
+                 <button
+                   data-testid="button-expand-assistant"
+                   className="assistant-expand"
+                   onClick={() => setAssistantExpanded((expanded) => !expanded)}
+                   aria-label={assistantExpanded ? "Exit expanded AI Assistant" : "Expand AI Assistant"}
+                 >
+                   {assistantExpanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+                 </button>
+               </div>
                <button className="assistant-orb" onClick={() => { setQuery(pulseQuestions[questionIndex]); notify("Question added to Ask Pulse"); }} aria-label="Use suggested business question">
                  <span className="orb-core" />
                </button>
