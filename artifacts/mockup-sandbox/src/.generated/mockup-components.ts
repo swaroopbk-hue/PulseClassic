@@ -9,5 +9,7 @@ export const modules: ModuleMap = {
   "./components/mockups/pulse-ai/PresidentEnterpriseAtlas.tsx": () => import("../components/mockups/pulse-ai/PresidentEnterpriseAtlas.tsx"),
   "./components/mockups/pulse-ai/PresidentMobile.tsx": () => import("../components/mockups/pulse-ai/PresidentMobile.tsx"),
   "./components/mockups/pulse-ai/PresidentMorningLedger.tsx": () => import("../components/mockups/pulse-ai/PresidentMorningLedger.tsx"),
+  "./components/mockups/pulse-ai/PulseReference3DDark.tsx": () => import("../components/mockups/pulse-ai/PulseReference3DDark.tsx"),
+  "./components/mockups/pulse-ai/PulseReference3DLight.tsx": () => import("../components/mockups/pulse-ai/PulseReference3DLight.tsx"),
   "./components/mockups/pulse-ai/PulseShared.tsx": () => import("../components/mockups/pulse-ai/PulseShared.tsx")
 };
