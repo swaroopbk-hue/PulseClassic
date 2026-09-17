@@ -36,3 +36,111 @@
 .light .theme-toggle {
   background: #f4f6f5;
 }
+
+.assistant-card {
+  min-height: 186px;
+  padding: 0 15px 12px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(77, 145, 239, .08), transparent 42%),
+    var(--card);
+}
+
+.assistant-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.assistant-heading .more {
+  font-size: 14px;
+}
+
+.assistant-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 10px auto 9px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 32% 25%, rgba(255,255,255,.92) 0 8%, transparent 21%),
+    radial-gradient(circle at 38% 34%, #8dc4ff 0 13%, #3c8df1 35%, #0b55cf 66%, #062d87 100%);
+  box-shadow:
+    0 0 0 7px rgba(77,145,239,.07),
+    0 9px 18px rgba(17,91,202,.35),
+    inset -8px -10px 14px rgba(0,21,92,.32),
+    inset 7px 8px 12px rgba(255,255,255,.24);
+  animation: assistantBreathe 3.2s ease-in-out infinite;
+}
+
+.assistant-orb:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.orb-core {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.36);
+  filter: blur(2px);
+}
+
+.assistant-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 29px;
+  padding: 4px 5px 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: var(--muted);
+}
+
+.assistant-input input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 8px;
+  text-overflow: ellipsis;
+}
+
+.assistant-input input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.assistant-input button {
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  cursor: pointer;
+}
+
+.assistant-hint {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 7px;
+  text-align: center;
+}
+
+@keyframes assistantBreathe {
+  0%, 100% { box-shadow: 0 0 0 7px rgba(77,145,239,.07), 0 9px 18px rgba(17,91,202,.35), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
+  50% { box-shadow: 0 0 0 11px rgba(77,145,239,.04), 0 12px 24px rgba(17,91,202,.42), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
+}

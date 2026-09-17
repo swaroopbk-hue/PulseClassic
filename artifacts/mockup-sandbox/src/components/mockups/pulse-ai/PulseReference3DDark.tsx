@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bell, Moon, Search, Send, SlidersHorizontal, Sun } from "lucide-react";
 import "./PulseReference3DDark.css";
 
 const navItems = ["Overview", "Businesses", "Performance", "Forecast", "Insights", "Attention", "Reports"];
 const periods = ["MTD", "QTD", "YTD"];
 const bars = [64, 57, 73, 48, 40, 35, 46, 58, 52, 69, 62, 78];
+const pulseQuestions = [
+  "What is driving UCC's margin change?",
+  "Which group is closest to missing forecast?",
+  "How is Estithmar tracking against plan?",
+  "What changed in Assets hospitality occupancy?",
+  "Where should the executive team focus today?",
+];
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -15,6 +22,14 @@ export function PulseReference3DDark() {
   const [period, setPeriod] = useState("YTD");
   const [selectedBar, setSelectedBar] = useState(2);
   const [toast, setToast] = useState("");
+  const [questionIndex, setQuestionIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setQuestionIndex((current) => (current + 1) % pulseQuestions.length);
+    }, 3200);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const notify = (message: string) => {
     setToast(message);
@@ -136,10 +151,23 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="ref-bottom">
-            <section className="ref-card retention">
-              <div className="card-head"><h2>Performance signal</h2><button className="more" onClick={() => notify("Signal options opened")}>···</button></div>
-              <div className="spark-area"><svg viewBox="0 0 260 115" preserveAspectRatio="none"><polyline points="0,87 22,91 44,74 65,77 87,48 108,51 130,40 151,47 173,30 195,58 216,63 238,45 260,52 260,115 0,115" /></svg></div>
-              <div className="axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+             <section className="ref-card assistant-card">
+               <div className="assistant-heading"><span>AI Assistant</span><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">↗</button></div>
+               <button className="assistant-orb" onClick={() => { setQuery(pulseQuestions[questionIndex]); notify("Question added to Ask Pulse"); }} aria-label="Use suggested business question">
+                 <span className="orb-core" />
+               </button>
+               <div className="assistant-input">
+                 <Search size={12} />
+                 <input
+                   value={query}
+                   onChange={(event) => setQuery(event.target.value)}
+                   onKeyDown={(event) => event.key === "Enter" && ask()}
+                   placeholder={pulseQuestions[questionIndex]}
+                   aria-label="Ask Pulse a business question"
+                 />
+                 <button onClick={ask} aria-label="Ask Pulse"><Send size={11} /></button>
+               </div>
+               <small className="assistant-hint">Tap the pulse to use this question</small>
             </section>
             <section className="ref-card stat-card">
               <div className="card-head"><h2>Transactions</h2><button className="more" onClick={() => notify("Transactions opened")}>···</button></div>
