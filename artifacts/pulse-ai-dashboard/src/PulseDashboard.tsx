@@ -13,19 +13,19 @@ const pulseQuestions = [
 ];
 const insightSlides = [
   { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
-  { group: "Estithmar", value: "18.6%", title: "Portfolio EBITDA widened ahead of forecast.", body: "Three properties contributed 74% of the improvement, led by disciplined cost control.", note: "Operating review signed off · 2 actions due this week.", tone: "sand" },
-  { group: "Assets", value: "−214M", title: "Hospitality remains the clearest enterprise watchpoint.", body: "Occupancy and commercial leasing explain most of the gap against the current forecast.", note: "Executive attention requested · evidence refreshed 2h ago.", tone: "coral" },
-  { group: "Baladna", value: "111%", title: "Demand is running above the annual target.", body: "Volume growth is strongest across core dairy and export channels into the next quarter.", note: "Forecast confidence increased from medium to high.", tone: "mint" },
-  { group: "TMT", value: "Q3", title: "A new transformation milestone is within reach.", body: "Delivery velocity improved across the shared services roadmap and capital program.", note: "Two dependencies remain with Group Leadership.", tone: "violet" },
+  { group: "Estithmar", value: "+18.6%", title: "EBITDA growth is ahead of the quarterly forecast.", body: "Hospitality and services contributed most of the gain, supported by stronger pricing and tighter operating costs.", note: "QAR 46M above plan · two follow-up actions due this week.", tone: "sand" },
+  { group: "Assets", value: "−214M", title: "The forecast gap is concentrated in two operating areas.", body: "Lower hotel occupancy and delayed commercial leasing account for 81% of the variance, making them the priority recovery levers.", note: "Recovery plan requested · latest evidence refreshed 2 hours ago.", tone: "coral" },
+  { group: "Baladna", value: "111%", title: "Demand is exceeding the full-year run-rate target.", body: "Core dairy volume and regional exports are both ahead of plan, with sufficient production capacity for the next-quarter outlook.", note: "Forecast confidence raised to high · supply remains on track.", tone: "mint" },
+  { group: "TMT", value: "87%", title: "The transformation portfolio is nearing its Q3 milestone.", body: "Shared services delivery has accelerated, while two leadership decisions remain on the critical path for completion.", note: "Seven of eight workstreams on track · decisions due this month.", tone: "violet" },
 ];
 const groupPerformance = [
   { name: "Power International", short: "Power International", value: "65.2K", change: "+12%", direction: "up", height: 92 },
-  { name: "UCC Holding", short: "UCC Holding", value: "54.8K", change: "-8%", direction: "down", height: 76 },
-  { name: "Estithmar Holding", short: "Estithmar Holding", value: "48.6K", change: "+6%", direction: "up", height: 64 },
-  { name: "Baladna", short: "Baladna", value: "38.3K", change: "-4%", direction: "down", height: 54 },
-  { name: "TMT", short: "TMT", value: "32.9K", change: "+9%", direction: "up", height: 47 },
-  { name: "Assets Group", short: "Assets Group", value: "28.1K", change: "-3%", direction: "down", height: 42 },
-  { name: "Aura Group", short: "Aura Group", value: "24.7K", change: "+11%", direction: "up", height: 37 },
+  { name: "UCC Holding", short: "UCC Holding", value: "49.4K", change: "−3.8%", direction: "down", height: 68 },
+  { name: "Estithmar Holding", short: "Estithmar Holding", value: "57.8K", change: "+6.4%", direction: "up", height: 80 },
+  { name: "Baladna", short: "Baladna", value: "38.3K", change: "+0.6%", direction: "stable", height: 52 },
+  { name: "TMT", short: "TMT", value: "44.6K", change: "+9.1%", direction: "up", height: 62 },
+  { name: "Assets Group", short: "Assets Group", value: "29.7K", change: "−5.2%", direction: "down", height: 41 },
+  { name: "Aura Group", short: "Aura Group", value: "35.1K", change: "+1.1%", direction: "stable", height: 48 },
 ];
 
 export function PulseReference3DDark() {
@@ -48,13 +48,6 @@ export function PulseReference3DDark() {
     const timer = window.setInterval(() => {
       setQuestionIndex((current) => (current + 1) % pulseQuestions.length);
     }, 3200);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setInsightIndex((current) => (current + 1) % insightSlides.length);
-    }, 11000);
     return () => window.clearInterval(timer);
   }, []);
 
@@ -214,8 +207,10 @@ export function PulseReference3DDark() {
                     onMouseLeave={() => setHoveredGroup(null)}
                   >
                     <span className="group-column-name">{group.short}</span>
-                    <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : "↓"} {group.change}</span>
-                    <strong>{group.value}</strong>
+                     <div className="group-value-row">
+                       <strong>{group.value}</strong>
+                       <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : group.direction === "down" ? "↓" : "→"} {group.change}</span>
+                     </div>
                     <span className="group-bar-wrap"><i style={{ height: `${group.height}%` }} /></span>
                     {hoveredGroup === index && (
                       <div className="group-hover-tooltip" role="status">
@@ -224,7 +219,7 @@ export function PulseReference3DDark() {
                         <i />
                          <span>Budget: <strong>{index === 2 ? "89%" : index % 2 === 0 ? "86%" : "82%"}</strong></span>
                         <i />
-                         <span>LY: <strong>{group.direction === "down" ? "-11%" : "-8%"}</strong></span>
+                          <span>LY: <strong>{group.direction === "down" ? "−11%" : group.direction === "stable" ? "+0.4%" : "+8%"}</strong></span>
                       </div>
                       )}
                   </div>
@@ -255,7 +250,7 @@ export function PulseReference3DDark() {
 
           <div className="ref-bottom">
              <section className="ref-card assistant-card">
-               <div className="assistant-heading"><span>AI Assistant</span><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">↗</button></div>
+               <div className="card-head assistant-heading"><h2>AI Assistant</h2><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">···</button></div>
                <button className="assistant-orb" onClick={() => { setQuery(pulseQuestions[questionIndex]); notify("Question added to Ask Pulse"); }} aria-label="Use suggested business question">
                  <span className="orb-core" />
                </button>
@@ -270,7 +265,6 @@ export function PulseReference3DDark() {
                  />
                   <button data-testid="button-ask-pulse" onClick={ask} aria-label="Ask Pulse"><Send size={11} /></button>
                </div>
-                <small className="assistant-hint">Tap the pulse to use this question</small>
                 {answer && <div className="ask-result" data-testid="text-pulse-answer">{answer}</div>}
             </section>
             <section className="ref-card stat-card">
@@ -300,7 +294,7 @@ export function PulseReference3DDark() {
                      key={slide.group}
                      className={index === insightIndex ? "active" : ""}
                      onClick={() => setInsightIndex(index)}
-                     aria-label={`Show ${slide.group} insight`}
+                     aria-label={`Show insight ${index + 1}: ${slide.group}`}
                      aria-selected={index === insightIndex}
                      role="tab"
                    />

@@ -214,7 +214,7 @@
   width: 100%;
   min-height: 230px;
   border-bottom: 1px solid var(--line);
-  background: repeating-linear-gradient(to bottom, transparent 0 45px, color-mix(in srgb, var(--line) 75%, transparent) 46px);
+  background: transparent;
 }
 
 .group-column {
@@ -262,17 +262,28 @@
   line-height: 1.08;
 }
 
-.group-change {
+.group-value-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
   margin-top: 7px;
-  font-size: 12px;
+  white-space: nowrap;
+}
+
+.group-change {
+  margin: 0;
+  font-size: 10px;
   font-weight: 600;
 }
 
 .group-change.up { color: #2ba475; }
 .group-change.down { color: #d9465e; }
+.group-change.stable { color: var(--muted); }
 
-.group-column strong {
-  margin-top: 6px;
+.group-value-row > strong {
+  margin: 0;
   font-family: "Google Sans", "Product Sans", sans-serif;
   font-size: 21px;
   font-weight: 500;
@@ -510,20 +521,9 @@
 .assistant-heading {
   position: absolute;
   top: 0;
-  left: 15px;
-  right: 15px;
+  left: 0;
+  right: 0;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 14px;
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.assistant-heading .more {
-  font-size: 14px;
 }
 
 .assistant-orb {
@@ -601,26 +601,18 @@
 .assistant-input button {
   display: grid;
   place-items: center;
-  width: 19px;
-  height: 19px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
   border: 0;
-  border-radius: 50%;
-  background: var(--blue);
-  color: #fff;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
   cursor: pointer;
 }
 
-.assistant-hint {
-  position: absolute;
-  right: 15px;
-  bottom: 2px;
-  left: 15px;
-  z-index: 2;
-  display: block;
-  margin: 0;
-  color: var(--muted);
-  font-size: 8px;
-  text-align: center;
+.assistant-input button:hover {
+  color: var(--ink);
 }
 
 .insight-card {
@@ -662,7 +654,7 @@
   display: flex;
   width: 500%;
   height: 186px;
-  transition: transform 1.15s cubic-bezier(.22,.61,.36,1);
+  transition: transform 220ms cubic-bezier(.23,1,.32,1);
   will-change: transform;
 }
 
@@ -673,7 +665,7 @@
   height: 186px;
   display: flex;
   flex-direction: column;
-  padding: 14px 15px 34px;
+  padding: 14px 18px 32px;
   color: #f7fbfc;
 }
 
@@ -709,7 +701,7 @@
   position: relative;
   z-index: 1;
   display: block;
-  margin-top: 19px;
+  margin-top: 14px;
   font-family: "Google Sans", "Product Sans", "Space Grotesk", sans-serif;
   font-size: 35px;
   font-weight: 500;
@@ -720,8 +712,8 @@
 .insight-slide h3 {
   position: relative;
   z-index: 1;
-  max-width: 205px;
-  margin: 8px 0 3px;
+  max-width: calc(100% - 18px);
+  margin: 7px 0 3px;
   font-size: 11px;
   font-weight: 600;
   line-height: 1.18;
@@ -730,7 +722,7 @@
 .insight-slide p {
   position: relative;
   z-index: 1;
-  max-width: 220px;
+  max-width: calc(100% - 10px);
   margin: 0;
   color: rgba(255,255,255,.82);
   font-size: 9px;
@@ -780,16 +772,10 @@
   content: "";
   position: absolute;
   inset: 0;
-  width: 0;
+  width: 100%;
   border-radius: inherit;
   background: #fff;
   box-shadow: 0 0 10px rgba(255,255,255,.45);
-  animation: insightProgress 11s linear forwards;
-}
-
-@keyframes insightProgress {
-  from { width: 0; }
-  to { width: 100%; }
 }
 
 /* Keep the lower row on one exact baseline: every card follows the
@@ -807,12 +793,18 @@
   border-radius: 16px !important;
 }
 
-/* Numeric values remain static; only the carousel track is allowed to move. */
+/* Numeric values remain static; the carousel moves only after direct user input. */
 .insight-slide strong,
 .stat-num,
 .metric-value {
   animation: none !important;
   transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight-track {
+    transition: none;
+  }
 }
 
 @keyframes assistantBreathe {
