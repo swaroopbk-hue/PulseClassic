@@ -118,6 +118,35 @@ export function PulseReference3DDark() {
             </div>
           </div>
 
+          <section className="glance-band" aria-label="Enterprise at a glance">
+            <div className="glance-heading">
+              <h2>Enterprise at a glance</h2>
+              <span>YTD through 18 June · 71% of year elapsed</span>
+            </div>
+            <div className="glance-metrics">
+              <button className="glance-metric" onClick={() => notify("Revenue detail opened")}>
+                <span className="glance-label">Revenue</span>
+                <strong>QAR 18.4B</strong>
+                <small><i className="glance-arrow">↗</i> 8.2% vs last year · 94% target</small>
+              </button>
+              <button className="glance-metric" onClick={() => notify("EBITDA detail opened")}>
+                <span className="glance-label">EBITDA</span>
+                <strong>QAR 3.76B</strong>
+                <small><i className="glance-arrow">↗</i> 6.9% margin 20.4%</small>
+              </button>
+              <button className="glance-metric" onClick={() => notify("Forecast detail opened")}>
+                <span className="glance-label">Forecast</span>
+                <strong>98.1%</strong>
+                <small><b>QAR 18.9B</b> expected</small>
+              </button>
+              <button className="glance-metric" onClick={() => notify("Pace detail opened")}>
+                <span className="glance-label">Time vs achieved</span>
+                <strong>+5%</strong>
+                <small>ahead of expected pace</small>
+              </button>
+            </div>
+          </section>
+
           <div className="ref-layout">
             <section className="ref-card">
               <div className="card-head">

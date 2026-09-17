@@ -380,3 +380,125 @@
   0%, 100% { box-shadow: 0 0 0 7px rgba(77,145,239,.07), 0 9px 18px rgba(17,91,202,.35), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
   50% { box-shadow: 0 0 0 11px rgba(77,145,239,.04), 0 12px 24px rgba(17,91,202,.42), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
 }
+
+.glance-band {
+  margin: 4px 0 15px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.glance-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 9px 0 8px;
+}
+
+.glance-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+
+.glance-heading span {
+  color: var(--muted);
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.glance-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.glance-metric {
+  min-width: 0;
+  padding: 10px 16px 12px 0;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s ease, color .2s ease;
+}
+
+.glance-metric + .glance-metric {
+  padding-left: 17px;
+}
+
+.glance-metric:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.glance-metric:hover {
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.glance-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.glance-metric strong {
+  display: block;
+  font-family: "Google Sans", "Product Sans", "Space Grotesk", sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+
+.glance-metric small {
+  display: block;
+  min-height: 18px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 7px;
+  line-height: 1.25;
+}
+
+.glance-metric small b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.glance-arrow {
+  color: #4fb97d;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .glance-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .glance-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .glance-metric:nth-child(2) {
+    border-right: 0;
+  }
+
+  .glance-metric:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+
+  .glance-metric:nth-child(3) {
+    padding-left: 0;
+  }
+}
