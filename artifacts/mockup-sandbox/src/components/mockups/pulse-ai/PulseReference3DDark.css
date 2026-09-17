@@ -185,33 +185,6 @@
 @keyframes orbitDrift { from { transform: translate(-50%, -50%) rotate(-12deg) scale(.98); } to { transform: translate(-50%, -50%) rotate(8deg) scale(1.02); } }
 @keyframes orbitFloat { from { margin-top: 0; } to { margin-top: -4px; } }
 
-.group-line-view {
-  display: flex;
-  min-height: 240px;
-  padding: 16px 12px 0 38px;
-}
-
-.line-axis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0 8px 37px 0;
-  color: var(--muted);
-  font-size: 8px;
-}
-
-.line-stage { position: relative; flex: 1; min-width: 0; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to bottom, transparent 0 61px, color-mix(in srgb, var(--line) 74%, transparent) 62px); }
-.line-chart-svg { position: absolute; inset: 0 0 34px; width: 100%; height: calc(100% - 34px); overflow: visible; }
-.line-area { fill: url(#lineFill); }
-.line-path { fill: none; stroke: #49a0ef; stroke-width: 3; vector-effect: non-scaling-stroke; }
-.line-point { fill: var(--card); stroke: #49a0ef; stroke-width: 2; vector-effect: non-scaling-stroke; }
-.line-labels { position: absolute; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(7, 1fr); height: 36px; }
-.line-labels button { position: relative; min-width: 0; padding: 0 3px; border: 0; background: transparent; color: var(--muted); text-align: center; cursor: pointer; }
-.line-labels button span { display: block; overflow: hidden; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
-.line-labels button strong { display: block; margin-top: 3px; color: var(--ink); font-size: 9px; font-weight: 600; }
-.line-labels button i { position: absolute; right: 8px; bottom: -1px; left: 8px; z-index: -1; opacity: .14; background: #49a0ef; }
-.line-labels button:hover span, .line-labels button:hover strong { color: var(--blue); }
-
 .group-chart {
   position: relative;
   display: flex;

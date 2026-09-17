@@ -42,7 +42,7 @@ export function PulseReference3DDark() {
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groupChatOpen, setGroupChatOpen] = useState(true);
   const [groupQuestion, setGroupQuestion] = useState("");
-  const [groupView, setGroupView] = useState<"bars" | "orbit" | "line">("bars");
+  const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -172,8 +172,11 @@ export function PulseReference3DDark() {
                 <p>Revenue movement across the enterprise portfolio</p>
               </div>
                <div className="group-view-actions" aria-label="Group performance views">
-                 <button className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
-                 <button className={`group-view-button ${groupView === "line" ? "active" : ""}`} onClick={() => setGroupView("line")}>Line Bar</button>
+                 {groupView === "orbit" ? (
+                   <button className="group-view-button" onClick={() => setGroupView("bars")}>Line Bar</button>
+                 ) : (
+                   <button className="group-view-button" onClick={() => setGroupView("orbit")}>Orbit</button>
+                 )}
                  <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">···</button>
                </div>
             </div>
@@ -194,19 +197,6 @@ export function PulseReference3DDark() {
                      <span>{group.name}</span><strong>{group.value}</strong><small>{group.change} vs LY</small>
                    </button>
                  ))}
-               </div>
-             ) : groupView === "line" ? (
-               <div className="group-line-view" aria-label="Line bar visualization">
-                 <div className="line-axis"><span>100K</span><span>50K</span><span>0</span></div>
-                 <div className="line-stage">
-                   <svg className="line-chart-svg" viewBox="0 0 700 190" preserveAspectRatio="none" aria-hidden="true">
-                     <defs><linearGradient id="lineFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#4da7f5" stopOpacity=".34" /><stop offset="1" stopColor="#4da7f5" stopOpacity="0" /></linearGradient></defs>
-                     <path className="line-area" d="M0 48 L116 72 L233 90 L350 113 L466 129 L583 142 L700 151 L700 190 L0 190Z" />
-                     <path className="line-path" d="M0 48 L116 72 L233 90 L350 113 L466 129 L583 142 L700 151" />
-                     {groupPerformance.map((group, index) => <circle key={group.name} className="line-point" cx={index * 116.6} cy={[48,72,90,113,129,142,151][index]} r="4" />)}
-                   </svg>
-                   <div className="line-labels">{groupPerformance.map((group, index) => <button key={group.name} onMouseEnter={() => setGroupIndex(index)} onClick={() => notify(`${group.name} selected`)}><span>{group.short}</span><strong>{group.value}</strong><i style={{ height: `${group.height}%` }} /></button>)}</div>
-                 </div>
                </div>
              ) : (
              <div className="group-chart">
