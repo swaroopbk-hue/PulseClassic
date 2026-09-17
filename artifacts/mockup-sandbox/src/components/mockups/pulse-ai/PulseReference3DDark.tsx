@@ -42,7 +42,7 @@ export function PulseReference3DDark() {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setInsightIndex((current) => (current + 1) % insightSlides.length);
-    }, 5200);
+    }, 11000);
     return () => window.clearInterval(timer);
   }, []);
 

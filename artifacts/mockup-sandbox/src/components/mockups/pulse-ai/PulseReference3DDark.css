@@ -178,7 +178,10 @@
   isolation: isolate;
   padding: 0;
   overflow: hidden;
-  background: #17242c;
+  height: 186px;
+  min-height: 186px;
+  border-radius: 2px !important;
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 12px 28px rgba(0,0,0,.2);
 }
 
@@ -212,23 +215,23 @@
 }
 
 .insight-card.insight-blue {
-  background: linear-gradient(135deg, #164d83 0%, #1a6e9a 47%, #c48f6c 125%);
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
 }
 
 .insight-card.insight-sand {
-  background: linear-gradient(135deg, #825f4a 0%, #c38c64 54%, #315c66 125%);
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
 }
 
 .insight-card.insight-coral {
-  background: linear-gradient(135deg, #80443e 0%, #b66a5d 52%, #2a6275 125%);
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
 }
 
 .insight-card.insight-mint {
-  background: linear-gradient(135deg, #286267 0%, #4d988f 53%, #aeab78 125%);
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
 }
 
 .insight-card.insight-violet {
-  background: linear-gradient(135deg, #3d4b7e 0%, #6a6eac 55%, #b68176 125%);
+  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
 }
 
 .insight-track {
@@ -236,8 +239,8 @@
   z-index: 1;
   display: flex;
   width: 500%;
-  height: 154px;
-  transition: transform .7s cubic-bezier(.22,.61,.36,1);
+  height: 186px;
+  transition: transform 1.15s cubic-bezier(.22,.61,.36,1);
   will-change: transform;
 }
 
@@ -245,7 +248,10 @@
   position: relative;
   flex: 0 0 20%;
   min-width: 20%;
-  padding: 12px 15px 7px;
+  height: 186px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 15px 34px;
   color: #f7fbfc;
 }
 
@@ -281,7 +287,7 @@
   position: relative;
   z-index: 1;
   display: block;
-  margin-top: 18px;
+  margin-top: 19px;
   font-family: "Google Sans", "Product Sans", "Space Grotesk", sans-serif;
   font-size: 35px;
   font-weight: 500;
@@ -313,7 +319,7 @@
   position: relative;
   z-index: 1;
   display: block;
-  margin-top: 5px;
+  margin-top: auto;
   color: rgba(255,255,255,.65);
   font-size: 7px;
   line-height: 1.2;
