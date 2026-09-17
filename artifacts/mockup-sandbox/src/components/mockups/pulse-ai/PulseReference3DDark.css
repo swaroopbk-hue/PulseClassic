@@ -222,46 +222,38 @@
 
 .group-hover-tooltip {
   position: absolute;
-  top: calc(100% + 45px);
-  left: 50%;
-  z-index: 5;
+  top: 50%;
+  left: calc(100% + 10px);
+  z-index: 6;
   display: flex;
   align-items: center;
   gap: 5px;
-  min-width: 300px;
+  min-width: 248px;
   justify-content: center;
-  padding: 10px 16px;
-  transform: translate(-50%, 0);
-  border: 1px solid rgba(177, 220, 255, .62);
-  border-radius: 999px;
+  padding: 8px 12px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(192, 224, 255, .3);
+  border-radius: 12px;
   background:
-    linear-gradient(105deg, rgba(39, 83, 133, .82), rgba(18, 45, 82, .7)),
-    rgba(22, 48, 80, .7);
+    linear-gradient(110deg, rgba(92, 151, 208, .22), rgba(14, 39, 67, .34)),
+    rgba(23, 43, 63, .58);
   box-shadow:
-    0 12px 28px rgba(2, 17, 34, .34),
-    0 0 24px rgba(78, 157, 255, .22),
-    inset 0 1px 0 rgba(255,255,255,.3),
-    inset 0 -1px 0 rgba(102, 180, 255, .12);
-  backdrop-filter: blur(18px) saturate(1.22);
+    0 10px 24px rgba(2, 17, 34, .28),
+    0 0 18px rgba(78, 157, 255, .12),
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -1px 0 rgba(102, 180, 255, .1);
+  backdrop-filter: blur(20px) saturate(1.1);
   color: rgba(224, 239, 255, .78);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: -.01em;
   white-space: nowrap;
   animation: tooltipIn .18s ease both;
   pointer-events: none;
 }
 
-.group-hover-tooltip::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 9px;
-  height: 9px;
-  transform: translateX(-50%) rotate(45deg);
-  border-left: 1px solid rgba(123, 181, 255, .28);
-  border-top: 1px solid rgba(123, 181, 255, .28);
-  background: #28517d;
+.group-column:nth-child(n + 6) .group-hover-tooltip {
+  right: calc(100% + 10px);
+  left: auto;
 }
 
 .group-hover-tooltip b {
@@ -281,15 +273,12 @@
 }
 
 .light .group-hover-tooltip {
-  background: linear-gradient(105deg, rgba(240, 248, 255, .9), rgba(221, 237, 255, .78));
-  border-color: rgba(78, 137, 207, .34);
-  box-shadow: 0 12px 28px rgba(27, 85, 136, .2), 0 0 22px rgba(78, 157, 255, .18), inset 0 1px 0 rgba(255,255,255,.92);
+  background:
+    linear-gradient(110deg, rgba(255,255,255,.64), rgba(220,237,253,.5)),
+    rgba(241,248,255,.56);
+  border-color: rgba(78, 137, 207, .28);
+  box-shadow: 0 10px 24px rgba(27, 85, 136, .16), 0 0 18px rgba(78, 157, 255, .12), inset 0 1px 0 rgba(255,255,255,.82);
   color: #526b8c;
-}
-
-.light .group-hover-tooltip::after {
-  background: #f7fbff;
-  border-color: rgba(78, 137, 207, .18);
 }
 
 .light .group-hover-tooltip b,
@@ -298,8 +287,17 @@
 }
 
 @keyframes tooltipIn {
-  from { opacity: 0; transform: translate(-50%, -5px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  from { opacity: 0; transform: translateY(-50%) translateX(-4px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+.group-column:nth-child(n + 6) .group-hover-tooltip {
+  animation-name: tooltipInFromLeft;
+}
+
+@keyframes tooltipInFromLeft {
+  from { opacity: 0; transform: translateY(-50%) translateX(4px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
 .group-chat {
@@ -307,7 +305,7 @@
   right: 10px;
   bottom: 10px;
   left: 10px;
-  z-index: 2;
+  z-index: 20;
   padding: 8px 10px 9px;
   border: 1px solid color-mix(in srgb, var(--blue) 12%, var(--line));
   border-radius: 17px;
