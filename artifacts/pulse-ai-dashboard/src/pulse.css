@@ -888,6 +888,345 @@
   box-shadow: 0 0 10px rgba(255,255,255,.45);
 }
 
+.decisions-card {
+  position: relative;
+}
+
+.decisions-head {
+  padding-bottom: 4px;
+}
+
+.decisions-head > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.decisions-head > div span {
+  color: #a56565;
+  font-size: 10px;
+}
+
+.decisions-view-all,
+.decisions-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  background: transparent;
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: 9px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.decision-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 108px;
+  padding: 5px 25px 0;
+}
+
+.decision-slide {
+  display: grid;
+  grid-template-columns: 7px minmax(0, 1fr) auto;
+  width: 100%;
+  align-items: start;
+  gap: 10px;
+  padding: 15px 10px 13px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  animation: decisionIn .22s ease both;
+}
+
+.decision-dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin-top: 4px;
+  background: #b89448;
+}
+
+.decision-slide.risk .decision-dot,
+.decision-queue-item.risk .decision-dot {
+  background: #b36f72;
+}
+
+.decision-slide.signal .decision-dot,
+.decision-queue-item.signal .decision-dot {
+  background: #9eaa65;
+}
+
+.decision-slide h3 {
+  margin: 0;
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.decision-slide p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.decision-slide > button {
+  padding: 1px 0 3px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--exe-blue-dark, var(--ink)) 32%, transparent);
+  background: transparent;
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.decision-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 22px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.decision-arrow:hover {
+  color: var(--ink);
+  background: var(--card);
+}
+
+.decision-arrow.previous { left: 5px; }
+.decision-arrow.next { right: 5px; }
+
+.decision-pagination {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 30px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.decision-pagination > i {
+  position: relative;
+  display: block;
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.decision-pagination > i b {
+  display: block;
+  height: 100%;
+  background: var(--exe-accent, #b89448);
+  transition: width .24s ease;
+}
+
+.ref-bottom > .decisions-card.decisions-all {
+  position: fixed;
+  inset: 4vh 4vw;
+  z-index: 40;
+  width: auto;
+  height: auto !important;
+  min-height: 0;
+  max-height: none !important;
+  overflow: auto;
+  border-radius: 18px !important;
+  box-shadow: 0 28px 80px rgba(10, 24, 34, .28);
+}
+
+.decisions-workspace {
+  min-height: 100%;
+  padding: 24px;
+}
+
+.decisions-workspace-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.decisions-workspace-head > div > span {
+  color: var(--exe-accent, #b89448);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.decisions-workspace-head h2 {
+  margin: 5px 0 3px;
+  font-family: var(--font-serif);
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: clamp(25px, 3vw, 38px);
+  font-weight: 500;
+  letter-spacing: -.035em;
+}
+
+.decisions-workspace-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.decisions-back {
+  flex: 0 0 auto;
+  margin-top: 4px;
+  padding: 5px 0;
+}
+
+.decisions-workspace-body {
+  display: grid;
+  grid-template-columns: minmax(260px, .8fr) minmax(360px, 1.55fr);
+  gap: 16px;
+  max-width: 1040px;
+  margin: 22px auto 0;
+}
+
+.decision-queue,
+.decision-detail {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 92%, var(--surface));
+}
+
+.decision-queue-title {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.decision-queue-title span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.decision-queue-item {
+  display: grid;
+  grid-template-columns: 7px minmax(0, 1fr);
+  width: 100%;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.decision-queue-item.active {
+  background: color-mix(in srgb, var(--exe-blue-dark, var(--blue)) 7%, var(--card));
+  box-shadow: inset 2px 0 0 var(--exe-accent, #b89448);
+}
+
+.decision-queue-item small,
+.decision-queue-item strong,
+.decision-queue-item em {
+  display: block;
+}
+
+.decision-queue-item small {
+  color: var(--muted);
+  font-size: 7px;
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.decision-queue-item strong {
+  margin-top: 4px;
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: 10px;
+}
+
+.decision-queue-item em {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+  font-style: normal;
+}
+
+.decision-detail {
+  min-height: 340px;
+  padding: 30px;
+}
+
+.decision-detail > small {
+  color: var(--exe-accent, #b89448);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.decision-detail h3 {
+  margin: 10px 0 4px;
+  font-family: var(--font-serif);
+  color: var(--exe-blue-dark, var(--ink));
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.decision-detail > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.decision-detail > p {
+  max-width: 620px;
+  margin: 30px 0;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.decision-recommendation {
+  display: flex;
+  max-width: 620px;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 9px;
+}
+
+.decision-recommendation span { color: var(--muted); }
+.decision-recommendation strong { color: var(--exe-blue-dark, var(--ink)); }
+
+.decision-primary-action {
+  margin-top: 16px;
+  padding: 9px 18px;
+  border: 0;
+  background: var(--exe-blue-dark, var(--blue));
+  color: #fff;
+  font-size: 9px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@keyframes decisionIn {
+  from { opacity: 0; transform: translateX(4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 /* Keep the lower row on one exact baseline: every card follows the
    Transaction card's 186px footprint and shared 16px corner language. */
 .ref-bottom {
@@ -914,6 +1253,33 @@
 @media (prefers-reduced-motion: reduce) {
   .insight-track {
     transition: none;
+  }
+
+  .decision-slide {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .decisions-workspace {
+    padding: 18px;
+  }
+
+  .decisions-workspace-head {
+    display: block;
+  }
+
+  .decisions-workspace-head > div {
+    margin-top: 15px;
+  }
+
+  .decisions-workspace-body {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-detail {
+    min-height: 280px;
+    padding: 22px;
   }
 }
 

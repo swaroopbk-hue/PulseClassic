@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { Bell, ChevronRight, Clock, Maximize2, Minimize2, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
+import { ArrowLeft, Bell, ChevronLeft, ChevronRight, Clock, Maximize2, Minimize2, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
 
 const periods = ["MTD", "QTD", "YTD"];
+const decisions = [
+  { type: "Approval", title: "UCC Infrastructure · QAR 42M", shortTitle: "Release infrastructure capital", description: "Capital release awaiting your review.", detail: "Phase two contractor release is ready. Holding it moves the Lusail handover by an estimated 9 days.", action: "Review", meta: "12 min ago", tone: "approval" },
+  { type: "Risk", title: "Hospitality occupancy", shortTitle: "Hospitality occupancy gap", description: "Projected 4.2% below seasonal plan.", detail: "Forward bookings are below the seasonal plan across two priority properties and require a response before the next forecast.", action: "Analyse", meta: "38 min ago", tone: "risk" },
+  { type: "Approval", title: "New contract wins", shortTitle: "Review new contract award", description: "QAR 18M · decision due this week.", detail: "A new QAR 18M contract award is ready for commercial review before the decision window closes this week.", action: "Open", meta: "1 hr ago", tone: "approval" },
+  { type: "Signal", title: "Baladna beat forecast", shortTitle: "Baladna forecast outperformance", description: "Performance is tracking +11.0% YTD.", detail: "Baladna is outperforming the current forecast, creating an opportunity to reassess the group outlook and near-term allocation.", action: "Open", meta: "2 hrs ago", tone: "signal" },
+] as const;
 const pulseQuestions = [
   "What is driving UCC's margin change?",
   "Which group is closest to missing forecast?",
@@ -44,6 +50,8 @@ export function PulseReference3DDark() {
   const [groupQuestion, setGroupQuestion] = useState("");
   const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
   const [assistantExpanded, setAssistantExpanded] = useState(false);
+  const [decisionIndex, setDecisionIndex] = useState(0);
+  const [decisionsViewAll, setDecisionsViewAll] = useState(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -323,12 +331,64 @@ export function PulseReference3DDark() {
                </div>
                 {answer && <div className="ask-result" data-testid="text-pulse-answer">{answer}</div>}
             </section>
-            <section className="ref-card stat-card">
-              <div className="card-head"><h2>Transactions</h2><button className="more" onClick={() => notify("Transactions opened")}>&middot;&middot;&middot;</button></div>
-              <div className="stat-content"><div><div className="stat-num">106k</div><span className="delta">+34,002 vs last period</span></div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
-              <div className="card-head"><h2>Customers</h2><span className="delta">+320</span></div>
-              <div className="stat-content" style={{ paddingTop: 0 }}><div className="stat-num">1,284</div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
-            </section>
+             <section className={`ref-card stat-card decisions-card ${decisionsViewAll ? "decisions-all" : ""}`} aria-label="Executive decisions">
+               {decisionsViewAll ? (
+                 <div className="decisions-workspace">
+                   <header className="decisions-workspace-head">
+                     <button className="decisions-back" onClick={() => setDecisionsViewAll(false)}><ArrowLeft size={14} /> Back</button>
+                     <div>
+                       <span>Decision desk · Tuesday, 18 June 2024</span>
+                       <h2>What needs your call?</h2>
+                       <p>Four signals surfaced from across the enterprise. One clear queue for the day.</p>
+                     </div>
+                   </header>
+                   <div className="decisions-workspace-body">
+                     <aside className="decision-queue">
+                       <div className="decision-queue-title"><strong>Decision queue</strong><span>{decisions.length} open items</span></div>
+                       {decisions.map((decision, index) => (
+                         <button key={decision.title} className={`decision-queue-item ${decision.tone} ${decisionIndex === index ? "active" : ""}`} onClick={() => setDecisionIndex(index)}>
+                           <span className="decision-dot" />
+                           <span>
+                             <small>{decision.type} · {decision.meta}</small>
+                             <strong>{decision.shortTitle}</strong>
+                             <em>{decision.description}</em>
+                           </span>
+                         </button>
+                       ))}
+                     </aside>
+                     <article className="decision-detail">
+                       <small>{decisions[decisionIndex].type} · High priority</small>
+                       <h3>{decisions[decisionIndex].shortTitle}</h3>
+                       <span>{decisions[decisionIndex].title}</span>
+                       <p>{decisions[decisionIndex].detail}</p>
+                       <div className="decision-recommendation"><span>Recommended next step</span><strong>{decisions[decisionIndex].action} decision</strong></div>
+                       <button className="decision-primary-action" onClick={() => notify(`${decisions[decisionIndex].action} opened`)}>{decisions[decisionIndex].action}</button>
+                     </article>
+                   </div>
+                 </div>
+               ) : (
+                 <>
+                   <div className="card-head decisions-head">
+                     <div><h2>Decisions</h2><span>{decisions.length} items</span></div>
+                     <button className="decisions-view-all" onClick={() => setDecisionsViewAll(true)}>View All</button>
+                   </div>
+                   <div className="decision-slider">
+                     <button className="decision-arrow previous" onClick={() => setDecisionIndex((decisionIndex - 1 + decisions.length) % decisions.length)} aria-label="Previous decision"><ChevronLeft size={15} /></button>
+                     <article className={`decision-slide ${decisions[decisionIndex].tone}`}>
+                       <span className="decision-dot" />
+                       <div><h3>{decisions[decisionIndex].title}</h3><p>{decisions[decisionIndex].description}</p></div>
+                       <button onClick={() => notify(`${decisions[decisionIndex].action} opened`)}>{decisions[decisionIndex].action}</button>
+                     </article>
+                     <button className="decision-arrow next" onClick={() => setDecisionIndex((decisionIndex + 1) % decisions.length)} aria-label="Next decision"><ChevronRight size={15} /></button>
+                   </div>
+                   <div className="decision-pagination" aria-label={`Decision ${decisionIndex + 1} of ${decisions.length}`}>
+                     <span>{String(decisionIndex + 1).padStart(2, "0")}</span>
+                     <i><b style={{ width: `${((decisionIndex + 1) / decisions.length) * 100}%` }} /></i>
+                     <span>{String(decisions.length).padStart(2, "0")}</span>
+                   </div>
+                 </>
+               )}
+             </section>
              <section className="insight-card" aria-label="Pulse Insights carousel">
                <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 100}%)` }}>
                  {insightSlides.map((slide) => (
