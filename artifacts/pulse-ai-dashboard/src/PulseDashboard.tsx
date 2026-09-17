@@ -390,7 +390,7 @@ export function PulseReference3DDark() {
                )}
              </section>
              <section className="insight-card" aria-label="Pulse Insights carousel">
-               <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 100}%)` }}>
+               <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 20}%)` }}>
                  {insightSlides.map((slide, index) => (
                    <article className="insight-slide" key={`${slide.group}-${index}`}>
                      <div className="insight-topline">
