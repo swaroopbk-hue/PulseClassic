@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+:root {
+  --background: 204 16% 86%; --foreground: 205 28% 10%; --border: 210 16% 88%;
+  --card: 180 20% 99%; --card-foreground: 205 28% 10%; --primary: 216 84% 44%;
+  --primary-foreground: 0 0% 100%; --muted: 204 10% 53%; --muted-foreground: 204 10% 53%;
+  --secondary: 204 17% 92%; --secondary-foreground: 205 28% 10%; --accent: 204 20% 94%;
+  --accent-foreground: 205 28% 10%; --input: 210 16% 88%; --ring: 216 84% 44%;
+  --radius: .5rem; --app-font-sans: "DM Sans", sans-serif; --app-font-mono: monospace;
+}
+.dark { --background: 204 31% 8%; --foreground: 180 20% 96%; --border: 203 17% 25%; --card: 204 21% 17%; --card-foreground: 180 20% 96%; --primary: 216 84% 62%; --muted: 204 10% 63%; --muted-foreground: 204 10% 63%; --secondary: 204 18% 22%; --secondary-foreground: 180 20% 96%; --accent: 204 18% 22%; --accent-foreground: 180 20% 96%; --input: 203 17% 25%; --ring: 216 84% 62%; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--app-font-sans); }
+button, input { font: inherit; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }

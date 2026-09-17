@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Pulse.ai Executive Dashboard"
+description = "A production-ready executive command center for consolidated enterprise performance, with interactive group visualizations, light and dark themes, Ask Pulse experiences, navigation controls, and rotating insights."
+version = "1.0.0"
+id = "artifacts/pulse-ai-dashboard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21611
+
+[services.development]
+run = "pnpm --filter @workspace/pulse-ai-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pulse-ai-dashboard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pulse-ai-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21611"
+BASE_PATH = "/"
