@@ -397,3 +397,217 @@
   top: 72px;
   right: 4vw;
 }
+
+/* =========================================
+   LOWER PAGE REFINEMENTS
+   ========================================= */
+
+/* Group Performance Section */
+.group-performance {
+  background: #ffffff !important;
+  border: 1px solid var(--exe-line) !important;
+  box-shadow: 0 4px 24px rgba(20, 37, 52, 0.04) !important;
+  border-radius: 16px !important;
+}
+.pulse-ref3d.dark .group-performance {
+  background: #11181e !important;
+  border-color: var(--exe-line) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.group-performance-head h2 {
+  font-family: var(--font-serif) !important;
+  font-size: 20px !important;
+  color: var(--exe-blue-dark) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+}
+.pulse-ref3d.dark .group-performance-head h2 {
+  color: #fff !important;
+}
+
+.group-performance-head p {
+  color: var(--exe-ink-light) !important;
+  font-size: 13px !important;
+  margin-top: 4px !important;
+}
+
+/* View Control Buttons (Orbit / Line Bar) */
+.group-view-actions {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 6px !important;
+  padding: 2px !important;
+  display: inline-flex !important;
+  gap: 2px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+  align-items: center !important;
+}
+.pulse-ref3d.dark .group-view-actions {
+  background: rgba(17, 24, 30, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.group-view-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 3px 10px !important;
+  min-height: 22px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: var(--exe-ink-light) !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+  font-family: var(--app-font-sans) !important;
+}
+
+.group-view-button.active {
+  background: #ffffff !important;
+  color: var(--exe-ink) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03) !important;
+  font-weight: 600 !important;
+}
+.pulse-ref3d.dark .group-view-button.active {
+  background: #2a343d !important;
+  color: #fff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+.group-view-actions .more {
+  padding: 3px 6px !important;
+  min-height: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  color: var(--exe-ink-light) !important;
+}
+.group-view-actions .more:hover {
+  color: var(--exe-ink) !important;
+}
+.pulse-ref3d.dark .group-view-actions .more:hover {
+  color: #fff !important;
+}
+
+.group-hover-tooltip {
+  background: #ffffff !important;
+  border: 1px solid var(--exe-line) !important;
+  box-shadow: 0 10px 30px rgba(20, 37, 52, 0.08) !important;
+  color: var(--exe-ink-light) !important;
+  border-radius: 8px !important;
+}
+.pulse-ref3d.dark .group-hover-tooltip {
+  background: #11181e !important;
+  border-color: var(--exe-line) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+.group-hover-tooltip b, .group-hover-tooltip span strong {
+  color: var(--exe-ink) !important;
+}
+.pulse-ref3d.dark .group-hover-tooltip b, .pulse-ref3d.dark .group-hover-tooltip span strong {
+  color: #fff !important;
+}
+.group-hover-tooltip i {
+  background: var(--exe-line) !important;
+}
+
+/* Group Chat */
+.group-chat {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid var(--exe-line) !important;
+  box-shadow: 0 8px 24px rgba(20, 37, 52, 0.06) !important;
+}
+.pulse-ref3d.dark .group-chat {
+  background: rgba(17, 24, 30, 0.85) !important;
+  border-color: var(--exe-line) !important;
+}
+.group-chat-prompt {
+  color: var(--exe-ink) !important;
+}
+.pulse-ref3d.dark .group-chat-prompt {
+  color: #fff !important;
+}
+.group-chat-prompt svg:first-child {
+  color: var(--exe-accent) !important;
+}
+.group-chat-input {
+  background: #ffffff !important;
+  border-color: var(--exe-line) !important;
+}
+.pulse-ref3d.dark .group-chat-input {
+  background: #0b1116 !important;
+}
+.group-chat-input button {
+  background: var(--exe-blue-dark) !important;
+  color: #fff !important;
+}
+.group-chat-input input {
+  color: var(--exe-ink) !important;
+}
+.pulse-ref3d.dark .group-chat-input input {
+  color: #fff !important;
+}
+
+/* Lower Cards */
+.ref-card {
+  background: #ffffff !important;
+  border: 1px solid var(--exe-line) !important;
+  box-shadow: 0 4px 24px rgba(20, 37, 52, 0.03) !important;
+  border-radius: 12px !important;
+}
+.pulse-ref3d.dark .ref-card {
+  background: #11181e !important;
+  border-color: var(--exe-line) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.assistant-card {
+  background: #ffffff !important;
+}
+.pulse-ref3d.dark .assistant-card {
+  background: #11181e !important;
+}
+
+.card-head h2, .assistant-heading h2 {
+  font-family: var(--font-serif) !important;
+  font-size: 18px !important;
+  color: var(--exe-blue-dark) !important;
+  font-weight: 500 !important;
+}
+.pulse-ref3d.dark .card-head h2, .pulse-ref3d.dark .assistant-heading h2 {
+  color: #fff !important;
+}
+
+.assistant-input {
+  background: rgba(250, 249, 246, 0.8) !important;
+  border-color: var(--exe-line) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+}
+.pulse-ref3d.dark .assistant-input {
+  background: rgba(20, 26, 31, 0.8) !important;
+}
+.assistant-input button {
+  background: var(--exe-blue-dark) !important;
+  color: #fff !important;
+}
+.ask-result {
+  border-left-color: var(--exe-accent) !important;
+  background: color-mix(in srgb, var(--exe-accent) 10%, transparent) !important;
+  color: var(--exe-ink) !important;
+  font-size: 11px !important;
+}
+.pulse-ref3d.dark .ask-result {
+  color: #fff !important;
+}
+
+/* Insight Card */
+.insight-card {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(20, 37, 52, 0.06) !important;
+}
+.pulse-ref3d.dark .insight-card {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+}

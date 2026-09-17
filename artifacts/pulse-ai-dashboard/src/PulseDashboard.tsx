@@ -189,11 +189,8 @@ export function PulseReference3DDark() {
                 <p>Revenue movement across the enterprise portfolio</p>
               </div>
                <div className="group-view-actions" aria-label="Group performance views">
-                 {groupView === "orbit" ? (
-                   <button className="group-view-button" onClick={() => setGroupView("bars")}>Line Bar</button>
-                 ) : (
-                   <button className="group-view-button" onClick={() => setGroupView("orbit")}>Orbit</button>
-                 )}
+                 <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
+                 <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
                  <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">&middot;&middot;&middot;</button>
                </div>
             </div>
@@ -287,6 +284,11 @@ export function PulseReference3DDark() {
               )}
             </div>
           </section>
+
+          <div className="exe-section-header" style={{ marginTop: '48px', marginBottom: '24px' }}>
+            <h2><span>03</span> Intelligence & operations</h2>
+            <div className="exe-section-line"></div>
+          </div>
 
           <div className="ref-bottom">
              <section className="ref-card assistant-card">
