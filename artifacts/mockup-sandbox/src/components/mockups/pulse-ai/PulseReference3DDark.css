@@ -1,0 +1,38 @@
+@import "./PulseReference3D.css";
+
+.pulse-ref3d {
+  font-family: "Google Sans", "Product Sans", "DM Sans", sans-serif;
+}
+
+.pulse-ref3d .ref-heading h1,
+.pulse-ref3d .metric-value,
+.pulse-ref3d .stat-num,
+.pulse-ref3d .insight-card strong {
+  font-family: "Google Sans", "Product Sans", "Space Grotesk", sans-serif;
+}
+
+.theme-toggle {
+  position: relative;
+}
+
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.theme-toggle:hover::after {
+  border-color: var(--blue);
+  transform: scale(1.08);
+}
+
+.dark .theme-toggle {
+  background: #26343d;
+}
+
+.light .theme-toggle {
+  background: #f4f6f5;
+}
