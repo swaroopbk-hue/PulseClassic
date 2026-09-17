@@ -20,10 +20,10 @@ const pulseQuestions = [
 ];
 const insightSlides = [
   { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
-  { group: "Estithmar", value: "+18.6%", title: "EBITDA growth is ahead of the quarterly forecast.", body: "Hospitality and services contributed most of the gain, supported by stronger pricing and tighter operating costs.", note: "QAR 46M above plan · two follow-up actions due this week.", tone: "sand" },
-  { group: "Assets", value: "−214M", title: "The forecast gap is concentrated in two operating areas.", body: "Lower hotel occupancy and delayed commercial leasing account for 81% of the variance, making them the priority recovery levers.", note: "Recovery plan requested · latest evidence refreshed 2 hours ago.", tone: "coral" },
-  { group: "Baladna", value: "111%", title: "Demand is exceeding the full-year run-rate target.", body: "Core dairy volume and regional exports are both ahead of plan, with sufficient production capacity for the next-quarter outlook.", note: "Forecast confidence raised to high · supply remains on track.", tone: "mint" },
-  { group: "TMT", value: "87%", title: "The transformation portfolio is nearing its Q3 milestone.", body: "Shared services delivery has accelerated, while two leadership decisions remain on the critical path for completion.", note: "Seven of eight workstreams on track · decisions due this month.", tone: "violet" },
+  { group: "Assets", value: "88%", title: "Assets Group is 12 points behind its YTD target.", body: "Hospitality occupancy is down 4.2 pts and retail footfall has fallen 71%, while commercial leasing revenue is QAR 12M short of plan. Current trajectory points to roughly QAR 38M of annual revenue exposure if it continues.", note: "", tone: "coral" },
+  { group: "Estithmar Aviation Services", value: "106%", title: "Estithmar Aviation Services is running 6 points ahead of plan.", body: "Aviation ground-services growth and new facilities-management contracts have lifted the group a point ahead of its YTD target. A QAR 18.4M capacity-expansion request for aviation ground services is awaiting your approval.", note: "", tone: "blue" },
+  { group: "UCC", value: "QAR 61M", title: "UCC won QAR 61M in new contract awards this month.", body: "New contracting wins and QAR 22M in procurement savings are offsetting QAR 14M in schedule delays across two sites, keeping UCC on track at 96% of its YTD target. Full-year forecast has been raised to QAR 6.0B.", note: "", tone: "mint" },
+  { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet" },
 ];
 const groupPerformance = [
   { name: "Power International", short: "Power International", value: "65.2K", change: "+12%", direction: "up", height: 92 },
@@ -391,8 +391,8 @@ export function PulseReference3DDark() {
              </section>
              <section className="insight-card" aria-label="Pulse Insights carousel">
                <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 100}%)` }}>
-                 {insightSlides.map((slide) => (
-                   <article className="insight-slide" key={slide.group}>
+                 {insightSlides.map((slide, index) => (
+                   <article className="insight-slide" key={`${slide.group}-${index}`}>
                      <div className="insight-topline">
                        <span className="insights-badge"><Sparkles size={9} /> Insights</span>
                        <span className="insight-group">{slide.group}</span>
@@ -400,14 +400,14 @@ export function PulseReference3DDark() {
                      <strong>{slide.value}</strong>
                      <h3>{slide.title}</h3>
                      <p>{slide.body}</p>
-                     <small>{slide.note}</small>
+                     {slide.note && <small>{slide.note}</small>}
                    </article>
                  ))}
                </div>
                <div className="insight-progress" role="tablist" aria-label="Insight slides">
                  {insightSlides.map((slide, index) => (
                    <button
-                     key={slide.group}
+                     key={`${slide.group}-${index}`}
                      className={index === insightIndex ? "active" : ""}
                      onClick={() => setInsightIndex(index)}
                      aria-label={`Show insight ${index + 1}: ${slide.group}`}
