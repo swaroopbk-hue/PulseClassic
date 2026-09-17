@@ -655,6 +655,29 @@
   to { width: 100%; }
 }
 
+/* Keep the lower row on one exact baseline: every card follows the
+   Transaction card's 186px footprint and shared 16px corner language. */
+.ref-bottom {
+  align-items: stretch;
+}
+
+.ref-bottom > .assistant-card,
+.ref-bottom > .stat-card,
+.ref-bottom > .insight-card {
+  height: 186px;
+  min-height: 186px;
+  max-height: 186px;
+  border-radius: 16px !important;
+}
+
+/* Numeric values remain static; only the carousel track is allowed to move. */
+.insight-slide strong,
+.stat-num,
+.metric-value {
+  animation: none !important;
+  transition: none !important;
+}
+
 @keyframes assistantBreathe {
   0%, 100% { box-shadow: 0 0 0 7px rgba(77,145,239,.07), 0 9px 18px rgba(17,91,202,.35), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
   50% { box-shadow: 0 0 0 11px rgba(77,145,239,.04), 0 12px 24px rgba(17,91,202,.42), inset -8px -10px 14px rgba(0,21,92,.32), inset 7px 8px 12px rgba(255,255,255,.24); }
