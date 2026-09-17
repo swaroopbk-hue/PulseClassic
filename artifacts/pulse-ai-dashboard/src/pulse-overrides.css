@@ -1,0 +1,381 @@
+/* EXECUTIVE EDITION OVERRIDES */
+.pulse-ref3d {
+  --exe-bg: #faf9f6;
+  --exe-ink: #142534;
+  --exe-ink-light: #707b85;
+  --exe-line: #e6e2db;
+  --exe-accent: #cda465;
+  --exe-blue-dark: #1f3b57;
+  --font-serif: "Fraunces", serif;
+  background: var(--exe-bg) !important;
+  padding: 0 !important;
+}
+
+.pulse-ref3d.dark {
+  --exe-bg: #0b1116;
+  --exe-ink: #e8ecef;
+  --exe-ink-light: #83919e;
+  --exe-line: #2a343d;
+  --exe-blue-dark: #8eb3d6;
+  background: var(--exe-bg) !important;
+}
+
+.exe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 4vw;
+  border-bottom: 1px solid var(--exe-line);
+}
+
+.exe-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.exe-logo {
+  height: 24px;
+  filter: var(--logo-filter, none);
+}
+.pulse-ref3d.dark .exe-logo {
+  --logo-filter: brightness(1.2) saturate(0.8);
+}
+
+.exe-edition {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--exe-ink-light);
+  text-transform: uppercase;
+  padding-left: 16px;
+  border-left: 1px solid var(--exe-line);
+}
+
+.exe-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 12px;
+  color: var(--exe-ink-light);
+}
+
+.exe-refresh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 8px;
+}
+
+.exe-icon-btn, .exe-avatar-btn {
+  border: 1px solid var(--exe-line);
+  background: var(--card);
+  color: var(--exe-ink);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  padding: 0;
+}
+.exe-icon-btn:hover, .exe-avatar-btn:hover {
+  border-color: var(--exe-accent);
+}
+
+.exe-avatar-btn {
+  background: var(--exe-accent);
+  color: #fff;
+  border: 0;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.exe-main {
+  width: 100%;
+}
+
+.exe-masthead {
+  padding: 48px 4vw 32px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.masthead-meta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+.masthead-controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--exe-line);
+  padding-bottom: 8px;
+}
+
+.period-tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.period-tab {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--exe-ink-light);
+  background: none;
+  border: none;
+  padding: 0 0 8px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.period-tab.active {
+  color: var(--exe-ink);
+}
+
+.period-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--exe-accent);
+}
+
+.current-date {
+  font-size: 12px;
+  color: var(--exe-ink-light);
+  padding-left: 24px;
+  border-left: 1px solid var(--exe-line);
+}
+
+.masthead-content h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--exe-blue-dark);
+  margin: 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.masthead-content h1 strong {
+  font-weight: 600;
+}
+
+.masthead-content p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--exe-ink-light);
+  max-width: 800px;
+  margin: 0;
+}
+
+.masthead-content p strong {
+  color: var(--exe-ink);
+  font-weight: 600;
+}
+
+.exe-metrics-section {
+  padding: 0 4vw;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.exe-section-header {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+.exe-section-header h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--exe-blue-dark);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.exe-section-header h2 span {
+  color: var(--exe-accent);
+}
+
+.exe-section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--exe-line);
+  margin: 0 16px;
+}
+
+.exe-section-meta {
+  font-size: 11px;
+  color: var(--exe-ink-light);
+  white-space: nowrap;
+}
+
+.exe-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 1024px) {
+  .exe-metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .exe-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .masthead-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .exe-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .exe-edition {
+    display: none;
+  }
+}
+
+.metric-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-cell:not(:first-child) {
+  padding-left: 32px;
+  border-left: 1px solid var(--exe-line);
+}
+
+@media (max-width: 1024px) {
+  .metric-cell:nth-child(4), .metric-cell:nth-child(5) {
+    padding-left: 0;
+    border-left: none;
+    padding-top: 24px;
+    border-top: 1px solid var(--exe-line);
+  }
+}
+
+@media (max-width: 768px) {
+  .metric-cell:not(:first-child) {
+    padding-left: 0;
+    border-left: none;
+    padding-top: 24px;
+    border-top: 1px solid var(--exe-line);
+  }
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--exe-ink-light);
+  margin-bottom: 16px;
+}
+
+.metric-value-large {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--exe-blue-dark);
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+}
+
+.metric-value-large .unit {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 6px;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.metric-sub {
+  font-size: 11px;
+  color: var(--exe-ink);
+  font-weight: 500;
+}
+
+.metric-sub .dim {
+  color: var(--exe-ink-light);
+  font-weight: 400;
+}
+
+.metric-sub .positive {
+  color: #35ae69;
+}
+
+.metric-progress {
+  margin: 10px 0;
+  height: 2px;
+  background: var(--exe-line);
+  position: relative;
+  width: 100%;
+}
+
+.metric-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: var(--exe-blue-dark);
+}
+
+.metric-progress-marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--exe-accent);
+  z-index: 2;
+}
+
+.metric-split-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--exe-ink);
+}
+
+.metric-split-labels span {
+  font-weight: 400;
+  color: var(--exe-ink-light);
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+.exe-content {
+  padding: 0 4vw 64px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.group-header-adjustment {
+  margin-bottom: 24px;
+}
+
+.exe-profile-pop {
+  top: 72px;
+  right: 4vw;
+}

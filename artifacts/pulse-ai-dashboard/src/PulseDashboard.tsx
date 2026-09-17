@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Bell, ChevronRight, Moon, Search, Send, SlidersHorizontal, Sparkles, Sun } from "lucide-react";
+import { Bell, ChevronRight, Clock, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
 import "./pulse.css";
+import "./pulse-overrides.css";
 
-const navItems = ["Overview", "Businesses", "Performance", "Forecast", "Insights", "Attention", "Reports"];
 const periods = ["MTD", "QTD", "YTD"];
 const pulseQuestions = [
   "What is driving UCC's margin change?",
@@ -29,8 +29,7 @@ const groupPerformance = [
 ];
 
 export function PulseReference3DDark() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [nav, setNav] = useState("Overview");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
   const [profile, setProfile] = useState(false);
@@ -75,89 +74,109 @@ export function PulseReference3DDark() {
 
   return (
     <div className={`pulse-ref3d ${theme}`} data-testid="pulse-dashboard">
-      <div className="ref-window">
-        <header className="ref-top">
-          <div className="ref-logo">
-            <img src="/images/pulse-ai-official.png" alt="Pulse.ai" />
+      <header className="exe-header">
+        <div className="exe-logo-area">
+          <img src="/images/pulse-ai-official.png" alt="Pulse.ai" className="exe-logo" />
+          <span className="exe-edition">EXECUTIVE EDITION</span>
+        </div>
+        <div className="exe-header-actions">
+          <div className="exe-refresh">
+            <Clock size={13} /> <span>Refreshed 08:42 AST</span>
           </div>
-          <nav className="ref-nav" aria-label="Primary navigation">
-            {navItems.map((item) => (
-              <button
-                className={nav === item ? "active" : ""}
-                data-testid={`nav-${item.toLowerCase()}`}
-                key={item}
-                onClick={() => {
-                  setNav(item);
-                  notify(`${item} view selected`);
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
-          <div className="ref-actions">
-            <button data-testid="button-theme-toggle" className="round-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
-              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-            </button>
-            <button data-testid="button-notifications" className="round-btn" onClick={() => notify("No new notifications")} aria-label="Notifications">
-              <Bell size={14} />
-            </button>
-            <button data-testid="button-account" className="ref-avatar" onClick={() => setProfile(!profile)} aria-label="Open account">JJ</button>
-          </div>
-        </header>
+          <button data-testid="button-theme-toggle" className="exe-icon-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
+            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+          <button data-testid="button-account" className="exe-avatar-btn" onClick={() => setProfile(!profile)} aria-label="Open account">JJ</button>
+        </div>
+      </header>
 
-        {profile && (
-          <div className="profile-pop">
-            <strong>Mr. Jasim</strong>
-            <span>President · Secure executive access</span>
-            <button onClick={() => notify("Preferences opened")}>Profile &amp; preferences</button>
-            <button onClick={() => setProfile(false)}>Close account menu</button>
-          </div>
-        )}
+      {profile && (
+        <div className="profile-pop exe-profile-pop">
+          <strong>Mr. Jasim</strong>
+          <span>President &middot; Secure executive access</span>
+          <button onClick={() => notify("Preferences opened")}>Profile &amp; preferences</button>
+          <button onClick={() => setProfile(false)}>Close account menu</button>
+        </div>
+      )}
 
-        <main className="ref-body">
-          <div className="ref-heading">
-            <div>
-              <h1>{nav}</h1>
-              <p>Enterprise command center · Tuesday, 18 June 2024 · Consolidated view</p>
-            </div>
-            <div className="ref-controls">
-              {periods.map((item) => (
-                <button data-testid={`button-period-${item.toLowerCase()}`} className={`ref-control ${period === item ? "primary" : ""}`} onClick={() => setPeriod(item)} key={item}>{item}</button>
-              ))}
-              <button data-testid="button-date-range" className="ref-control" onClick={() => notify("Date range opened")}>01 Jan – 31 Jul⌄</button>
-              <button data-testid="button-add-widget" className="ref-control" onClick={() => notify("Widget added")}><SlidersHorizontal size={11} /> Add widget +</button>
+      <main className="exe-main">
+        <div className="exe-masthead">
+          <div className="masthead-top">
+            <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / QAR CONSOLIDATED VIEW</div>
+            <div className="masthead-controls">
+              <div className="period-tabs">
+                {periods.map((item) => (
+                  <button
+                    data-testid={`button-period-${item.toLowerCase()}`}
+                    className={`period-tab ${period === item ? "active" : ""}`}
+                    onClick={() => setPeriod(item)}
+                    key={item}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+              <div className="current-date">18 Jun 2024</div>
             </div>
           </div>
+          <div className="masthead-content">
+            <h1 className="masthead-headline">
+              The enterprise is <strong>ahead</strong> of its morning pace.
+            </h1>
+            <p className="masthead-subhead">
+              Revenue is tracking at <strong>QAR 18.4B</strong>, 5 pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
+            </p>
+          </div>
+        </div>
 
-          <section className="glance-band" aria-label="Enterprise at a glance">
-            <div className="glance-heading">
-              <h2>Enterprise at a glance</h2>
-              <span>YTD through 18 June · 71% of year elapsed</span>
+        <section className="exe-metrics-section" aria-label="Enterprise position">
+          <div className="exe-section-header">
+            <h2><span>01</span> Enterprise position</h2>
+            <div className="exe-section-line"></div>
+            <span className="exe-section-meta">YTD &middot; FY24 plan</span>
+          </div>
+
+          <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
+            <div className="metric-cell">
+               <span className="metric-label">Consolidated revenue</span>
+               <div className="metric-value-large">18.4<span className="unit">B QAR</span></div>
+               <div className="metric-sub">↗ 8.2% YoY &middot; 94% target</div>
             </div>
-              <div className="glance-metrics" data-testid="metrics-at-a-glance">
-              <button className="glance-metric" onClick={() => notify("Revenue detail opened")}>
-                <span className="glance-label">Revenue</span>
-                <strong>QAR 18.4B</strong>
-                <small><i className="glance-arrow">↗</i> 8.2% vs last year · 94% target</small>
-              </button>
-              <button className="glance-metric" onClick={() => notify("EBITDA detail opened")}>
-                <span className="glance-label">EBITDA</span>
-                <strong>QAR 3.76B</strong>
-                <small><i className="glance-arrow">↗</i> 6.9% margin 20.4%</small>
-              </button>
-              <button className="glance-metric" onClick={() => notify("Forecast detail opened")}>
-                <span className="glance-label">Forecast</span>
-                <strong>98.1%</strong>
-                <small><b>QAR 18.9B</b> expected</small>
-              </button>
-              <button className="glance-metric" onClick={() => notify("Pace detail opened")}>
-                <span className="glance-label">Time vs achieved</span>
-                <strong>+5%</strong>
-                <small>ahead of expected pace</small>
-              </button>
+            <div className="metric-cell">
+               <span className="metric-label">EBITDA / profit</span>
+               <div className="metric-value-large">3.76B</div>
+               <div className="metric-sub">20.4% margin <span className="positive">+6.9% YoY</span></div>
             </div>
-          </section>
+            <div className="metric-cell">
+               <span className="metric-label">Budget achievement</span>
+               <div className="metric-value-large">94.0%</div>
+               <div className="metric-sub">QAR 18.4B <span className="dim">vs 19.6B plan</span></div>
+            </div>
+            <div className="metric-cell">
+               <span className="metric-label">Full-year forecast</span>
+               <div className="metric-value-large">98.1%</div>
+               <div className="metric-sub">18.9B expected <span className="dim">−1.9% vs plan</span></div>
+            </div>
+            <div className="metric-cell">
+               <span className="metric-label">Time vs achievement</span>
+               <div className="metric-split-labels">
+                 <div>71% <span>year elapsed</span></div>
+                 <div>76% <span>achieved</span></div>
+               </div>
+               <div className="metric-progress">
+                 <div className="metric-progress-fill" style={{ width: '76%' }}></div>
+                 <div className="metric-progress-marker" style={{ left: '71%' }}></div>
+               </div>
+               <div className="metric-sub">5% ahead of expected pace</div>
+            </div>
+          </div>
+        </section>
+
+        <div className="exe-content">
+          <div className="exe-section-header group-header-adjustment">
+            <h2><span>02</span> Seven businesses, one connected pulse</h2>
+            <div className="exe-section-line"></div>
+          </div>
 
           <section className={`group-performance ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label="Enterprise group performance">
             <div className="group-performance-head">
@@ -171,7 +190,7 @@ export function PulseReference3DDark() {
                  ) : (
                    <button className="group-view-button" onClick={() => setGroupView("orbit")}>Orbit</button>
                  )}
-                 <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">···</button>
+                 <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">&middot;&middot;&middot;</button>
                </div>
             </div>
              {groupView === "orbit" ? (
@@ -256,7 +275,7 @@ export function PulseReference3DDark() {
                     value={groupQuestion}
                     onChange={(event) => setGroupQuestion(event.target.value)}
                     onKeyDown={(event) => event.key === "Enter" && askGroup()}
-                    placeholder={`Show me the reason for the ${groupPerformance[groupIndex].change.startsWith("-") ? "drop" : "change"} in ${groupPerformance[groupIndex].name}`}
+                    placeholder={`Show me the reason for the ${groupPerformance[groupIndex].change.startsWith("−") || groupPerformance[groupIndex].change.startsWith("-") ? "drop" : "change"} in ${groupPerformance[groupIndex].name}`}
                     aria-label="Ask about group performance"
                   />
                    <button data-testid="button-send-group-question" onClick={askGroup} aria-label="Send group performance question"><Send size={15} /></button>
@@ -267,7 +286,7 @@ export function PulseReference3DDark() {
 
           <div className="ref-bottom">
              <section className="ref-card assistant-card">
-               <div className="card-head assistant-heading"><h2>AI Assistant</h2><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">···</button></div>
+               <div className="card-head assistant-heading"><h2>AI Assistant</h2><button className="more" onClick={() => notify("Assistant options opened")} aria-label="Assistant options">&middot;&middot;&middot;</button></div>
                <button className="assistant-orb" onClick={() => { setQuery(pulseQuestions[questionIndex]); notify("Question added to Ask Pulse"); }} aria-label="Use suggested business question">
                  <span className="orb-core" />
                </button>
@@ -285,7 +304,7 @@ export function PulseReference3DDark() {
                 {answer && <div className="ask-result" data-testid="text-pulse-answer">{answer}</div>}
             </section>
             <section className="ref-card stat-card">
-              <div className="card-head"><h2>Transactions</h2><button className="more" onClick={() => notify("Transactions opened")}>···</button></div>
+              <div className="card-head"><h2>Transactions</h2><button className="more" onClick={() => notify("Transactions opened")}>&middot;&middot;&middot;</button></div>
               <div className="stat-content"><div><div className="stat-num">106k</div><span className="delta">+34,002 vs last period</span></div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
               <div className="card-head"><h2>Customers</h2><span className="delta">+320</span></div>
               <div className="stat-content" style={{ paddingTop: 0 }}><div className="stat-num">1,284</div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
@@ -319,8 +338,8 @@ export function PulseReference3DDark() {
                </div>
              </section>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
       {toast && <div className="toast">{toast}</div>}
     </div>
   );
