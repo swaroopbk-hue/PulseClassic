@@ -110,10 +110,6 @@
   margin: 0 12px 0 38px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
-  background:
-    linear-gradient(rgba(94, 146, 172, .08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(94, 146, 172, .08) 1px, transparent 1px);
-  background-size: 42px 42px;
 }
 
 .orbit-ring {
@@ -136,32 +132,37 @@
   left: 50%;
   z-index: 2;
   display: flex;
-  width: 112px;
-  height: 78px;
+  width: 140px;
+  height: 140px;
   align-items: center;
   justify-content: center;
-  flex-direction: column-reverse;
-  gap: 4px;
+  flex-direction: column;
+  gap: 2px;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(117, 187, 223, .62);
   border-radius: 50%;
   background: color-mix(in srgb, var(--card) 86%, #d9f0fb);
-  box-shadow: 0 6px 18px rgba(28, 98, 130, .15), inset 0 1px 0 rgba(255,255,255,.75);
+  box-shadow: 0 8px 24px rgba(28, 98, 130, .12);
 }
 
-.orbit-core span { color: var(--ink); font-size: 19px; font-weight: 600; letter-spacing: -.06em; }
-.orbit-core small { color: var(--muted); font-size: 7px; letter-spacing: .1em; }
+.orbit-core small { color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .06em; text-align: center; line-height: 1.3; margin-bottom: 2px; }
+.orbit-core-value { display: flex; align-items: baseline; gap: 4px; color: #112a46; }
+.orbit-core-value span { font-family: "Space Grotesk", sans-serif; font-size: 38px; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+.orbit-core-value sub { font-size: 11px; font-weight: 600; vertical-align: baseline; bottom: 0; }
+.orbit-core-trend { display: flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: #2ba475; margin-top: 2px; }
+
+.dark .orbit-core-value { color: #f5fbff; }
+.dark .orbit-core-trend { color: #35ae69; }
 
 .orbit-node {
   position: absolute;
   z-index: 3;
   display: flex;
-  min-width: 84px;
-  padding: 7px 9px;
+  min-width: 104px;
+  padding: 8px 10px;
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid color-mix(in srgb, var(--blue) 28%, var(--line));
-  border-radius: 5px;
+  border-radius: 6px;
   background: color-mix(in srgb, var(--card) 87%, #edf7fb);
   box-shadow: 0 5px 12px rgba(19, 68, 91, .12);
   color: var(--ink);
@@ -171,9 +172,74 @@
 }
 
 .orbit-node:hover, .orbit-node:focus-visible { border-color: var(--blue); transform: translateY(-2px); }
-.orbit-node span { font-size: 8px; }
-.orbit-node strong { margin-top: 3px; font-size: 12px; font-weight: 600; }
-.orbit-node small { margin-top: 2px; color: #4fb97d; font-size: 7px; }
+
+.orbit-node-name { 
+  font-size: 11px; 
+  font-weight: 600; 
+  color: #112a46; 
+  margin-bottom: 2px;
+}
+.dark .orbit-node-name { color: #f5fbff; }
+
+.orbit-node-value { 
+  font-size: 13px; 
+  font-weight: 600; 
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+}
+
+.orbit-node-trend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+  font-size: 10px;
+  color: #4fb97d;
+  font-weight: 500;
+}
+.orbit-node-trend .trend-indicator {
+  font-weight: 700;
+}
+
+.orbit-node.negative .orbit-node-trend {
+  color: #d9465e;
+}
+.orbit-node.negative .orbit-node-value {
+  color: #d9465e;
+}
+.orbit-node.negative::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d9465e;
+  box-shadow: 0 0 0 2px rgba(217, 70, 94, 0.2);
+}
+
+.orbit-node.highest-positive {
+  border-color: rgba(43, 164, 117, 0.5);
+  background: color-mix(in srgb, var(--card) 90%, rgba(43, 164, 117, 0.15));
+}
+.orbit-node.highest-positive .orbit-node-trend {
+  color: #2ba475;
+}
+.orbit-node.highest-positive .orbit-node-value {
+  color: #2ba475;
+}
+.orbit-node.highest-positive::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2ba475;
+  box-shadow: 0 0 0 2px rgba(43, 164, 117, 0.2);
+}
 .dark .orbit-node { background: rgba(31, 49, 59, .9); }
 .dark .orbit-core { background: rgba(29, 49, 60, .96); }
 .orbit-node-0 { top: 16px; left: 7%; animation-delay: -.8s; }

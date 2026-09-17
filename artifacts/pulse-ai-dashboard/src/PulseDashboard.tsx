@@ -179,18 +179,35 @@ export function PulseReference3DDark() {
                  <div className="orbit-ring orbit-ring-one" />
                  <div className="orbit-ring orbit-ring-two" />
                  <div className="orbit-ring orbit-ring-three" />
-                 <div className="orbit-core"><span>18.4B</span><small>CONSOLIDATED REVENUE</small></div>
-                 {groupPerformance.map((group, index) => (
-                   <button
-                     className={`orbit-node orbit-node-${index}`}
-                     key={group.name}
-                     onMouseEnter={() => setGroupIndex(index)}
-                     onFocus={() => setGroupIndex(index)}
-                     onClick={() => notify(`${group.name} selected`)}
-                   >
-                     <span>{group.name}</span><strong>{group.value}</strong><small>{group.change} vs LY</small>
-                   </button>
-                 ))}
+                 <div className="orbit-core">
+                   <small>CONSOLIDATED<br />REVENUE</small>
+                   <div className="orbit-core-value">
+                     <span>18.4</span><sub>B QAR</sub>
+                   </div>
+                   <div className="orbit-core-trend">
+                     ↗ 8.2% YoY
+                   </div>
+                 </div>
+                 {groupPerformance.map((group, index) => {
+                   const isNegative = group.direction === "down";
+                   const isHighestPositive = group.name === "Power International";
+                   return (
+                     <button
+                       data-testid={`button-orbit-node-${group.short.toLowerCase().replace(/\s+/g, '-')}`}
+                       className={`orbit-node orbit-node-${index} ${isNegative ? 'negative' : ''} ${isHighestPositive ? 'highest-positive' : ''}`}
+                       key={group.name}
+                       onMouseEnter={() => setGroupIndex(index)}
+                       onFocus={() => setGroupIndex(index)}
+                       onClick={() => notify(`${group.name} selected`)}
+                     >
+                       <span className="orbit-node-name">{group.name}</span>
+                       <strong className="orbit-node-value">QAR {group.value}</strong>
+                       <div className="orbit-node-trend">
+                         <span className="trend-indicator">{isNegative ? '↘' : (group.direction === "up" ? '↗' : '→')}</span> {group.change} YoY
+                       </div>
+                     </button>
+                   );
+                 })}
                </div>
              ) : (
              <div className="group-chart">
