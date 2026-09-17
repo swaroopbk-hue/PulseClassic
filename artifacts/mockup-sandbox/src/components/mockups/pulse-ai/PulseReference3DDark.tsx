@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, ChevronLeft, ChevronRight, Moon, Search, Send, SlidersHorizontal, Sparkles, Sun } from "lucide-react";
+import { Bell, ChevronRight, Moon, Search, Send, SlidersHorizontal, Sparkles, Sun } from "lucide-react";
 import "./PulseReference3DDark.css";
 
 const navItems = ["Overview", "Businesses", "Performance", "Forecast", "Insights", "Attention", "Reports"];
@@ -192,11 +192,11 @@ export function PulseReference3DDark() {
                     {hoveredGroup === index && (
                       <div className="group-hover-tooltip" role="status">
                         <b>{group.value}</b>
-                        <span>transactions</span>
+                         <span>Revenue</span>
                         <i />
-                        <span>Conversion: <strong>{index === 2 ? "89%" : index % 2 === 0 ? "86%" : "82%"}</strong></span>
+                         <span>Budget: <strong>{index === 2 ? "89%" : index % 2 === 0 ? "86%" : "82%"}</strong></span>
                         <i />
-                        <span>Drop-off: <strong>{group.direction === "down" ? "-11%" : "-8%"}</strong></span>
+                         <span>LY: <strong>{group.direction === "down" ? "-11%" : "-8%"}</strong></span>
                       </div>
                     )}
                   </div>
@@ -249,7 +249,7 @@ export function PulseReference3DDark() {
               <div className="card-head"><h2>Customers</h2><span className="delta">+320</span></div>
               <div className="stat-content" style={{ paddingTop: 0 }}><div className="stat-num">1,284</div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
             </section>
-             <section className={`insight-card insight-${insightSlides[insightIndex].tone}`} aria-label="Pulse Insights carousel">
+             <section className="insight-card" aria-label="Pulse Insights carousel">
                <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 100}%)` }}>
                  {insightSlides.map((slide) => (
                    <article className="insight-slide" key={slide.group}>
@@ -264,10 +264,17 @@ export function PulseReference3DDark() {
                    </article>
                  ))}
                </div>
-               <div className="insight-controls">
-                 <button onClick={() => setInsightIndex((insightIndex - 1 + insightSlides.length) % insightSlides.length)} aria-label="Previous insight"><ChevronLeft size={11} /></button>
-                 <div className="insight-dots">{insightSlides.map((slide, index) => <button key={slide.group} className={index === insightIndex ? "active" : ""} onClick={() => setInsightIndex(index)} aria-label={`Show ${slide.group} insight`} />)}</div>
-                 <button onClick={() => setInsightIndex((insightIndex + 1) % insightSlides.length)} aria-label="Next insight"><ChevronRight size={11} /></button>
+               <div className="insight-progress" role="tablist" aria-label="Insight slides">
+                 {insightSlides.map((slide, index) => (
+                   <button
+                     key={slide.group}
+                     className={index === insightIndex ? "active" : ""}
+                     onClick={() => setInsightIndex(index)}
+                     aria-label={`Show ${slide.group} insight`}
+                     aria-selected={index === insightIndex}
+                     role="tab"
+                   />
+                 ))}
                </div>
              </section>
           </div>

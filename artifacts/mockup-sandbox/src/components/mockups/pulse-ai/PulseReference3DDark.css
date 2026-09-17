@@ -198,7 +198,7 @@
 
 .group-hover-tooltip {
   position: absolute;
-  top: 52%;
+  top: calc(100% + 45px);
   left: 50%;
   z-index: 5;
   display: flex;
@@ -207,7 +207,7 @@
   min-width: 300px;
   justify-content: center;
   padding: 10px 16px;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, 0);
   border: 1px solid rgba(177, 220, 255, .62);
   border-radius: 999px;
   background:
@@ -230,13 +230,13 @@
 .group-hover-tooltip::after {
   content: "";
   position: absolute;
-  bottom: -5px;
+  top: -5px;
   left: 50%;
   width: 9px;
   height: 9px;
   transform: translateX(-50%) rotate(45deg);
-  border-right: 1px solid rgba(123, 181, 255, .28);
-  border-bottom: 1px solid rgba(123, 181, 255, .28);
+  border-left: 1px solid rgba(123, 181, 255, .28);
+  border-top: 1px solid rgba(123, 181, 255, .28);
   background: #28517d;
 }
 
@@ -274,8 +274,8 @@
 }
 
 @keyframes tooltipIn {
-  from { opacity: 0; transform: translate(-50%, calc(-100% + 5px)); }
-  to { opacity: 1; transform: translate(-50%, -100%); }
+  from { opacity: 0; transform: translate(-50%, -5px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .group-chat {
@@ -494,7 +494,9 @@
   height: 186px;
   min-height: 186px;
   border-radius: 2px !important;
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
+  background:
+    linear-gradient(110deg, rgba(5, 20, 40, .34), rgba(9, 29, 48, .18) 48%, rgba(44, 22, 15, .3)),
+    url("/__mockup/images/pulse-insights-background.png") center / cover no-repeat;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 12px 28px rgba(0,0,0,.2);
 }
 
@@ -514,37 +516,7 @@
 }
 
 .insight-card::after {
-  content: "";
-  position: absolute;
-  width: 210px;
-  height: 210px;
-  z-index: 0;
-  right: -72px;
-  top: -86px;
-  border: 26px solid rgba(255,255,255,.5);
-  border-radius: 50%;
-  transform: rotate(24deg);
-  pointer-events: none;
-}
-
-.insight-card.insight-blue {
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
-}
-
-.insight-card.insight-sand {
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
-}
-
-.insight-card.insight-coral {
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
-}
-
-.insight-card.insight-mint {
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
-}
-
-.insight-card.insight-violet {
-  background: linear-gradient(135deg, #173b68 0%, #216b98 40%, #b97a68 78%, #d2aa78 116%);
+  content: none;
 }
 
 .insight-track {
@@ -638,55 +610,49 @@
   line-height: 1.2;
 }
 
-.insight-controls {
+.insight-progress {
   position: absolute;
-  right: 11px;
-  bottom: 10px;
-  left: 11px;
+  right: 15px;
+  bottom: 11px;
+  left: 15px;
   z-index: 4;
   display: flex;
+  gap: 3px;
   align-items: center;
-  justify-content: space-between;
+  height: 9px;
 }
 
-.insight-controls > button {
-  display: grid;
-  width: 19px;
-  height: 19px;
-  place-items: center;
-  border: 1px solid rgba(255,255,255,.28);
-  border-radius: 50%;
-  background: rgba(15, 26, 32, .22);
-  color: rgba(255,255,255,.88);
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-}
-
-.insight-controls > button:hover {
-  background: rgba(255,255,255,.2);
-}
-
-.insight-dots {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.insight-dots button {
-  width: 5px;
-  height: 5px;
+.insight-progress button {
+  position: relative;
+  flex: 1;
+  height: 4px;
   padding: 0;
+  overflow: hidden;
   border: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,.38);
+  border-radius: 999px;
+  background: rgba(255,255,255,.32);
   cursor: pointer;
-  transition: transform .2s ease, background .2s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,.12);
 }
 
-.insight-dots button.active {
-  width: 14px;
-  border-radius: 999px;
+.insight-progress button:hover {
+  background: rgba(255,255,255,.55);
+}
+
+.insight-progress button.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 0;
+  border-radius: inherit;
   background: #fff;
+  box-shadow: 0 0 10px rgba(255,255,255,.45);
+  animation: insightProgress 11s linear forwards;
+}
+
+@keyframes insightProgress {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes assistantBreathe {
