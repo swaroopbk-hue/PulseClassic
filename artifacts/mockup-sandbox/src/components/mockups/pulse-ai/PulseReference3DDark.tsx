@@ -4,7 +4,6 @@ import "./PulseReference3DDark.css";
 
 const navItems = ["Overview", "Businesses", "Performance", "Forecast", "Insights", "Attention", "Reports"];
 const periods = ["MTD", "QTD", "YTD"];
-const bars = [64, 57, 73, 48, 40, 35, 46, 58, 52, 69, 62, 78];
 const pulseQuestions = [
   "What is driving UCC's margin change?",
   "Which group is closest to missing forecast?",
@@ -19,6 +18,15 @@ const insightSlides = [
   { group: "Baladna", value: "111%", title: "Demand is running above the annual target.", body: "Volume growth is strongest across core dairy and export channels into the next quarter.", note: "Forecast confidence increased from medium to high.", tone: "mint" },
   { group: "TMT", value: "Q3", title: "A new transformation milestone is within reach.", body: "Delivery velocity improved across the shared services roadmap and capital program.", note: "Two dependencies remain with Group Leadership.", tone: "violet" },
 ];
+const groupPerformance = [
+  { name: "Power International", short: "Power International", value: "65.2K", change: "+12%", direction: "up", height: 92 },
+  { name: "UCC Holding", short: "UCC Holding", value: "54.8K", change: "-8%", direction: "down", height: 76 },
+  { name: "Estithmar Holding", short: "Estithmar Holding", value: "48.6K", change: "+6%", direction: "up", height: 64 },
+  { name: "Baladna", short: "Baladna", value: "38.3K", change: "-4%", direction: "down", height: 54 },
+  { name: "TMT", short: "TMT", value: "32.9K", change: "+9%", direction: "up", height: 47 },
+  { name: "Assets Group", short: "Assets Group", value: "28.1K", change: "-3%", direction: "down", height: 42 },
+  { name: "Aura Group", short: "Aura Group", value: "24.7K", change: "+11%", direction: "up", height: 37 },
+];
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -27,10 +35,12 @@ export function PulseReference3DDark() {
   const [answer, setAnswer] = useState("");
   const [profile, setProfile] = useState(false);
   const [period, setPeriod] = useState("YTD");
-  const [selectedBar, setSelectedBar] = useState(2);
   const [toast, setToast] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
   const [insightIndex, setInsightIndex] = useState(0);
+  const [groupIndex, setGroupIndex] = useState(2);
+  const [groupChatOpen, setGroupChatOpen] = useState(true);
+  const [groupQuestion, setGroupQuestion] = useState("");
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -60,6 +70,12 @@ export function PulseReference3DDark() {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     notify(`${next === "dark" ? "Dark" : "Light"} mode enabled`);
+  };
+
+  const askGroup = () => {
+    if (!groupQuestion.trim()) return;
+    setAnswer(`${groupPerformance[groupIndex].name} is at ${groupPerformance[groupIndex].value}, ${groupPerformance[groupIndex].change} versus last period. Pulse is comparing the movement against the current enterprise forecast.`);
+    notify("Group performance analysis ready");
   };
 
   return (
@@ -147,52 +163,55 @@ export function PulseReference3DDark() {
             </div>
           </section>
 
-          <div className="ref-layout">
-            <section className="ref-card">
-              <div className="card-head">
-                <h2>Enterprise revenue</h2>
-                <button className="more" onClick={() => notify("Revenue options opened")}>···</button>
+          <section className={`group-performance ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label="Enterprise group performance">
+            <div className="group-performance-head">
+              <div>
+                <h2>Group Performance</h2>
+                <p>Revenue movement across the enterprise portfolio</p>
               </div>
-              <div className="pulse-chart">
-                <div className="chart-grid"><i /><i /><i /><i /><i /></div>
-                <div className="bars">
-                  {bars.map((height, index) => (
-                    <button
-                      className={`bar ${selectedBar === index ? "focus" : ""}`}
-                      key={index}
-                      style={{ height: `${height}%` }}
-                      onClick={() => {
-                        setSelectedBar(index);
-                        notify(`Period ${index + 1} selected`);
-                      }}
-                      aria-label={`Period ${index + 1}`}
-                    />
-                  ))}
-                </div>
-                <div className="chart-float"><b>QAR 18.4B</b> · 94% target</div>
-                <div className="chart-labels"><span>Jan</span><span>Mar</span><span>May</span><span>Jun</span></div>
-              </div>
-              <div className="ask-inline">
-                <Search size={13} />
-                <input value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => event.key === "Enter" && ask()} placeholder="Ask Pulse about the enterprise signal" />
-                <button onClick={ask} aria-label="Ask Pulse"><Send size={12} /></button>
-              </div>
-              {answer && <div className="ask-result"><b>Executive answer · </b>{answer}</div>}
-            </section>
-
-            <section className="ref-card metric-card">
-              <div className="card-head"><h2>Gross enterprise value</h2><button className="more" onClick={() => notify("Value options opened")}>···</button></div>
-              <div className="metric-value">QAR 18.4B <span className="delta">↗ 8.2%</span></div>
-              <div className="mini-list">
-                {[["Revenue", "11.8B", 82, ""], ["EBITDA", "3.76B", 63, "blue"], ["Forecast", "18.9B", 49, "pink"]].map((row) => (
-                  <div className="mini-row" key={row[0]}>
-                    <header><span>{row[0]}</span><span>QAR {row[1]}</span></header>
-                    <div className="mini-track"><i className={String(row[3])} style={{ width: `${row[2]}%` }} /></div>
-                  </div>
+              <button className="more" onClick={() => notify("Group performance options opened")} aria-label="Group performance options">···</button>
+            </div>
+            <div className="group-chart">
+              <div className="group-axis"><span>100K</span><span>80K</span><span>60K</span><span>40K</span><span>20K</span></div>
+              <div className="group-columns">
+                {groupPerformance.map((group, index) => (
+                  <button
+                    className={`group-column ${groupIndex === index ? "selected" : ""}`}
+                    key={group.name}
+                    onClick={() => {
+                      setGroupIndex(index);
+                      notify(`${group.name} selected`);
+                    }}
+                    aria-label={`Inspect ${group.name}`}
+                  >
+                    <span className="group-column-name">{group.short}</span>
+                    <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : "↓"} {group.change}</span>
+                    <strong>{group.value}</strong>
+                    <span className="group-bar-wrap"><i style={{ height: `${group.height}%` }} /></span>
+                  </button>
                 ))}
               </div>
-            </section>
-          </div>
+            </div>
+            <div className="group-chat">
+              <button className="group-chat-prompt" onClick={() => setGroupChatOpen(!groupChatOpen)} aria-expanded={groupChatOpen}>
+                <Sparkles size={14} />
+                <span>{groupChatOpen ? "Would you like to explore revenue, budget, or last year comparison?" : "Ask Pulse about group performance"}</span>
+                <ChevronRight className={groupChatOpen ? "chat-chevron open" : "chat-chevron"} size={15} />
+              </button>
+              {groupChatOpen && (
+                <div className="group-chat-input">
+                  <input
+                    value={groupQuestion}
+                    onChange={(event) => setGroupQuestion(event.target.value)}
+                    onKeyDown={(event) => event.key === "Enter" && askGroup()}
+                    placeholder={`Show me the reason for the ${groupPerformance[groupIndex].change.startsWith("-") ? "drop" : "change"} in ${groupPerformance[groupIndex].name}`}
+                    aria-label="Ask about group performance"
+                  />
+                  <button onClick={askGroup} aria-label="Send group performance question"><Send size={15} /></button>
+                </div>
+              )}
+            </div>
+          </section>
 
           <div className="ref-bottom">
              <section className="ref-card assistant-card">
