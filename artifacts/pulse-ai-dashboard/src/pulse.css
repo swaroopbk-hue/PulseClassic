@@ -109,7 +109,7 @@
   min-height: 240px;
   margin: 0 12px 0 38px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  border: 0;
 }
 
 .orbit-ring {
