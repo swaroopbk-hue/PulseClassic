@@ -172,7 +172,7 @@
   display: flex;
   align-items: flex-end;
   height: 132px;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(to top, rgba(16, 108, 220, .22), transparent);
 }
 
@@ -184,6 +184,30 @@
   background: repeating-linear-gradient(135deg, rgba(255,255,255,.56) 0 1px, transparent 1px 6px), linear-gradient(180deg, #1978ea, #3e9bf0 65%, rgba(137,199,246,.22));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 -4px 12px rgba(35,137,238,.22);
   transition: height .3s ease, filter .3s ease;
+}
+
+.group-bar-wrap i::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 39%;
+  width: 30px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2788ec, #62b7f4);
+  box-shadow: 0 2px 8px rgba(49, 143, 239, .3);
+}
+
+.group-bar-wrap i::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 15px;
+  background: linear-gradient(90deg, transparent, rgba(235, 249, 255, .5));
+  opacity: .72;
+  pointer-events: none;
 }
 
 .group-column:hover .group-bar-wrap i {
