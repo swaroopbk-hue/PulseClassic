@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, Moon, Search, Send, SlidersHorizontal, Sun } from "lucide-react";
+import { Bell, ChevronLeft, ChevronRight, Moon, Search, Send, SlidersHorizontal, Sparkles, Sun } from "lucide-react";
 import "./PulseReference3DDark.css";
 
 const navItems = ["Overview", "Businesses", "Performance", "Forecast", "Insights", "Attention", "Reports"];
@@ -12,6 +12,13 @@ const pulseQuestions = [
   "What changed in Assets hospitality occupancy?",
   "Where should the executive team focus today?",
 ];
+const insightSlides = [
+  { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
+  { group: "Estithmar", value: "18.6%", title: "Portfolio EBITDA widened ahead of forecast.", body: "Three properties contributed 74% of the improvement, led by disciplined cost control.", note: "Operating review signed off · 2 actions due this week.", tone: "sand" },
+  { group: "Assets", value: "−214M", title: "Hospitality remains the clearest enterprise watchpoint.", body: "Occupancy and commercial leasing explain most of the gap against the current forecast.", note: "Executive attention requested · evidence refreshed 2h ago.", tone: "coral" },
+  { group: "Baladna", value: "111%", title: "Demand is running above the annual target.", body: "Volume growth is strongest across core dairy and export channels into the next quarter.", note: "Forecast confidence increased from medium to high.", tone: "mint" },
+  { group: "TMT", value: "Q3", title: "A new transformation milestone is within reach.", body: "Delivery velocity improved across the shared services roadmap and capital program.", note: "Two dependencies remain with Group Leadership.", tone: "violet" },
+];
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -23,11 +30,19 @@ export function PulseReference3DDark() {
   const [selectedBar, setSelectedBar] = useState(2);
   const [toast, setToast] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
+  const [insightIndex, setInsightIndex] = useState(0);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setQuestionIndex((current) => (current + 1) % pulseQuestions.length);
     }, 3200);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setInsightIndex((current) => (current + 1) % insightSlides.length);
+    }, 5200);
     return () => window.clearInterval(timer);
   }, []);
 
@@ -175,7 +190,27 @@ export function PulseReference3DDark() {
               <div className="card-head"><h2>Customers</h2><span className="delta">+320</span></div>
               <div className="stat-content" style={{ paddingTop: 0 }}><div className="stat-num">1,284</div><div className="dot-grid">{Array.from({ length: 30 }, (_, index) => <i key={index} />)}</div></div>
             </section>
-            <section className="insight-card"><h3>Pulse insight</h3><strong>94%</strong><p>Enterprise position is ahead of expected pace by 5 points.</p><small>Assets is the clearest watchpoint today.</small></section>
+             <section className={`insight-card insight-${insightSlides[insightIndex].tone}`} aria-label="Pulse Insights carousel">
+               <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 100}%)` }}>
+                 {insightSlides.map((slide) => (
+                   <article className="insight-slide" key={slide.group}>
+                     <div className="insight-topline">
+                       <span className="insights-badge"><Sparkles size={9} /> Insights</span>
+                       <span className="insight-group">{slide.group}</span>
+                     </div>
+                     <strong>{slide.value}</strong>
+                     <h3>{slide.title}</h3>
+                     <p>{slide.body}</p>
+                     <small>{slide.note}</small>
+                   </article>
+                 ))}
+               </div>
+               <div className="insight-controls">
+                 <button onClick={() => setInsightIndex((insightIndex - 1 + insightSlides.length) % insightSlides.length)} aria-label="Previous insight"><ChevronLeft size={11} /></button>
+                 <div className="insight-dots">{insightSlides.map((slide, index) => <button key={slide.group} className={index === insightIndex ? "active" : ""} onClick={() => setInsightIndex(index)} aria-label={`Show ${slide.group} insight`} />)}</div>
+                 <button onClick={() => setInsightIndex((insightIndex + 1) % insightSlides.length)} aria-label="Next insight"><ChevronRight size={11} /></button>
+               </div>
+             </section>
           </div>
         </main>
       </div>

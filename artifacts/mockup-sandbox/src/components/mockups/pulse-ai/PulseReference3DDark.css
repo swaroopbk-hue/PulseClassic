@@ -37,6 +37,16 @@
   background: #f4f6f5;
 }
 
+.pulse-ref3d.dark {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(41, 74, 103, .14), transparent 34%),
+    #0c1318;
+}
+
+.pulse-ref3d.dark .ref-window {
+  background: #182127;
+}
+
 .assistant-card {
   position: relative;
   min-height: 186px;
@@ -161,6 +171,203 @@
   color: var(--muted);
   font-size: 7px;
   text-align: center;
+}
+
+.insight-card {
+  position: relative;
+  isolation: isolate;
+  padding: 0;
+  overflow: hidden;
+  background: #17242c;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 12px 28px rgba(0,0,0,.2);
+}
+
+.insight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .16;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255,255,255,.7) .5px, transparent .7px),
+    radial-gradient(rgba(255,255,255,.3) .5px, transparent .7px);
+  background-position: 0 0, 11px 13px;
+  background-size: 17px 17px, 23px 23px;
+}
+
+.insight-card::after {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  z-index: 0;
+  right: -72px;
+  top: -86px;
+  border: 26px solid rgba(255,255,255,.5);
+  border-radius: 50%;
+  transform: rotate(24deg);
+  pointer-events: none;
+}
+
+.insight-card.insight-blue {
+  background: linear-gradient(135deg, #164d83 0%, #1a6e9a 47%, #c48f6c 125%);
+}
+
+.insight-card.insight-sand {
+  background: linear-gradient(135deg, #825f4a 0%, #c38c64 54%, #315c66 125%);
+}
+
+.insight-card.insight-coral {
+  background: linear-gradient(135deg, #80443e 0%, #b66a5d 52%, #2a6275 125%);
+}
+
+.insight-card.insight-mint {
+  background: linear-gradient(135deg, #286267 0%, #4d988f 53%, #aeab78 125%);
+}
+
+.insight-card.insight-violet {
+  background: linear-gradient(135deg, #3d4b7e 0%, #6a6eac 55%, #b68176 125%);
+}
+
+.insight-track {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 500%;
+  height: 154px;
+  transition: transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+
+.insight-slide {
+  position: relative;
+  flex: 0 0 20%;
+  min-width: 20%;
+  padding: 12px 15px 7px;
+  color: #f7fbfc;
+}
+
+.insight-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.insights-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 7px;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 999px;
+  background: rgba(18, 29, 35, .2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 5px 15px rgba(0,0,0,.12);
+  backdrop-filter: blur(9px);
+  color: rgba(255,255,255,.9);
+  font-size: 8px;
+  letter-spacing: .01em;
+}
+
+.insight-group {
+  color: rgba(255,255,255,.72);
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.insight-slide strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 18px;
+  font-family: "Google Sans", "Product Sans", "Space Grotesk", sans-serif;
+  font-size: 35px;
+  font-weight: 500;
+  letter-spacing: -.08em;
+  line-height: .9;
+}
+
+.insight-slide h3 {
+  position: relative;
+  z-index: 1;
+  max-width: 205px;
+  margin: 8px 0 3px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+.insight-slide p {
+  position: relative;
+  z-index: 1;
+  max-width: 220px;
+  margin: 0;
+  color: rgba(255,255,255,.82);
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.insight-slide small {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 5px;
+  color: rgba(255,255,255,.65);
+  font-size: 7px;
+  line-height: 1.2;
+}
+
+.insight-controls {
+  position: absolute;
+  right: 11px;
+  bottom: 10px;
+  left: 11px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.insight-controls > button {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 50%;
+  background: rgba(15, 26, 32, .22);
+  color: rgba(255,255,255,.88);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.insight-controls > button:hover {
+  background: rgba(255,255,255,.2);
+}
+
+.insight-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.insight-dots button {
+  width: 5px;
+  height: 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.38);
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.insight-dots button.active {
+  width: 14px;
+  border-radius: 999px;
+  background: #fff;
 }
 
 @keyframes assistantBreathe {
