@@ -38,7 +38,9 @@
 }
 
 .assistant-card {
+  position: relative;
   min-height: 186px;
+  height: 186px;
   padding: 0 15px 12px;
   background:
     radial-gradient(circle at 50% 50%, rgba(77, 145, 239, .08), transparent 42%),
@@ -46,6 +48,11 @@
 }
 
 .assistant-heading {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  right: 15px;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,12 +67,16 @@
 }
 
 .assistant-orb {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 56px;
   height: 56px;
-  margin: 10px auto 9px;
+  margin: 0;
+  transform: translate(-50%, -50%);
   border: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -78,10 +89,11 @@
     inset -8px -10px 14px rgba(0,21,92,.32),
     inset 7px 8px 12px rgba(255,255,255,.24);
   animation: assistantBreathe 3.2s ease-in-out infinite;
+  transition: transform .2s ease;
 }
 
 .assistant-orb:hover {
-  transform: translateY(-2px) scale(1.04);
+  transform: translate(-50%, -50%) translateY(-2px) scale(1.04);
 }
 
 .orb-core {
@@ -93,10 +105,16 @@
 }
 
 .assistant-input {
+  position: absolute;
+  right: 15px;
+  bottom: 12px;
+  left: 15px;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 6px;
   min-height: 29px;
+  margin: 0;
   padding: 4px 5px 4px 8px;
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -133,8 +151,13 @@
 }
 
 .assistant-hint {
+  position: absolute;
+  right: 15px;
+  bottom: 2px;
+  left: 15px;
+  z-index: 2;
   display: block;
-  margin-top: 6px;
+  margin: 0;
   color: var(--muted);
   font-size: 7px;
   text-align: center;
