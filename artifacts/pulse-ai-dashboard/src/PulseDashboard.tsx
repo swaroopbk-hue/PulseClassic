@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun, Plus, Eye, Folder, LayoutGrid, Link as LinkIcon, Brain, Box, Settings, Menu, X } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
@@ -163,6 +163,41 @@ export function PulseReference3DDark() {
     window.setTimeout(() => setToast(""), 2200);
   };
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState("glance");
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuCloseRef = useRef<HTMLButtonElement>(null);
+  const sidebarWasOpenRef = useRef(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && sidebarOpen) setSidebarOpen(false);
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        notify("Ask Pulse opened");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [sidebarOpen]);
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = "hidden";
+      window.requestAnimationFrame(() => mobileMenuCloseRef.current?.focus());
+      sidebarWasOpenRef.current = true;
+    } else {
+      document.body.style.overflow = "";
+      if (sidebarWasOpenRef.current) {
+        mobileMenuButtonRef.current?.focus();
+        sidebarWasOpenRef.current = false;
+      }
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [sidebarOpen]);
+
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
@@ -174,10 +209,98 @@ export function PulseReference3DDark() {
     notify("Group performance analysis ready");
   };
 
+  const navItems = [
+    { id: 'glance', label: 'Glance', icon: Eye },
+    { id: 'projects', label: 'Projects', icon: Folder, count: 2 },
+    { id: 'tasks', label: 'Scheduled Tasks', icon: Clock },
+    { id: 'dashboards', label: 'Dashboards', icon: LayoutGrid, count: 5 },
+    { id: 'artifacts', label: 'Live Artifacts', icon: Sparkles, count: 4 },
+    { id: 'apps', label: 'Connected Apps and Data', icon: LinkIcon, count: 5 },
+  ];
+
+  const agentItems = [
+    { id: 'memories', label: 'Memories', icon: Brain },
+    { id: 'skills', label: 'Skills library', icon: Box },
+  ];
+
+  const SidebarContent = () => (
+    <div className="exe-sidebar-inner">
+      <div className="exe-sidebar-top">
+        <button type="button" className="exe-sidebar-ask" onClick={() => { setSidebarOpen(false); notify("Ask Pulse opened"); }}>
+          <div className="ask-left"><Plus size={15} /> Ask Pulse</div>
+          <kbd className="ask-kbd">⌘K</kbd>
+        </button>
+
+        <nav className="exe-sidebar-menu">
+          {navItems.map(item => (
+            <button 
+              type="button"
+              key={item.id} 
+              className={`exe-sidebar-item ${item.id === "apps" ? "is-long-label" : ""} ${activeNav === item.id ? 'active' : ''}`}
+              aria-current={activeNav === item.id ? "page" : undefined}
+              onClick={() => {
+                setActiveNav(item.id);
+                setSidebarOpen(false);
+              }}
+            >
+              <div className="item-left"><item.icon size={15} style={{ flexShrink: 0 }} /> <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span></div>
+              {item.count && <span className="item-count">{item.count}</span>}
+            </button>
+          ))}
+        </nav>
+
+        <div className="exe-sidebar-section">
+          <div className="exe-sidebar-label">AGENT</div>
+          <nav className="exe-sidebar-menu">
+            {agentItems.map(item => (
+              <button 
+                type="button"
+                key={item.id} 
+                className={`exe-sidebar-item ${activeNav === item.id ? 'active' : ''}`}
+                aria-current={activeNav === item.id ? "page" : undefined}
+                onClick={() => {
+                  setActiveNav(item.id);
+                  setSidebarOpen(false);
+                }}
+              >
+                <div className="item-left"><item.icon size={15} style={{ flexShrink: 0 }} /> <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span></div>
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      <div className="exe-sidebar-bottom">
+        <button 
+          type="button"
+          className={`exe-sidebar-item ${activeNav === 'settings' ? 'active' : ''}`}
+          aria-current={activeNav === "settings" ? "page" : undefined}
+          onClick={() => {
+            setActiveNav('settings');
+            setSidebarOpen(false);
+          }}
+        >
+          <div className="item-left"><Settings size={15} /> Settings</div>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className={`pulse-ref3d ${theme}`} data-testid="pulse-dashboard">
       <header className="exe-header">
         <div className="exe-logo-area">
+          <button
+            ref={mobileMenuButtonRef}
+            type="button"
+            className="exe-mobile-menu-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={sidebarOpen}
+            aria-controls="pulse-mobile-navigation"
+          >
+            <Menu size={20} />
+          </button>
           <img
             src={theme === "dark" ? darkPulseLogo : "/images/pulse-ai-official.png"}
             alt="Pulse.ai"
@@ -205,7 +328,30 @@ export function PulseReference3DDark() {
         </div>
       )}
 
-      <main className="exe-main">
+      <div className="exe-layout">
+        <aside className="exe-sidebar desktop-only">
+          <SidebarContent />
+        </aside>
+
+        {sidebarOpen && (
+          <div className="exe-sidebar-drawer">
+            <div className="exe-sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+            <aside
+              id="pulse-mobile-navigation"
+              className="exe-sidebar"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Pulse navigation"
+            >
+              <div className="exe-sidebar-close">
+                <button ref={mobileMenuCloseRef} type="button" onClick={() => setSidebarOpen(false)} aria-label="Close navigation menu"><X size={20} /></button>
+              </div>
+              <SidebarContent />
+            </aside>
+          </div>
+        )}
+
+        <main className="exe-main">
         <div className="exe-masthead">
           <div className="masthead-top">
             <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / QAR CONSOLIDATED VIEW</div>
@@ -533,6 +679,7 @@ export function PulseReference3DDark() {
           </section>
         </div>
       </main>
+      </div>
       {toast && <div className="toast">{toast}</div>}
     </div>
   );
