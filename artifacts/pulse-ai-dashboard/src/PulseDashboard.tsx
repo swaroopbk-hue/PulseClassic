@@ -280,7 +280,9 @@ export function PulseReference3DDark() {
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groupChatOpen, setGroupChatOpen] = useState(true);
   const [groupQuestion, setGroupQuestion] = useState("");
-  const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
+  const [groupView, setGroupView] = useState<"bars" | "orbit">(() =>
+    new URLSearchParams(window.location.search).get("groupView") === "orbit" ? "orbit" : "bars"
+  );
   const [decisionIndex, setDecisionIndex] = useState(0);
   const enterprise = enterprisePerformance[period];
   const groupPerformance = groupPerformanceByPeriod[period];
@@ -763,8 +765,8 @@ export function PulseReference3DDark() {
                    </div>
                  </div>
                  {groupPerformance.map((group, index) => {
-                   const isNegative = group.direction === "down";
-                   const isHighestPositive = group.name === "Power International";
+                    const isNegative = group.height === lowestRevenueHeight;
+                    const isHighestPositive = group.height === highestRevenueHeight;
                    return (
                      <button
                        data-testid={`button-orbit-node-${group.short.toLowerCase().replace(/\s+/g, '-')}`}
@@ -794,13 +796,25 @@ export function PulseReference3DDark() {
                         : group.height === lowestRevenueHeight
                           ? "lowest-revenue"
                           : ""
-                    }`}
+                     } ${groupIndex === index ? "is-selected" : ""}`}
                     key={group.name}
+                     role="button"
+                     tabIndex={0}
+                     aria-label={`${group.name}: ${group.value}, ${group.change}`}
+                     aria-pressed={groupIndex === index}
                     onMouseEnter={() => {
                       setGroupIndex(index);
                       setHoveredGroup(index);
                     }}
                     onMouseLeave={() => setHoveredGroup(null)}
+                     onFocus={() => setGroupIndex(index)}
+                     onClick={() => setGroupIndex(index)}
+                     onKeyDown={(event) => {
+                       if (event.key === "Enter" || event.key === " ") {
+                         event.preventDefault();
+                         setGroupIndex(index);
+                       }
+                     }}
                   >
                     <span className="group-column-name">{group.short}</span>
                      <div className="group-value-row">

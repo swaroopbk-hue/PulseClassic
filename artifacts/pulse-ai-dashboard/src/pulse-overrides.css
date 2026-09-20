@@ -2953,3 +2953,474 @@
     line-height: 1.3;
   }
 }
+
+/* Development-ready mobile refinement: readable type, touch ergonomics, native data views. */
+@media (max-width: 640px) {
+  .pulse-ref3d {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pulse-ref3d button,
+  .pulse-ref3d [role="button"] {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .exe-icon-btn,
+  .exe-avatar-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .masthead-meta {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .masthead-content h1 {
+    margin-top: 8px;
+    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .masthead-content p {
+    max-width: none;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .masthead-grid {
+    gap: 20px;
+  }
+
+  .masthead-insight,
+  .masthead-insight .insight-track,
+  .masthead-insight .insight-slide {
+    height: 290px;
+    min-height: 290px;
+  }
+
+  .insight-page-content {
+    padding: 16px 18px 34px;
+  }
+
+  .insights-badge,
+  .insight-group {
+    font-size: 11px;
+  }
+
+  .masthead-insight .insight-slide strong {
+    margin-top: 16px;
+    font-size: 42px;
+  }
+
+  .masthead-insight .insight-page-content h3 {
+    max-width: 94%;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .masthead-insight .insight-page-content p {
+    max-width: 96%;
+    margin-top: 9px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .masthead-insight .insight-page-content small {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .insight-progress {
+    right: 18px;
+    bottom: 13px;
+    left: 18px;
+    gap: 5px;
+  }
+
+  .insight-progress button {
+    min-height: 12px;
+  }
+
+  .exe-metrics-section {
+    padding-top: 8px;
+  }
+
+  .exe-section-header {
+    margin-bottom: 16px;
+  }
+
+  .exe-section-header h2 {
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .exe-metrics-section .exe-section-header {
+    row-gap: 12px;
+  }
+
+  .exe-metrics-section .period-tab {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .exe-metrics-grid {
+    margin-bottom: 40px;
+  }
+
+  .metric-cell,
+  .metric-cell:not(:first-child),
+  .metric-cell:nth-child(4),
+  .metric-cell:nth-child(5) {
+    min-height: 126px;
+    padding-top: 18px;
+    padding-bottom: 16px;
+  }
+
+  .metric-cell:nth-child(5) {
+    min-height: 112px;
+  }
+
+  .metric-label {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .metric-value-large {
+    margin-bottom: 10px;
+    font-size: 32px;
+  }
+
+  .metric-value-large .unit {
+    font-size: 12px;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .metric-split-labels {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .metric-split-labels span {
+    font-size: 11px;
+  }
+
+  .group-header-adjustment {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .group-performance {
+    padding: 18px 14px 14px;
+    border-radius: 16px;
+  }
+
+  .group-performance-head {
+    margin-bottom: 14px;
+  }
+
+  .group-performance-head h2 {
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .group-performance-head p {
+    margin-top: 7px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .group-view-actions {
+    margin-top: 14px;
+    padding: 3px;
+    border-radius: 9px;
+  }
+
+  .group-view-button {
+    min-height: 44px;
+    font-size: 13px;
+    border-radius: 7px;
+  }
+
+  .group-column {
+    grid-template-columns: minmax(105px, .9fr) minmax(120px, 1.1fr) 16px;
+    min-height: 72px;
+    padding: 10px 0;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  .group-column.is-selected {
+    background: rgba(77, 145, 239, .055);
+  }
+
+  .group-column:focus-visible {
+    box-shadow: inset 0 0 0 2px rgba(77, 145, 239, .65);
+  }
+
+  .group-column-name {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .group-value-row {
+    gap: 7px;
+    margin-top: 5px;
+  }
+
+  .group-value-row > strong,
+  .group-performance.period-ytd .group-value-row > strong {
+    font-size: 20px;
+  }
+
+  .group-change {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .group-bar-wrap {
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .group-column .group-bar-wrap i {
+    min-width: 12px;
+    border-radius: 6px;
+  }
+
+  .group-column::after {
+    font-size: 20px;
+  }
+
+  .group-chat {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .group-chat-prompt {
+    min-height: 44px;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .group-chat-input {
+    margin-top: 10px;
+  }
+
+  .group-chat-input input {
+    height: 46px;
+    font-size: 16px;
+  }
+
+  .group-chat-input button {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Orbit becomes a mobile constellation: readable cards around a central summary. */
+  .group-orbit-view {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 0;
+    margin: 0;
+    padding: 4px 0 0;
+    overflow: visible;
+    transform: none;
+  }
+
+  .group-orbit-view .orbit-ring {
+    display: none;
+  }
+
+  .group-orbit-view .orbit-core {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-column: 1 / -1;
+    width: 132px;
+    height: 132px;
+    margin: 4px auto 8px;
+    transform: none;
+  }
+
+  .orbit-core small {
+    font-size: 11px;
+  }
+
+  .orbit-core-value span {
+    font-size: 34px;
+  }
+
+  .orbit-core-value sub,
+  .orbit-core-trend {
+    font-size: 12px;
+  }
+
+  .group-orbit-view .orbit-node {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    min-height: 92px;
+    padding: 13px 12px;
+    justify-content: center;
+    border-radius: 10px;
+    animation: none;
+    transform: none;
+  }
+
+  .group-orbit-view .orbit-node:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .orbit-node-name {
+    padding-right: 12px;
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .orbit-node-value {
+    margin-top: 3px;
+    font-size: 15px;
+  }
+
+  .orbit-node-trend {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  .exe-content > .exe-section-header[style],
+  .agents-section-header {
+    margin-top: 40px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .ref-bottom > .decisions-card {
+    min-height: 420px;
+    border-radius: 16px;
+  }
+
+  .decisions-card .card-head {
+    padding: 16px 16px 8px;
+  }
+
+  .decisions-head h2 {
+    font-size: 22px;
+  }
+
+  .decisions-head > div span,
+  .decisions-view-all,
+  .decision-kind,
+  .decision-status {
+    font-size: 11px;
+  }
+
+  .decisions-view-all {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+
+  .ref-bottom > .decisions-card:not(.decisions-all) .decision-slider {
+    min-height: 330px;
+    padding: 0 34px;
+    align-items: stretch;
+  }
+
+  .decision-arrow {
+    width: 40px;
+    height: 44px;
+  }
+
+  .decision-slide {
+    padding: 14px 8px;
+    align-self: stretch;
+    align-content: center;
+  }
+
+  .decision-slide h3 {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .decision-slide p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .decision-summary-meta,
+  .decision-summary-footer {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .decision-slide > button {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  /* Native swipe row with approximately two-and-a-half substantial cards visible. */
+  .landing-agent-marquee {
+    margin: 0 -12px;
+    padding-bottom: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    mask-image: none;
+    -webkit-mask-image: none;
+    touch-action: pan-x;
+  }
+
+  .landing-agent-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .landing-agent-marquee .marquee-track {
+    gap: 12px;
+    padding: 0 12px 12px;
+    animation: none;
+    transform: none;
+  }
+
+  .landing-agent-marquee .marquee-card {
+    flex: 0 0 calc((100vw - 52px) / 2.5);
+    width: calc((100vw - 52px) / 2.5);
+    min-width: 132px;
+    max-width: 150px;
+    height: 150px;
+    padding: 14px;
+    border-radius: 14px;
+    scroll-snap-align: start;
+  }
+
+  .landing-agent-marquee .marquee-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .landing-agent-marquee .marquee-info strong {
+    font-size: 14px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .landing-agent-marquee .marquee-info span {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
