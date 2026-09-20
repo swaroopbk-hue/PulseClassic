@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { 
   AlertCircle, ArrowLeft, Check, CheckCircle2, Clock, Download,
   FileSpreadsheet, FileText, MessageSquare, Share, ThumbsUp, XCircle, Search, Sparkles,
-  Send, ChevronUp, ChevronDown
+  Send, ChevronUp, ChevronDown, ChevronLeft, ChevronRight
 } from "lucide-react";
 import "./decisions.css";
 
@@ -475,6 +475,38 @@ export function DecisionsWorkspace({
             )}
           </div>
         </aside>
+
+        {filteredDecisions.length > 0 && (
+          <nav className="mobile-decision-navigation" aria-label="Decision navigation">
+            <button
+              type="button"
+              aria-label="Previous decision"
+              onClick={() => setSelectedIndex((safeIndex - 1 + filteredDecisions.length) % filteredDecisions.length)}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <div className="mobile-decision-dots" role="tablist" aria-label="Decision requests">
+              {filteredDecisions.map((decision, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-label={`Show ${decision.shortTitle}`}
+                  aria-selected={index === safeIndex}
+                  className={index === safeIndex ? "active" : ""}
+                  key={decision.id}
+                  onClick={() => setSelectedIndex(index)}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label="Next decision"
+              onClick={() => setSelectedIndex((safeIndex + 1) % filteredDecisions.length)}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </nav>
+        )}
         
         <main className="decisions-detail scrollable">
            {selectedDecision ? (
@@ -587,6 +619,42 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           )}
         </div>
       </header>
+
+      <section className="mobile-decision-actions" aria-label="Decision actions">
+        {decision.type === 'Approval' ? (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Approved Request')}>
+              <CheckCircle2 size={17} /> Approve Request
+            </button>
+            <div>
+              <button type="button" className="btn-reject" onClick={() => onAction('Declined Request')}>
+                <XCircle size={16} /> Decline
+              </button>
+              <button type="button" className="btn-secondary" onClick={() => onAction('Requested Info')}>
+                <MessageSquare size={16} /> Request Info
+              </button>
+            </div>
+          </>
+        ) : decision.type === 'Risk' ? (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Risk')}>
+              <AlertCircle size={17} /> Acknowledge Risk
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => onAction('Escalated to Board')}>
+              <Share size={16} /> Escalate to Board
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Signal')}>
+              <ThumbsUp size={17} /> Acknowledge
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => onAction('Reassigned')}>
+              <Share size={16} /> Reassign
+            </button>
+          </>
+        )}
+      </section>
 
       <div className="detail-content-grid">
         <div className="detail-main-col">
