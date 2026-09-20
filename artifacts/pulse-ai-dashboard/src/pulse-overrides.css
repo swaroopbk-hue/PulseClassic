@@ -3904,10 +3904,8 @@
     min-height: 510px;
     padding-bottom: 18px;
     overflow: hidden;
-    border-color: rgba(73, 139, 177, .3) !important;
-    background:
-      radial-gradient(circle at 50% 42%, rgba(24, 115, 171, .09), transparent 48%),
-      #101920 !important;
+    border-color: var(--exe-line) !important;
+    background: #11181e !important;
   }
 
   .decisions-card .card-head {
@@ -3932,13 +3930,16 @@
   }
 
   .decisions-view-all {
-    min-width: 82px;
-    min-height: 44px;
-    padding: 0 15px;
-    border-color: rgba(91, 151, 187, .42);
-    background: rgba(20, 41, 54, .72);
-    color: #d7e6ef;
-    font-size: 13px;
+    min-width: 0;
+    min-height: 32px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    color: var(--exe-ink-light);
+    font-size: 12px;
+    line-height: 1.1;
   }
 
   .ref-bottom > .decisions-card:not(.decisions-all) .decision-slider {
@@ -3956,10 +3957,10 @@
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    border: 1px solid rgba(64, 155, 211, .48);
+    border: 1px solid var(--exe-line);
     border-radius: 18px;
-    background: linear-gradient(145deg, rgba(16, 47, 66, .92), rgba(8, 28, 40, .96));
-    box-shadow: inset 0 0 28px rgba(44, 146, 204, .08), 0 12px 28px rgba(0, 0, 0, .18);
+    background: #141d24;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
   }
 
   .decision-summary-topline {
@@ -3980,7 +3981,7 @@
 
   .decision-slide h3 {
     margin-bottom: 8px;
-    color: #8dd4ff;
+    color: #f5fbff;
     font-size: 20px;
     line-height: 1.22;
   }
@@ -4042,10 +4043,10 @@
     z-index: 3;
     width: 46px;
     height: 46px;
-    border-color: rgba(69, 137, 177, .5);
+    border-color: var(--exe-line);
     border-radius: 50%;
-    background: #0d202c;
-    color: #b7daf0;
+    background: #11181e;
+    color: var(--exe-ink-light);
   }
 
   .decision-arrow.previous {
@@ -4099,20 +4100,25 @@
   .landing-agent-marquee {
     width: calc(100% + 24px);
     max-width: none;
-    overflow: visible;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
   }
 
   .landing-agent-marquee .marquee-track {
-    width: 100%;
-    max-width: 100%;
+    width: max-content;
+    max-width: none;
     box-sizing: border-box;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    gap: 16px;
+    overflow: visible;
+    scroll-snap-type: none;
+    animation: marquee 38s linear infinite;
+    will-change: transform;
+    touch-action: pan-y;
+  }
+
+  .landing-agent-marquee .marquee-track:hover {
+    animation-play-state: running;
   }
 
   .landing-agent-marquee .marquee-track::-webkit-scrollbar {
@@ -4120,20 +4126,18 @@
   }
 
   .pulse-ref3d.light .ref-bottom > .decisions-card {
-    border-color: #cbdce5 !important;
-    background:
-      radial-gradient(circle at 50% 42%, rgba(56, 154, 210, .08), transparent 48%),
-      #fffdfa !important;
+    border-color: #ded8ce !important;
+    background: #fffdfa !important;
   }
 
   .pulse-ref3d.light .decision-slide {
-    border-color: rgba(55, 137, 184, .34);
-    background: linear-gradient(145deg, #f7fbfd, #edf5f8);
-    box-shadow: 0 12px 28px rgba(33, 83, 110, .09);
+    border-color: #ded8ce;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(34, 48, 58, .07);
   }
 
   .pulse-ref3d.light .decision-slide h3 {
-    color: #2377aa;
+    color: #173047;
   }
 
   .pulse-ref3d.light .decision-slide p,
@@ -4152,5 +4156,11 @@
 
   .pulse-ref3d.light .decision-summary-footer strong {
     color: #173047;
+  }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .landing-agent-marquee .marquee-track {
+    animation: none;
   }
 }
