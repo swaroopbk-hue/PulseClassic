@@ -597,70 +597,296 @@
   gap: 10px;
 }
 
-.ask-pih-cta {
-  margin-top: 32px;
-  padding: 20px;
-  background: color-mix(in srgb, var(--exe-accent) 10%, var(--card));
-  border: 1px solid color-mix(in srgb, var(--exe-accent) 30%, transparent);
-  border-radius: 12px;
+.ask-pulse-context {
+  width: 100%;
+  margin-top: 24px;
+  border: 1px solid var(--exe-line);
+  border-radius: 14px;
+  background: var(--card);
+  overflow: hidden;
+}
+
+.ask-pulse-context.is-open {
+  border-color: color-mix(in srgb, var(--exe-blue-dark) 30%, var(--exe-line));
+}
+
+.ask-pulse-context-trigger {
+  width: 100%;
+  min-height: 76px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  border: 0;
+  background: color-mix(in srgb, var(--exe-blue-dark) 4%, var(--card));
+  color: var(--exe-ink);
+  cursor: pointer;
+  text-align: left;
 }
 
-.ask-pih-cta-info {
+.ask-pulse-context-trigger:hover {
+  background: color-mix(in srgb, var(--exe-blue-dark) 7%, var(--card));
+}
+
+.ask-pulse-context-title,
+.ask-pulse-context-action {
   display: flex;
   align-items: center;
+}
+
+.ask-pulse-context-title {
   gap: 12px;
 }
 
-.ask-pih-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--exe-accent);
-  color: #fff;
-  display: grid;
-  place-items: center;
+.ask-pulse-context-title > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.ask-pih-text h4 {
-  margin: 0 0 2px;
+.ask-pulse-context-title strong {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 650;
+}
+
+.ask-pulse-context-title small {
+  color: var(--exe-ink-light);
+  font-size: 12px;
+}
+
+.ask-pulse-context-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--exe-blue-dark);
+  color: #fff;
+}
+
+.ask-pulse-context-action {
+  gap: 7px;
+  flex: 0 0 auto;
+  color: var(--exe-blue-dark);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.ask-pulse-panel {
+  padding: 22px;
+  border-top: 1px solid var(--exe-line);
+  animation: assistant-panel-in 180ms ease both;
+}
+
+@keyframes assistant-panel-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ask-pulse-panel-label {
+  margin-bottom: 10px;
+  color: var(--exe-ink-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.ask-pulse-context-chips,
+.ask-pulse-suggested-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ask-pulse-context-chips span {
+  padding: 6px 9px;
+  border: 1px solid var(--exe-line);
+  border-radius: 6px;
+  color: var(--exe-ink-light);
+  font-size: 11px;
+}
+
+.ask-pulse-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--exe-line);
+  color: var(--exe-blue-dark);
+}
+
+.ask-pulse-intro svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.ask-pulse-intro p {
+  margin: 0;
+  color: var(--exe-ink-light);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.ask-pulse-intro strong {
   color: var(--exe-ink);
 }
 
-.pulse-ref3d.dark .ask-pih-text h4 {
-  color: #fff;
+.ask-pulse-suggested-prompts button {
+  padding: 7px 10px;
+  border: 1px solid var(--exe-line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--exe-ink);
+  font-size: 11px;
+  cursor: pointer;
 }
 
-.ask-pih-text p {
-  margin: 0;
-  font-size: 12px;
+.ask-pulse-suggested-prompts button:hover {
+  border-color: var(--exe-blue-dark);
+  color: var(--exe-blue-dark);
+}
+
+.ask-pulse-messages {
+  max-height: 320px;
+  margin-top: 18px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  border: 1px solid var(--exe-line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--exe-bg) 72%, var(--card));
+}
+
+.ask-pulse-message {
+  max-width: 86%;
+}
+
+.ask-pulse-message.user {
+  align-self: flex-end;
+}
+
+.ask-pulse-message span {
+  display: block;
+  margin-bottom: 4px;
   color: var(--exe-ink-light);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
 }
 
-.btn-ask-pih {
-  padding: 8px 16px;
+.ask-pulse-message p {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 9px;
   background: var(--card);
   border: 1px solid var(--exe-line);
   color: var(--exe-ink);
   font-size: 12px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
+  line-height: 1.5;
 }
 
-.pulse-ref3d.dark .btn-ask-pih {
+.ask-pulse-message.user p {
+  border-color: var(--exe-blue-dark);
+  background: var(--exe-blue-dark);
   color: #fff;
-  background: rgba(255,255,255,0.05);
 }
 
-.btn-ask-pih:hover {
-  border-color: var(--exe-accent);
-  color: var(--exe-accent);
+.ask-pulse-context-form {
+  margin-top: 18px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--exe-line);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.ask-pulse-context-form:focus-within {
+  border-color: var(--exe-blue-dark);
+}
+
+.ask-pulse-context-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 9px 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--exe-ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.ask-pulse-context-form button {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: var(--exe-blue-dark);
+  color: #fff;
+  cursor: pointer;
+}
+
+.ask-pulse-context-form button:disabled {
+  cursor: not-allowed;
+  opacity: .4;
+}
+
+.ask-pulse-context-note {
+  margin: 8px 2px 0;
+  color: var(--exe-ink-light);
+  font-size: 10px;
+}
+
+.pulse-ref3d.dark .ask-pulse-context-trigger,
+.pulse-ref3d.dark .ask-pulse-context-form,
+.pulse-ref3d.dark .ask-pulse-message p {
+  color: #fff;
+}
+
+.pulse-ref3d.dark .ask-pulse-context-action,
+.pulse-ref3d.dark .ask-pulse-intro {
+  color: #8eb3d6;
+}
+
+.pulse-ref3d.dark .ask-pulse-intro strong {
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .ask-pulse-context-trigger {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .ask-pulse-context-action {
+    font-size: 0;
+  }
+
+  .ask-pulse-panel {
+    padding: 16px;
+  }
+
+  .ask-pulse-message {
+    max-width: 94%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ask-pulse-panel {
+    animation: none;
+  }
 }
 
 .attachment-item {

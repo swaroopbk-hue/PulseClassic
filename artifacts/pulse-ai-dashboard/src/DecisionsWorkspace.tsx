@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { 
   AlertCircle, ArrowLeft, Check, CheckCircle2, Clock, Download,
-  FileSpreadsheet, FileText, MessageSquare, Share, ThumbsUp, XCircle, Search, Sparkles
+  FileSpreadsheet, FileText, MessageSquare, Share, ThumbsUp, XCircle, Search, Sparkles,
+  Send, ChevronUp, ChevronDown
 } from "lucide-react";
 import "./decisions.css";
 
@@ -491,6 +492,9 @@ export function DecisionsWorkspace({
 }
 
 function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecisions[0], onAction: (a: string) => void }) {
+  const [assistantOpen, setAssistantOpen] = useState(false);
+  const [assistantPrompt, setAssistantPrompt] = useState("");
+  const [assistantMessages, setAssistantMessages] = useState<Array<{ role: "user" | "assistant"; text: string }>>([]);
   const approvalFlow = [
     {
       step: "Submitted by",
@@ -500,6 +504,43 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
     },
     ...decision.workflow,
   ];
+
+  useEffect(() => {
+    setAssistantOpen(false);
+    setAssistantPrompt("");
+    setAssistantMessages([]);
+  }, [decision.id]);
+
+  const getContextualResponse = (prompt: string) => {
+    const normalizedPrompt = prompt.toLowerCase();
+    const currentStep = approvalFlow.find(step => step.status === "current");
+
+    if (normalizedPrompt.includes("workflow") || normalizedPrompt.includes("audit") || normalizedPrompt.includes("approval")) {
+      return `This request has ${approvalFlow.length} recorded stages. ${currentStep ? `${currentStep.step} is currently with ${currentStep.actor}.` : "All recorded stages are complete."} I can also explain any individual handoff or timestamp.`;
+    }
+
+    if (normalizedPrompt.includes("document") || normalizedPrompt.includes("attachment") || normalizedPrompt.includes("evidence")) {
+      return `${decision.attachments.length} supporting ${decision.attachments.length === 1 ? "document is" : "documents are"} attached: ${decision.attachments.map(item => item.name).join(", ")}.`;
+    }
+
+    if (normalizedPrompt.includes("priority") || normalizedPrompt.includes("urgent") || normalizedPrompt.includes("due")) {
+      return `${decision.isPriority ? "This request is marked Priority." : "This request is not marked Priority."} Its current due date is ${decision.dueDate.toLowerCase()}.`;
+    }
+
+    return `${decision.title} was submitted by ${decision.requester.name} through ${decision.sourcePlatform}. ${decision.context[0]} ${currentStep ? `The current approval stage is ${currentStep.step}.` : ""}`;
+  };
+
+  const askAssistant = (prompt: string) => {
+    const cleanPrompt = prompt.trim();
+    if (!cleanPrompt) return;
+    setAssistantMessages(previous => [
+      ...previous,
+      { role: "user", text: cleanPrompt },
+      { role: "assistant", text: getContextualResponse(cleanPrompt) },
+    ]);
+    setAssistantPrompt("");
+    onAction("Asked Pulse.AI about this decision");
+  };
 
   return (
     <div className="decision-detail-inner animate-in fade-in slide-in-from-bottom-2 duration-300" key={decision.id}>
@@ -591,20 +632,6 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
             </div>
           </section>
 
-          <div className="ask-pih-cta">
-            <div className="ask-pih-cta-info">
-              <div className="ask-pih-icon">
-                <Sparkles size={16} />
-              </div>
-              <div className="ask-pih-text">
-                <h4>Need more context?</h4>
-                <p>Ask Pulse to summarize policies, check budget availability, or analyze risk.</p>
-              </div>
-            </div>
-            <button type="button" className="btn-ask-pih" onClick={() => onAction("Ask PIH Assistant Opened")}>
-              Ask PIH
-            </button>
-          </div>
         </div>
 
         <div className="detail-side-col">
@@ -667,6 +694,91 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           </section>
         </div>
       </div>
+
+      <section className={`ask-pulse-context ${assistantOpen ? "is-open" : ""}`} aria-label={`Ask Pulse.AI about ${decision.title}`}>
+        <button
+          type="button"
+          className="ask-pulse-context-trigger"
+          onClick={() => {
+            setAssistantOpen(open => !open);
+            if (!assistantOpen) onAction("Ask Pulse.AI opened");
+          }}
+          aria-expanded={assistantOpen}
+        >
+          <span className="ask-pulse-context-title">
+            <span className="ask-pulse-context-icon"><Sparkles size={17} /></span>
+            <span>
+              <strong>Ask Pulse.AI</strong>
+              <small>Explore this request, its evidence, and approval history.</small>
+            </span>
+          </span>
+          <span className="ask-pulse-context-action">
+            {assistantOpen ? "Close assistant" : "Open assistant"}
+            {assistantOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </span>
+        </button>
+
+        {assistantOpen && (
+          <div className="ask-pulse-panel">
+            <div className="ask-pulse-context-map">
+              <div className="ask-pulse-panel-label">Decision context</div>
+              <div className="ask-pulse-context-chips">
+                <span>Request · {decision.id}</span>
+                <span>Platform · {decision.sourcePlatform}</span>
+                <span>Requester · {decision.requester.name}</span>
+                <span>{decision.attachments.length} supporting {decision.attachments.length === 1 ? "document" : "documents"}</span>
+                <span>{approvalFlow.length} approval stages</span>
+              </div>
+            </div>
+
+            <div className="ask-pulse-intro">
+              <Sparkles size={16} />
+              <p>
+                I can connect the facts in this request with its supporting documents and audit trail.
+                My answers stay focused on <strong>{decision.shortTitle}</strong>.
+              </p>
+            </div>
+
+            <div className="ask-pulse-suggested-prompts" aria-label="Suggested questions">
+              {["Summarize this request", "What should I verify?", "Explain the approval workflow"].map(prompt => (
+                <button type="button" key={prompt} onClick={() => askAssistant(prompt)}>{prompt}</button>
+              ))}
+            </div>
+
+            {assistantMessages.length > 0 && (
+              <div className="ask-pulse-messages" aria-live="polite">
+                {assistantMessages.map((message, index) => (
+                  <div key={`${message.role}-${index}`} className={`ask-pulse-message ${message.role}`}>
+                    <span>{message.role === "assistant" ? "Pulse.AI" : "You"}</span>
+                    <p>{message.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <form
+              className="ask-pulse-context-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                askAssistant(assistantPrompt);
+              }}
+            >
+              <input
+                value={assistantPrompt}
+                onChange={(event) => setAssistantPrompt(event.target.value)}
+                placeholder={`Ask about ${decision.shortTitle.toLowerCase()}...`}
+                aria-label="Ask Pulse.AI about this decision"
+              />
+              <button type="submit" disabled={!assistantPrompt.trim()} aria-label="Send question to Pulse.AI">
+                <Send size={16} />
+              </button>
+            </form>
+            <p className="ask-pulse-context-note">
+              Responses use the request information currently visible in this decision workspace.
+            </p>
+          </div>
+        )}
+      </section>
     </div>
   );
 }
