@@ -57,6 +57,22 @@ const insightSlides = [
   { group: "UCC", value: "QAR 61M", title: "UCC won QAR 61M in new contract awards this month.", body: "New contracting wins and QAR 22M in procurement savings are offsetting QAR 14M in schedule delays across two sites, keeping UCC on track at 96% of its YTD target. Full-year forecast has been raised to QAR 6.0B.", note: "", tone: "mint" },
   { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet" },
 ];
+
+function InsightPageContent({ slide }: { slide: (typeof insightSlides)[number] }) {
+  return (
+    <div className="insight-page-content">
+      <div className="insight-topline">
+        <span className="insights-badge"><Sparkles size={9} /> Insights</span>
+        <span className="insight-group">{slide.group}</span>
+      </div>
+      <strong>{slide.value}</strong>
+      <h3>{slide.title}</h3>
+      <p>{slide.body}</p>
+      {slide.note && <small>{slide.note}</small>}
+    </div>
+  );
+}
+
 const groupPerformanceByPeriod = {
   Today: [
     { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", forecast: "98%", lastYear: "+3.7%" },
@@ -222,14 +238,19 @@ export function PulseReference3DDark() {
                     key={`${slide.group}-${index}`}
                     aria-hidden={!isRestingPage && !isIncomingPage && !isOutgoingPage}
                   >
-                    <div className="insight-topline">
-                      <span className="insights-badge"><Sparkles size={9} /> Insights</span>
-                      <span className="insight-group">{slide.group}</span>
+                    <div className="insight-page-full">
+                      <InsightPageContent slide={slide} />
                     </div>
-                    <strong>{slide.value}</strong>
-                    <h3>{slide.title}</h3>
-                    <p>{slide.body}</p>
-                    {slide.note && <small>{slide.note}</small>}
+                    <div className="insight-page-half insight-page-left" aria-hidden="true">
+                      <div className="insight-page-half-inner">
+                        <InsightPageContent slide={slide} />
+                      </div>
+                    </div>
+                    <div className="insight-page-half insight-page-right" aria-hidden="true">
+                      <div className="insight-page-half-inner">
+                        <InsightPageContent slide={slide} />
+                      </div>
+                    </div>
                   </article>
                   );
                 })}
