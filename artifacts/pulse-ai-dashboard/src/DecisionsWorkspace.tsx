@@ -369,6 +369,7 @@ export function DecisionsWorkspace({
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   const [searchQuery, setSearchQuery] = useState("");
   const [priorityOnly, setPriorityOnly] = useState(false);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(true);
 
   const filteredDecisions = useMemo(() => {
     return extendedDecisions.filter(dec => {
@@ -399,7 +400,7 @@ export function DecisionsWorkspace({
   };
 
   return (
-    <div className="decisions-workspace fade-in" data-testid="decisions-workspace">
+    <div className={`decisions-workspace fade-in ${mobileDetailOpen ? "mobile-detail-open" : "mobile-queue-open"}`} data-testid="decisions-workspace">
       <div className="decisions-header">
          <button type="button" onClick={onBack} className="back-btn" aria-label="Back to Glance" data-testid="button-back">
            <ArrowLeft size={16} /> Back
@@ -452,7 +453,10 @@ export function DecisionsWorkspace({
                 key={dec.id}
                 type="button"
                 className={`queue-item ${i === safeIndex ? 'is-active' : ''} type-${dec.tone}`}
-                onClick={() => setSelectedIndex(i)}
+                onClick={() => {
+                  setSelectedIndex(i);
+                  setMobileDetailOpen(true);
+                }}
                 data-testid={`queue-item-${dec.id}`}
                 aria-current={i === safeIndex ? "true" : undefined}
               >
@@ -509,6 +513,13 @@ export function DecisionsWorkspace({
         )}
         
         <main className="decisions-detail scrollable">
+           <div className="mobile-detail-toolbar">
+             <button type="button" onClick={() => setMobileDetailOpen(false)} aria-label="Back to decision requests">
+               <ArrowLeft size={18} />
+             </button>
+             <strong>Decision Detail</strong>
+             <span aria-hidden="true" />
+           </div>
            {selectedDecision ? (
              <DecisionDetail 
                decision={selectedDecision} 
