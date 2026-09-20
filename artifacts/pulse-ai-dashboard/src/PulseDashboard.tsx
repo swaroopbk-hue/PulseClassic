@@ -321,7 +321,9 @@ export function PulseReference3DDark() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
+  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(() => (
+    new URLSearchParams(window.location.search).get("view") === "decisions"
+  ));
   const [activeNav, setActiveNav] = useState(() => (
     new URLSearchParams(window.location.search).get("view") === "decisions" ? "decisions" : "glance"
   ));
@@ -368,6 +370,12 @@ export function PulseReference3DDark() {
       url.searchParams.delete("view");
     }
     window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [activeNav]);
+
+  useEffect(() => {
+    if (activeNav === "decisions") {
+      setDesktopSidebarCollapsed(true);
+    }
   }, [activeNav]);
 
   const toggleTheme = () => {
@@ -479,7 +487,7 @@ export function PulseReference3DDark() {
             setSidebarOpen(false);
           }}
         >
-          <div className="item-left"><Settings size={15} /> Settings</div>
+          <div className="item-left"><Settings size={15} /> <span>Settings</span></div>
         </button>
       </div>
     </div>
