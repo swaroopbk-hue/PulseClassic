@@ -197,6 +197,7 @@
 }
 
 .masthead-insight {
+  --insight-turn-duration: 820ms;
   width: 100%;
   height: 220px;
   min-height: 220px;
@@ -284,6 +285,33 @@
   color: #f7fbfc;
 }
 
+.masthead-insight .insight-page-content > strong {
+  text-shadow: 0 1px 18px rgba(0, 0, 0, .14);
+}
+
+.masthead-insight .insight-page-content.performance-positive > strong {
+  color: #8de2b7;
+}
+
+.masthead-insight .insight-page-content.performance-negative > strong {
+  color: #ff9aaa;
+}
+
+.masthead-insight .insight-page-content h3 {
+  margin-top: 9px;
+  margin-bottom: 0;
+  line-height: 1.22;
+}
+
+.masthead-insight .insight-page-content p {
+  margin-top: 10px;
+  line-height: 1.38;
+}
+
+.masthead-insight .insight-page-content small {
+  padding-top: 10px;
+}
+
 .insight-page-half {
   display: none;
   position: absolute;
@@ -293,12 +321,28 @@
   overflow: hidden;
 }
 
+.insight-page-left {
+  border-radius: 12px 0 0 12px;
+}
+
+.insight-page-right {
+  border-radius: 0 12px 12px 0;
+}
+
 .insight-page-face {
   position: absolute;
   inset: 0;
   overflow: hidden;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+}
+
+.insight-page-left .insight-page-face {
+  border-radius: 12px 0 0 12px;
+}
+
+.insight-page-right .insight-page-face {
+  border-radius: 0 12px 12px 0;
 }
 
 .insight-page-front {
@@ -408,35 +452,35 @@
 }
 
 .masthead-insight .insight-slide.is-turning-forward .insight-page-left {
-  animation: insightFixedHalfRelease 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightFixedHalfRelease var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-forward .insight-page-right {
-  animation: insightRightPageTurn 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightRightPageTurn var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-forward .insight-page-right::before {
-  animation: insightFoldLightForward 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightFoldLightForward var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-forward .insight-page-right::after {
-  animation: insightOuterEdgeForward 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightOuterEdgeForward var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-reverse .insight-page-right {
-  animation: insightFixedHalfRelease 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightFixedHalfRelease var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-reverse .insight-page-left {
-  animation: insightLeftPageTurn 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightLeftPageTurn var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-reverse .insight-page-left::before {
-  animation: insightFoldLightReverse 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightFoldLightReverse var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 .masthead-insight .insight-slide.is-turning-reverse .insight-page-left::after {
-  animation: insightOuterEdgeReverse 1000ms cubic-bezier(.77, 0, .175, 1) both;
+  animation: insightOuterEdgeReverse var(--insight-turn-duration) cubic-bezier(.77, 0, .175, 1) both;
 }
 
 @keyframes insightRightPageTurn {

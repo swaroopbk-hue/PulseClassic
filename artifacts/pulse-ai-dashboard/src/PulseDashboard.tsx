@@ -52,16 +52,16 @@ const decisions = [
   { type: "Signal", title: "Baladna forecast outperformance", description: "Performance is tracking 11.0% above the current YTD forecast.", action: "Open insight", meta: "2 hrs ago", tone: "signal", sourcePlatform: "Signature.ai", isPriority: false, dueDate: "No action required", status: "Ready for executive review", requester: "Pulse.ai", value: "+11.0% YTD" },
 ] as const;
 const insightSlides = [
-  { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
-  { group: "Assets", value: "88%", title: "Assets Group is 12 points behind its YTD target.", body: "Hospitality occupancy is down 4.2 pts and retail footfall has fallen 71%, while commercial leasing revenue is QAR 12M short of plan. Current trajectory points to roughly QAR 38M of annual revenue exposure if it continues.", note: "", tone: "coral" },
-  { group: "Estithmar Aviation Services", value: "106%", title: "Estithmar Aviation Services is running 6 points ahead of plan.", body: "Aviation ground-services growth and new facilities-management contracts have lifted the group a point ahead of its YTD target. A QAR 18.4M capacity-expansion request for aviation ground services is awaiting your approval.", note: "", tone: "blue" },
-  { group: "UCC", value: "QAR 61M", title: "UCC won QAR 61M in new contract awards this month.", body: "New contracting wins and QAR 22M in procurement savings are offsetting QAR 14M in schedule delays across two sites, keeping UCC on track at 96% of its YTD target. Full-year forecast has been raised to QAR 6.0B.", note: "", tone: "mint" },
-  { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet" },
+  { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue", performance: "positive" },
+  { group: "Assets", value: "88%", title: "Assets Group is 12 points behind its YTD target.", body: "Hospitality occupancy is down 4.2 pts and retail footfall has fallen 71%, while commercial leasing revenue is QAR 12M short of plan. Current trajectory points to roughly QAR 38M of annual revenue exposure if it continues.", note: "", tone: "coral", performance: "negative" },
+  { group: "Estithmar Aviation Services", value: "106%", title: "Estithmar Aviation Services is running 6 points ahead of plan.", body: "Aviation ground-services growth and new facilities-management contracts have lifted the group a point ahead of its YTD target. A QAR 18.4M capacity-expansion request for aviation ground services is awaiting your approval.", note: "", tone: "blue", performance: "positive" },
+  { group: "UCC", value: "QAR 61M", title: "UCC won QAR 61M in new contract awards this month.", body: "New contracting wins and QAR 22M in procurement savings are offsetting QAR 14M in schedule delays across two sites, keeping UCC on track at 96% of its YTD target. Full-year forecast has been raised to QAR 6.0B.", note: "", tone: "mint", performance: "positive" },
+  { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet", performance: "positive" },
 ];
 
 function InsightPageContent({ slide }: { slide: (typeof insightSlides)[number] }) {
   return (
-    <div className="insight-page-content">
+    <div className={`insight-page-content performance-${slide.performance}`}>
       <div className="insight-topline">
         <span className="insights-badge"><Sparkles size={9} /> Insights</span>
         <span className="insight-group">{slide.group}</span>
@@ -300,7 +300,7 @@ export function PulseReference3DDark() {
       setInsightTransition(null);
       insightAnimatingRef.current = false;
       insightTransitionTimerRef.current = null;
-    }, 1000);
+    }, 820);
   }, [insightIndex]);
 
   useEffect(() => {
