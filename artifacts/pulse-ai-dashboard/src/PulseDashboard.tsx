@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ArrowLeft, Bell, ChevronLeft, ChevronRight, Clock, Maximize2, Minimize2, Moon, Search, Send, Sparkles, Sun } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
@@ -50,13 +50,6 @@ const decisions = [
   { type: "Approval", title: "New contract wins", shortTitle: "Review new contract award", description: "QAR 18M · decision due this week.", detail: "A new QAR 18M contract award is ready for commercial review before the decision window closes this week.", action: "Open", meta: "1 hr ago", tone: "approval" },
   { type: "Signal", title: "Baladna beat forecast", shortTitle: "Baladna forecast outperformance", description: "Performance is tracking +11.0% YTD.", detail: "Baladna is outperforming the current forecast, creating an opportunity to reassess the group outlook and near-term allocation.", action: "Open", meta: "2 hrs ago", tone: "signal" },
 ] as const;
-const pulseQuestions = [
-  "What is driving UCC's margin change?",
-  "Which group is closest to missing forecast?",
-  "How is Estithmar tracking against plan?",
-  "What changed in Assets hospitality occupancy?",
-  "Where should the executive team focus today?",
-];
 const insightSlides = [
   { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
   { group: "Assets", value: "88%", title: "Assets Group is 12 points behind its YTD target.", body: "Hospitality occupancy is down 4.2 pts and retail footfall has fallen 71%, while commercial leasing revenue is QAR 12M short of plan. Current trajectory points to roughly QAR 38M of annual revenue exposure if it continues.", note: "", tone: "coral" },
@@ -66,69 +59,53 @@ const insightSlides = [
 ];
 const groupPerformanceByPeriod = {
   Today: [
-    { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", lastYear: "+3.7%" },
-    { name: "UCC Holding", short: "UCC Holding", value: "365M", change: "−1.4%", direction: "down", height: 68, budget: "91%", lastYear: "−0.8%" },
-    { name: "Estithmar Holding", short: "Estithmar Holding", value: "398M", change: "+3.8%", direction: "up", height: 73, budget: "95%", lastYear: "+3.2%" },
-    { name: "Baladna", short: "Baladna", value: "284M", change: "+1.2%", direction: "up", height: 52, budget: "98%", lastYear: "+1.0%" },
-    { name: "TMT", short: "TMT", value: "312M", change: "+2.6%", direction: "up", height: 58, budget: "94%", lastYear: "+2.1%" },
-    { name: "Assets Group", short: "Assets Group", value: "216M", change: "−2.1%", direction: "down", height: 40, budget: "88%", lastYear: "−1.7%" },
-    { name: "Aura Group", short: "Aura Group", value: "247M", change: "+0.8%", direction: "stable", height: 46, budget: "93%", lastYear: "+0.6%" },
+    { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", forecast: "98%", lastYear: "+3.7%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "365M", change: "−1.4%", direction: "down", height: 68, budget: "91%", forecast: "93%", lastYear: "−0.8%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "398M", change: "+3.8%", direction: "up", height: 73, budget: "95%", forecast: "97%", lastYear: "+3.2%" },
+    { name: "Baladna", short: "Baladna", value: "284M", change: "+1.2%", direction: "up", height: 52, budget: "98%", forecast: "101%", lastYear: "+1.0%" },
+    { name: "TMT", short: "TMT", value: "312M", change: "+2.6%", direction: "up", height: 58, budget: "94%", forecast: "96%", lastYear: "+2.1%" },
+    { name: "Assets Group", short: "Assets Group", value: "216M", change: "−2.1%", direction: "down", height: 40, budget: "88%", forecast: "90%", lastYear: "−1.7%" },
+    { name: "Aura Group", short: "Aura Group", value: "247M", change: "+0.8%", direction: "stable", height: 46, budget: "93%", forecast: "94%", lastYear: "+0.6%" },
   ],
   MTD: [
-    { name: "Power International", short: "Power International", value: "12.8B", change: "+8.4%", direction: "up", height: 88, budget: "97%", lastYear: "+7.9%" },
-    { name: "UCC Holding", short: "UCC Holding", value: "9.6B", change: "−2.8%", direction: "down", height: 66, budget: "90%", lastYear: "−2.1%" },
-    { name: "Estithmar Holding", short: "Estithmar Holding", value: "11.4B", change: "+5.7%", direction: "up", height: 79, budget: "96%", lastYear: "+5.1%" },
-    { name: "Baladna", short: "Baladna", value: "7.2B", change: "+1.9%", direction: "up", height: 50, budget: "99%", lastYear: "+1.5%" },
-    { name: "TMT", short: "TMT", value: "8.9B", change: "+6.3%", direction: "up", height: 62, budget: "95%", lastYear: "+5.8%" },
-    { name: "Assets Group", short: "Assets Group", value: "5.8B", change: "−4.1%", direction: "down", height: 40, budget: "87%", lastYear: "−3.6%" },
-    { name: "Aura Group", short: "Aura Group", value: "6.7B", change: "+1.4%", direction: "stable", height: 46, budget: "92%", lastYear: "+1.1%" },
+    { name: "Power International", short: "Power International", value: "12.8B", change: "+8.4%", direction: "up", height: 88, budget: "97%", forecast: "101%", lastYear: "+7.9%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "9.6B", change: "−2.8%", direction: "down", height: 66, budget: "90%", forecast: "92%", lastYear: "−2.1%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "11.4B", change: "+5.7%", direction: "up", height: 79, budget: "96%", forecast: "99%", lastYear: "+5.1%" },
+    { name: "Baladna", short: "Baladna", value: "7.2B", change: "+1.9%", direction: "up", height: 50, budget: "99%", forecast: "102%", lastYear: "+1.5%" },
+    { name: "TMT", short: "TMT", value: "8.9B", change: "+6.3%", direction: "up", height: 62, budget: "95%", forecast: "98%", lastYear: "+5.8%" },
+    { name: "Assets Group", short: "Assets Group", value: "5.8B", change: "−4.1%", direction: "down", height: 40, budget: "87%", forecast: "89%", lastYear: "−3.6%" },
+    { name: "Aura Group", short: "Aura Group", value: "6.7B", change: "+1.4%", direction: "stable", height: 46, budget: "92%", forecast: "94%", lastYear: "+1.1%" },
   ],
   YTD: [
-    { name: "Power International", short: "Power International", value: "132B", change: "+12%", direction: "up", height: 91, budget: "98%", lastYear: "+11.2%" },
-    { name: "UCC Holding", short: "UCC Holding", value: "118B", change: "−3.8%", direction: "down", height: 81, budget: "91%", lastYear: "−3.1%" },
-    { name: "Estithmar Holding", short: "Estithmar Holding", value: "145B", change: "+6.4%", direction: "up", height: 100, budget: "97%", lastYear: "+5.9%" },
-    { name: "Baladna", short: "Baladna", value: "96B", change: "+11.4%", direction: "up", height: 66, budget: "104%", lastYear: "+10.7%" },
-    { name: "TMT", short: "TMT", value: "84B", change: "+9.1%", direction: "up", height: 58, budget: "96%", lastYear: "+8.6%" },
-    { name: "Assets Group", short: "Assets Group", value: "72B", change: "−5.2%", direction: "down", height: 50, budget: "88%", lastYear: "−4.8%" },
-    { name: "Aura Group", short: "Aura Group", value: "65B", change: "+1.1%", direction: "stable", height: 45, budget: "93%", lastYear: "+0.9%" },
+    { name: "Power International", short: "Power International", value: "132B", change: "+12%", direction: "up", height: 91, budget: "98%", forecast: "103%", lastYear: "+11.2%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "118B", change: "−3.8%", direction: "down", height: 81, budget: "91%", forecast: "94%", lastYear: "−3.1%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "145B", change: "+6.4%", direction: "up", height: 100, budget: "97%", forecast: "101%", lastYear: "+5.9%" },
+    { name: "Baladna", short: "Baladna", value: "96B", change: "+11.4%", direction: "up", height: 66, budget: "104%", forecast: "108%", lastYear: "+10.7%" },
+    { name: "TMT", short: "TMT", value: "84B", change: "+9.1%", direction: "up", height: 58, budget: "96%", forecast: "100%", lastYear: "+8.6%" },
+    { name: "Assets Group", short: "Assets Group", value: "72B", change: "−5.2%", direction: "down", height: 50, budget: "88%", forecast: "91%", lastYear: "−4.8%" },
+    { name: "Aura Group", short: "Aura Group", value: "65B", change: "+1.1%", direction: "stable", height: 45, budget: "93%", forecast: "95%", lastYear: "+0.9%" },
   ],
-} satisfies Record<Period, Array<{ name: string; short: string; value: string; change: string; direction: string; height: number; budget: string; lastYear: string }>>;
+} satisfies Record<Period, Array<{ name: string; short: string; value: string; change: string; direction: string; height: number; budget: string; forecast: string; lastYear: string }>>;
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
-  const [query, setQuery] = useState("");
-  const [answer, setAnswer] = useState("");
   const [profile, setProfile] = useState(false);
   const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
-  const [questionIndex, setQuestionIndex] = useState(0);
   const [insightIndex, setInsightIndex] = useState(0);
   const [groupIndex, setGroupIndex] = useState(2);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groupChatOpen, setGroupChatOpen] = useState(true);
   const [groupQuestion, setGroupQuestion] = useState("");
   const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
-  const [assistantExpanded, setAssistantExpanded] = useState(false);
   const [decisionIndex, setDecisionIndex] = useState(0);
   const [decisionsViewAll, setDecisionsViewAll] = useState(false);
   const enterprise = enterprisePerformance[period];
   const groupPerformance = groupPerformanceByPeriod[period];
 
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setQuestionIndex((current) => (current + 1) % pulseQuestions.length);
-    }, 3200);
-    return () => window.clearInterval(timer);
-  }, []);
-
   const notify = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(""), 2200);
-  };
-
-  const ask = () => {
-    if (!query.trim()) return;
-    setAnswer("Pulse identifies Assets as the priority: QAR 214M below forecast, with occupancy and leasing as the evidence-backed drivers.");
   };
 
   const toggleTheme = () => {
@@ -139,7 +116,6 @@ export function PulseReference3DDark() {
 
   const askGroup = () => {
     if (!groupQuestion.trim()) return;
-    setAnswer(`${groupPerformance[groupIndex].name} is at ${groupPerformance[groupIndex].value}, ${groupPerformance[groupIndex].change} versus last period. Pulse is comparing the movement against the current enterprise forecast.`);
     notify("Group performance analysis ready");
   };
 
@@ -178,29 +154,44 @@ export function PulseReference3DDark() {
         <div className="exe-masthead">
           <div className="masthead-top">
             <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / QAR CONSOLIDATED VIEW</div>
-            <div className="masthead-controls">
-              <div className="period-tabs">
-                {periods.map((item) => (
-                  <button
-                    data-testid={`button-period-${item.toLowerCase()}`}
-                    className={`period-tab ${period === item ? "active" : ""}`}
-                    onClick={() => setPeriod(item)}
-                    key={item}
-                  >
-                    {item}
-                  </button>
+          </div>
+          <div className="masthead-grid">
+            <div className="masthead-content">
+              <h1 className="masthead-headline">
+                Good Morning, Jasim
+              </h1>
+              <p className="masthead-subhead">
+                 Revenue is tracking at <strong>QAR {enterprise.revenue}{enterprise.revenueUnit.startsWith("B") ? "B" : ""}</strong>, {enterprise.achieved - enterprise.elapsed} pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
+              </p>
+            </div>
+            <section className="insight-card masthead-insight" aria-label="Pulse Insights carousel">
+              <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 20}%)` }}>
+                {insightSlides.map((slide, index) => (
+                  <article className="insight-slide" key={`${slide.group}-${index}`}>
+                    <div className="insight-topline">
+                      <span className="insights-badge"><Sparkles size={9} /> Insights</span>
+                      <span className="insight-group">{slide.group}</span>
+                    </div>
+                    <strong>{slide.value}</strong>
+                    <h3>{slide.title}</h3>
+                    <p>{slide.body}</p>
+                    {slide.note && <small>{slide.note}</small>}
+                  </article>
                 ))}
               </div>
-              <div className="current-date">18 Jun 2024</div>
-            </div>
-          </div>
-          <div className="masthead-content">
-            <h1 className="masthead-headline">
-              Good Morning, Jasim
-            </h1>
-            <p className="masthead-subhead">
-               Revenue is tracking at <strong>QAR {enterprise.revenue}{enterprise.revenueUnit.startsWith("B") ? "B" : ""}</strong>, {enterprise.achieved - enterprise.elapsed} pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
-            </p>
+              <div className="insight-progress" role="tablist" aria-label="Insight slides">
+                {insightSlides.map((slide, index) => (
+                  <button
+                    key={`${slide.group}-${index}`}
+                    className={index === insightIndex ? "active" : ""}
+                    onClick={() => setInsightIndex(index)}
+                    aria-label={`Show insight ${index + 1}: ${slide.group}`}
+                    aria-selected={index === insightIndex}
+                    role="tab"
+                  />
+                ))}
+              </div>
+            </section>
           </div>
         </div>
 
@@ -208,7 +199,18 @@ export function PulseReference3DDark() {
           <div className="exe-section-header">
             <h2><span>01</span> Enterprise position</h2>
             <div className="exe-section-line"></div>
-            <span className="exe-section-meta">{period} &middot; FY24 plan</span>
+            <div className="period-tabs" aria-label="Dashboard period">
+              {periods.map((item) => (
+                <button
+                  data-testid={`button-period-${item.toLowerCase()}`}
+                  className={`period-tab ${period === item ? "active" : ""}`}
+                  onClick={() => setPeriod(item)}
+                  key={item}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
@@ -263,23 +265,9 @@ export function PulseReference3DDark() {
                 <h2>Group Performance</h2>
                  <p>{period} revenue movement across the enterprise portfolio</p>
               </div>
-                <div className="group-performance-controls">
-                  <div className="group-period-tabs" aria-label="Group performance period">
-                    {periods.map((item) => (
-                      <button
-                        data-testid={`button-group-period-${item.toLowerCase()}`}
-                        className={`group-period-tab ${period === item ? "active" : ""}`}
-                        onClick={() => setPeriod(item)}
-                        key={item}
-                      >
-                        {item}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="group-view-actions" aria-label="Group performance views">
-                    <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
-                    <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
-                  </div>
+                <div className="group-view-actions" aria-label="Group performance views">
+                  <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
+                  <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
                </div>
             </div>
              {groupView === "orbit" ? (
@@ -338,12 +326,11 @@ export function PulseReference3DDark() {
                     <span className="group-bar-wrap"><i style={{ height: `${group.height}%` }} /></span>
                     {hoveredGroup === index && (
                       <div className="group-hover-tooltip" role="status">
-                        <b>{group.value}</b>
-                         <span>Revenue</span>
+                        <span>Budget: <strong>{group.budget}</strong></span>
                         <i />
-                          <span>Budget: <strong>{group.budget}</strong></span>
+                        <span>Forecast: <strong>{group.forecast}</strong></span>
                         <i />
-                           <span>{period === "Today" ? "Prior day" : period === "MTD" ? "Prior MTD" : "LY"}: <strong>{group.lastYear}</strong></span>
+                        <span>LY: <strong>{group.lastYear}</strong></span>
                       </div>
                       )}
                   </div>
@@ -378,34 +365,6 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="ref-bottom">
-             <section className={`ref-card assistant-card ${assistantExpanded ? "assistant-expanded" : ""}`}>
-               <div className="card-head assistant-heading">
-                 <h2>AI Assistant</h2>
-                 <button
-                   data-testid="button-expand-assistant"
-                   className="assistant-expand"
-                   onClick={() => setAssistantExpanded((expanded) => !expanded)}
-                   aria-label={assistantExpanded ? "Exit expanded AI Assistant" : "Expand AI Assistant"}
-                 >
-                   {assistantExpanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-                 </button>
-               </div>
-               <button className="assistant-orb" onClick={() => { setQuery(pulseQuestions[questionIndex]); notify("Question added to Ask Pulse"); }} aria-label="Use suggested business question">
-                 <span className="orb-core" />
-               </button>
-               <div className="assistant-input">
-                 <Search size={12} />
-                  <input data-testid="input-ask-pulse"
-                   value={query}
-                   onChange={(event) => setQuery(event.target.value)}
-                   onKeyDown={(event) => event.key === "Enter" && ask()}
-                   placeholder={pulseQuestions[questionIndex]}
-                   aria-label="Ask Pulse a business question"
-                 />
-                  <button data-testid="button-ask-pulse" onClick={ask} aria-label="Ask Pulse"><Send size={11} /></button>
-               </div>
-                {answer && <div className="ask-result" data-testid="text-pulse-answer">{answer}</div>}
-            </section>
              <section className={`ref-card stat-card decisions-card ${decisionsViewAll ? "decisions-all" : ""}`} aria-label="Executive decisions">
                {decisionsViewAll ? (
                  <div className="decisions-workspace">
@@ -464,35 +423,21 @@ export function PulseReference3DDark() {
                  </>
                )}
              </section>
-             <section className="insight-card" aria-label="Pulse Insights carousel">
-               <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 20}%)` }}>
-                 {insightSlides.map((slide, index) => (
-                   <article className="insight-slide" key={`${slide.group}-${index}`}>
-                     <div className="insight-topline">
-                       <span className="insights-badge"><Sparkles size={9} /> Insights</span>
-                       <span className="insight-group">{slide.group}</span>
-                     </div>
-                     <strong>{slide.value}</strong>
-                     <h3>{slide.title}</h3>
-                     <p>{slide.body}</p>
-                     {slide.note && <small>{slide.note}</small>}
-                   </article>
-                 ))}
-               </div>
-               <div className="insight-progress" role="tablist" aria-label="Insight slides">
-                 {insightSlides.map((slide, index) => (
-                   <button
-                     key={`${slide.group}-${index}`}
-                     className={index === insightIndex ? "active" : ""}
-                     onClick={() => setInsightIndex(index)}
-                     aria-label={`Show insight ${index + 1}: ${slide.group}`}
-                     aria-selected={index === insightIndex}
-                     role="tab"
-                   />
-                 ))}
-               </div>
-             </section>
           </div>
+
+          <div className="exe-section-header agents-section-header">
+            <h2><span>04</span> Our Agents</h2>
+            <div className="exe-section-line"></div>
+          </div>
+
+          <section className="agents-grid" aria-label="Our Agents placeholders">
+            {[1, 2, 3, 4].map((agent) => (
+              <article className="agent-placeholder-card" key={agent}>
+                <span>Agent {String(agent).padStart(2, "0")}</span>
+                <p>Details coming soon</p>
+              </article>
+            ))}
+          </section>
         </div>
       </main>
       {toast && <div className="toast">{toast}</div>}
