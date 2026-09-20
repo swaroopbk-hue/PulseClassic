@@ -2251,6 +2251,13 @@
   padding-bottom: 24px;
 }
 
+/* Final sidebar size override: keep every existing typography property except size. */
+.pulse-ref3d .exe-sidebar .exe-sidebar-ask,
+.pulse-ref3d .exe-sidebar .exe-sidebar-item,
+.pulse-ref3d .exe-sidebar .exe-sidebar-item.is-long-label {
+  font-size: 11px;
+}
+
 @media (max-width: 640px) {
   .landing-agent-marquee .marquee-card {
     width: 118px;
