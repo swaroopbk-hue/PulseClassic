@@ -226,6 +226,9 @@ export function PulseReference3DDark() {
                   const isOutgoingPage = insightTransition?.from === index;
                   const isIncomingPage = insightTransition?.to === index;
                   const transitionDirection = isOutgoingPage ? insightTransition.direction : "";
+                  const reverseSideSlide = isOutgoingPage && insightTransition
+                    ? insightSlides[insightTransition.to]
+                    : slide;
 
                   return (
                   <article
@@ -242,13 +245,27 @@ export function PulseReference3DDark() {
                       <InsightPageContent slide={slide} />
                     </div>
                     <div className="insight-page-half insight-page-left" aria-hidden="true">
-                      <div className="insight-page-half-inner">
-                        <InsightPageContent slide={slide} />
+                      <div className="insight-page-face insight-page-front">
+                        <div className="insight-page-half-inner">
+                          <InsightPageContent slide={slide} />
+                        </div>
+                      </div>
+                      <div className="insight-page-face insight-page-back">
+                        <div className="insight-page-half-inner">
+                          <InsightPageContent slide={reverseSideSlide} />
+                        </div>
                       </div>
                     </div>
                     <div className="insight-page-half insight-page-right" aria-hidden="true">
-                      <div className="insight-page-half-inner">
-                        <InsightPageContent slide={slide} />
+                      <div className="insight-page-face insight-page-front">
+                        <div className="insight-page-half-inner">
+                          <InsightPageContent slide={slide} />
+                        </div>
+                      </div>
+                      <div className="insight-page-face insight-page-back">
+                        <div className="insight-page-half-inner">
+                          <InsightPageContent slide={reverseSideSlide} />
+                        </div>
                       </div>
                     </div>
                   </article>
