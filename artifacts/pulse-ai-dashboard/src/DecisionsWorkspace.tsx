@@ -19,7 +19,7 @@ const extendedDecisions = [
     amount: "QAR 42,000,000",
     isPriority: true,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP S/4HANA",
     dueDate: "Due Today",
     requester: { name: "Khalid Al-Mahmoud", role: "VP Infrastructure", initials: "KA" },
     context: [
@@ -90,7 +90,7 @@ const extendedDecisions = [
     amount: "QAR 18,000,000",
     isPriority: false,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP S/4HANA",
     dueDate: "Due Thursday",
     requester: { name: "Ahmed Hassan", role: "Commercial Director", initials: "AH" },
     context: [
@@ -157,7 +157,7 @@ const extendedDecisions = [
     amount: "QAR 340,000",
     isPriority: false,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP SuccessFactors",
     dueDate: "Due Friday",
     requester: { name: "Fatima Al-Thani", role: "Investor Relations", initials: "FA" },
     context: [
@@ -191,7 +191,7 @@ const extendedDecisions = [
     amount: "USD 210,000",
     isPriority: false,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "IT Service Desk",
     dueDate: "Due Next Week",
     requester: { name: "Omar Siddiqui", role: "CTO", initials: "OS" },
     context: [
@@ -227,7 +227,7 @@ const extendedDecisions = [
     amount: "QAR 1,200,000",
     isPriority: false,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP S/4HANA",
     dueDate: "Due Tomorrow",
     requester: { name: "Lina Marwan", role: "CMO", initials: "LM" },
     context: [
@@ -260,7 +260,7 @@ const extendedDecisions = [
     tone: "risk",
     isPriority: true,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "IT Service Desk",
     dueDate: "Immediate",
     requester: { name: "Tariq Ali", role: "CISO", initials: "TA" },
     context: [
@@ -294,7 +294,7 @@ const extendedDecisions = [
     amount: "QAR 85,000",
     isPriority: false,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP SuccessFactors",
     dueDate: "Next Payroll",
     requester: { name: "Nadia Youssef", role: "CHRO", initials: "NY" },
     context: [
@@ -329,7 +329,7 @@ const extendedDecisions = [
     amount: "QAR 4,800,000",
     isPriority: true,
     status: "Pending",
-    sourcePlatform: "Signature.ai",
+    sourcePlatform: "SAP S/4HANA",
     dueDate: "Due Today",
     requester: { name: "Hassan Ibrahim", role: "Fleet Director", initials: "HI" },
     context: [

@@ -321,12 +321,14 @@ export function PulseReference3DDark() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(() => (
-    new URLSearchParams(window.location.search).get("view") === "decisions"
-  ));
+  const [sidebarPreferenceCollapsed, setSidebarPreferenceCollapsed] = useState(false);
+  const [decisionSidebarExpanded, setDecisionSidebarExpanded] = useState(false);
   const [activeNav, setActiveNav] = useState(() => (
     new URLSearchParams(window.location.search).get("view") === "decisions" ? "decisions" : "glance"
   ));
+  const desktopSidebarCollapsed = activeNav === "decisions"
+    ? !decisionSidebarExpanded
+    : sidebarPreferenceCollapsed;
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuCloseRef = useRef<HTMLButtonElement>(null);
   const sidebarWasOpenRef = useRef(false);
@@ -374,7 +376,7 @@ export function PulseReference3DDark() {
 
   useEffect(() => {
     if (activeNav === "decisions") {
-      setDesktopSidebarCollapsed(true);
+      setDecisionSidebarExpanded(false);
     }
   }, [activeNav]);
 
@@ -541,7 +543,13 @@ export function PulseReference3DDark() {
           <button 
             type="button" 
             className="sidebar-collapse-trigger"
-            onClick={() => setDesktopSidebarCollapsed(!desktopSidebarCollapsed)}
+            onClick={() => {
+              if (activeNav === "decisions") {
+                setDecisionSidebarExpanded(desktopSidebarCollapsed);
+              } else {
+                setSidebarPreferenceCollapsed(!desktopSidebarCollapsed);
+              }
+            }}
             aria-label="Toggle sidebar"
             title={desktopSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
