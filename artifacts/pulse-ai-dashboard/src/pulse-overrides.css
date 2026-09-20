@@ -1145,6 +1145,40 @@
   flex-direction: column;
   background: var(--exe-bg);
   transition: width 240ms cubic-bezier(.23, 1, .32, 1);
+  position: relative;
+}
+
+.sidebar-collapse-trigger {
+  position: absolute;
+  right: -12px;
+  bottom: 80px;
+  width: 24px;
+  height: 24px;
+  background: var(--card);
+  border: 1px solid var(--exe-line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--exe-ink-light);
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pulse-ref3d.dark .sidebar-collapse-trigger {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-collapse-trigger:hover {
+  color: var(--exe-ink);
+  border-color: var(--exe-blue-dark);
+}
+
+.pulse-ref3d.dark .sidebar-collapse-trigger:hover {
+  color: #fff;
+  border-color: #8eb3d6;
 }
 
 @media (min-width: 1025px) {

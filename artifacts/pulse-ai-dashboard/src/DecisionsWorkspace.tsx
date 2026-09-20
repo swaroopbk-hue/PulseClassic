@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { 
   AlertCircle, ArrowLeft, Check, CheckCircle2, Clock, Download,
-  FileSpreadsheet, FileText, MessageSquare, Share, ThumbsUp, XCircle
+  FileSpreadsheet, FileText, MessageSquare, Share, ThumbsUp, XCircle, Search, Sparkles
 } from "lucide-react";
 import "./decisions.css";
 
-// Define enhanced data with rich content for the workspace
 const extendedDecisions = [
   {
     id: "DEC-882",
@@ -20,6 +19,8 @@ const extendedDecisions = [
     amount: "QAR 42,000,000",
     priority: "High",
     status: "Pending",
+    sourcePlatform: "SAP Ariba",
+    dueDate: "Due Today",
     requester: { name: "Khalid Al-Mahmoud", role: "VP Infrastructure", initials: "KA" },
     context: [
       "Phase two of the Lusail infrastructure development has reached its contractor milestone. The capital release of QAR 42M is required to authorize the next stage of procurement and labor allocation.",
@@ -37,6 +38,7 @@ const extendedDecisions = [
     workflow: [
       { step: "Milestone Verified", actor: "Project Management Office", time: "Oct 12, 09:30 AM", status: "completed" },
       { step: "Financial Audit", actor: "Finance Control", time: "Oct 12, 11:45 AM", status: "completed", note: "Funds verified in Q3 allocation." },
+      { step: "Director Review", actor: "Operations Director", time: "Oct 13, 10:15 AM", status: "completed" },
       { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" },
       { step: "Funds Disbursement", actor: "Treasury", time: "Awaiting", status: "pending" }
     ]
@@ -53,6 +55,8 @@ const extendedDecisions = [
     tone: "risk",
     priority: "High",
     status: "Pending",
+    sourcePlatform: "Oracle ERP",
+    dueDate: "Due Tomorrow",
     requester: { name: "Sarah Jenkins", role: "Director, Hospitality", initials: "SJ" },
     context: [
       "Forward bookings for Q4 are currently tracking 4.2% below the seasonal baseline, primarily concentrated in our two flagship luxury properties.",
@@ -86,6 +90,8 @@ const extendedDecisions = [
     amount: "QAR 18,000,000",
     priority: "Medium",
     status: "Pending",
+    sourcePlatform: "Salesforce",
+    dueDate: "Due Thursday",
     requester: { name: "Ahmed Hassan", role: "Commercial Director", initials: "AH" },
     context: [
       "A newly negotiated QAR 18M facilities management contract for the Al Rayyan complex has been finalized. The margins are slightly above our baseline target, but require executive sign-off due to the multi-year commitment structure.",
@@ -118,6 +124,8 @@ const extendedDecisions = [
     tone: "signal",
     priority: "Low",
     status: "Pending",
+    sourcePlatform: "Power BI",
+    dueDate: "No Action Required",
     requester: { name: "Pulse.ai", role: "Automated Insight", initials: "AI" },
     context: [
       "Baladna continues to outperform its YTD targets by 11.0%, driven by higher than expected export volumes and improved operational efficiencies in Q3.",
@@ -135,6 +143,214 @@ const extendedDecisions = [
       { step: "Signal Generated", actor: "Pulse.ai", time: "Today, 04:00 AM", status: "completed" },
       { step: "Executive Review", actor: "Jasim", time: "Pending", status: "current" }
     ]
+  },
+  {
+    id: "DEC-886",
+    type: "Approval",
+    title: "Executive Travel Authorization",
+    shortTitle: "Approve executive travel",
+    description: "Multi-city roadshow across Asia.",
+    detail: "The Q4 investor roadshow requires approval for private charter and ground logistics across Singapore, Tokyo, and Seoul.",
+    action: "Review",
+    meta: "3 hrs ago",
+    tone: "approval",
+    amount: "QAR 340,000",
+    priority: "Medium",
+    status: "Pending",
+    sourcePlatform: "Workday",
+    dueDate: "Due Friday",
+    requester: { name: "Fatima Al-Thani", role: "Investor Relations", initials: "FA" },
+    context: [
+      "The scheduled Q4 investor roadshow spans Singapore, Tokyo, and Seoul. Due to the tight timeline between meetings, commercial flights are not viable.",
+      "We are requesting authorization for private charter logistics to ensure the executive team can meet the back-to-back schedule."
+    ],
+    impact: [
+      { category: "Cost", value: "QAR 340k", trend: "negative", subtitle: "Charter + Logistics" },
+      { category: "Time Saved", value: "28 Hrs", trend: "positive", subtitle: "Vs Commercial routing" },
+      { category: "Meetings", value: "14", trend: "neutral", subtitle: "Confirmed investors" }
+    ],
+    attachments: [
+      { name: "Roadshow_Itinerary.pdf", size: "1.2 MB", type: "pdf" }
+    ],
+    workflow: [
+      { step: "Request Submitted", actor: "Fatima Al-Thani", time: "Yesterday, 02:15 PM", status: "completed" },
+      { step: "Finance Review", actor: "Travel Control", time: "Yesterday, 04:30 PM", status: "completed", note: "Cost is within Q4 IR budget." },
+      { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" }
+    ]
+  },
+  {
+    id: "DEC-887",
+    type: "Approval",
+    title: "Enterprise AI License",
+    shortTitle: "Renew GitHub Copilot seats",
+    description: "Annual renewal for 450 engineers.",
+    detail: "The enterprise agreement for developer AI tools is up for renewal. We have negotiated a 5% volume discount for a 2-year commitment.",
+    action: "Review",
+    meta: "4 hrs ago",
+    tone: "approval",
+    amount: "USD 210,000",
+    priority: "Low",
+    status: "Pending",
+    sourcePlatform: "ServiceNow",
+    dueDate: "Due Next Week",
+    requester: { name: "Omar Siddiqui", role: "CTO", initials: "OS" },
+    context: [
+      "Our current GitHub Copilot Enterprise agreement expires on the 30th. Based on internal productivity metrics, the tool has saved an average of 14% development time per sprint.",
+      "Procurement has negotiated a 5% volume discount on the condition of a 2-year commitment for 450 seats."
+    ],
+    impact: [
+      { category: "Dev Time Saved", value: "14%", trend: "positive", subtitle: "Per sprint average" },
+      { category: "Discount", value: "5%", trend: "positive", subtitle: "Volume pricing applied" },
+      { category: "Commitment", value: "2 Yrs", trend: "neutral", subtitle: "Lock-in period" }
+    ],
+    attachments: [
+      { name: "Vendor_Quote_Renewal.pdf", size: "540 KB", type: "pdf" },
+      { name: "Engineering_Productivity_Report.pdf", size: "2.1 MB", type: "pdf" }
+    ],
+    workflow: [
+      { step: "Procurement Negotitation", actor: "IT Sourcing", time: "Oct 05, 11:00 AM", status: "completed" },
+      { step: "CTO Endorsement", actor: "Omar Siddiqui", time: "Oct 08, 09:20 AM", status: "completed" },
+      { step: "CFO Review", actor: "Finance Control", time: "Yesterday, 10:45 AM", status: "completed" },
+      { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" }
+    ]
+  },
+  {
+    id: "DEC-888",
+    type: "Approval",
+    title: "Q4 Marketing Reallocation",
+    shortTitle: "Reallocate Q4 media spend",
+    description: "Shift QAR 1.2M to digital channels.",
+    detail: "Marketing requests shifting print and out-of-home budget towards performance digital to capitalize on current conversion rates.",
+    action: "Review",
+    meta: "5 hrs ago",
+    tone: "approval",
+    amount: "QAR 1,200,000",
+    priority: "Medium",
+    status: "Pending",
+    sourcePlatform: "SAP Ariba",
+    dueDate: "Due Tomorrow",
+    requester: { name: "Lina Marwan", role: "CMO", initials: "LM" },
+    context: [
+      "Current digital conversion rates are outperforming historical baselines by 22%. Conversely, out-of-home tracking shows diminished returns in Q3.",
+      "We request authorization to reallocate QAR 1.2M from the planned Q4 Print/OOH budget directly into programmatic and paid social channels."
+    ],
+    impact: [
+      { category: "Est. Conversions", value: "+15%", trend: "positive", subtitle: "Model projection" },
+      { category: "OOH Presence", value: "-30%", trend: "negative", subtitle: "Reduced visibility" },
+      { category: "Budget Net", value: "Zero", trend: "neutral", subtitle: "No new funds required" }
+    ],
+    attachments: [
+      { name: "Media_Mix_Proposal.pdf", size: "3.4 MB", type: "pdf" }
+    ],
+    workflow: [
+      { step: "Proposal Drafted", actor: "Media Team", time: "Oct 11, 03:00 PM", status: "completed" },
+      { step: "CMO Approval", actor: "Lina Marwan", time: "Yesterday, 09:00 AM", status: "completed" },
+      { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" }
+    ]
+  },
+  {
+    id: "DEC-889",
+    type: "Risk",
+    title: "Cybersecurity Compliance",
+    shortTitle: "Unpatched server vulnerabilities",
+    description: "12 legacy servers require immediate patching.",
+    detail: "A routine scan identified 12 legacy application servers missing critical security patches that expose them to known exploits.",
+    action: "Analyse",
+    meta: "1 d ago",
+    tone: "risk",
+    priority: "High",
+    status: "Pending",
+    sourcePlatform: "Splunk",
+    dueDate: "Immediate",
+    requester: { name: "Tariq Ali", role: "CISO", initials: "TA" },
+    context: [
+      "A scheduled vulnerability scan flagged 12 legacy servers running the old HR portal environment. These systems are missing critical OS patches from last month.",
+      "Patching will require 4 hours of downtime. We need approval for an emergency maintenance window tonight."
+    ],
+    impact: [
+      { category: "Risk Level", value: "Critical", trend: "negative", subtitle: "CVSS Score 9.2" },
+      { category: "Downtime", value: "4 Hrs", trend: "neutral", subtitle: "During off-peak" },
+      { category: "Systems", value: "12", trend: "neutral", subtitle: "Legacy nodes" }
+    ],
+    attachments: [
+      { name: "Vulnerability_Scan_Report.pdf", size: "1.8 MB", type: "pdf" }
+    ],
+    workflow: [
+      { step: "Scan Completed", actor: "SecOps Team", time: "Yesterday, 02:00 AM", status: "completed" },
+      { step: "CISO Escalation", actor: "Tariq Ali", time: "Yesterday, 07:30 AM", status: "completed" },
+      { step: "Executive Review", actor: "Jasim", time: "Pending", status: "current" }
+    ]
+  },
+  {
+    id: "DEC-890",
+    type: "Approval",
+    title: "Regional GM Compensation",
+    shortTitle: "Adjust Dubai GM package",
+    description: "Market adjustment for key leadership role.",
+    detail: "HR recommends a 12% base salary adjustment for the Dubai Regional GM to align with recent market benchmarking data.",
+    action: "Review",
+    meta: "1 d ago",
+    tone: "approval",
+    amount: "QAR 85,000",
+    priority: "Low",
+    status: "Pending",
+    sourcePlatform: "Workday",
+    dueDate: "Next Payroll",
+    requester: { name: "Nadia Youssef", role: "CHRO", initials: "NY" },
+    context: [
+      "Recent market benchmarking by Korn Ferry indicates that our Dubai Regional GM compensation is currently in the 35th percentile for the local market.",
+      "To ensure retention of key talent, HR proposes a 12% upward adjustment to base salary, bringing the package to the targeted 65th percentile."
+    ],
+    impact: [
+      { category: "Annual Cost", value: "QAR 85k", trend: "negative", subtitle: "Prorated for year" },
+      { category: "Retention", value: "High", trend: "positive", subtitle: "Flight risk mitigated" },
+      { category: "Market Position", value: "65th", trend: "neutral", subtitle: "Target percentile" }
+    ],
+    attachments: [
+      { name: "KornFerry_Benchmark_Dubai.pdf", size: "890 KB", type: "pdf" }
+    ],
+    workflow: [
+      { step: "Benchmark Completed", actor: "HR Comp & Ben", time: "Oct 01, 10:00 AM", status: "completed" },
+      { step: "CHRO Endorsement", actor: "Nadia Youssef", time: "Oct 05, 11:30 AM", status: "completed" },
+      { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" },
+      { step: "Payroll Processing", actor: "Finance", time: "Awaiting", status: "pending" }
+    ]
+  },
+  {
+    id: "DEC-891",
+    type: "Approval",
+    title: "Heavy Machinery Fleet",
+    shortTitle: "Procure 5 new excavators",
+    description: "Expand fleet capacity for Q1 projects.",
+    detail: "Operations requires 5 new Caterpillar excavators to support the upcoming pipeline of civil works scheduled for Q1.",
+    action: "Review",
+    meta: "2 d ago",
+    tone: "approval",
+    amount: "QAR 4,800,000",
+    priority: "High",
+    status: "Pending",
+    sourcePlatform: "Oracle ERP",
+    dueDate: "Due Today",
+    requester: { name: "Hassan Ibrahim", role: "Fleet Director", initials: "HI" },
+    context: [
+      "The confirmed pipeline of civil engineering projects for Q1 exceeds our current heavy machinery capacity by approximately 15%.",
+      "We recommend purchasing 5 new Caterpillar excavators rather than leasing, as the multi-year utilization forecast makes Capex far more cost-effective."
+    ],
+    impact: [
+      { category: "Capex", value: "QAR 4.8M", trend: "negative", subtitle: "Asset purchase" },
+      { category: "Capacity", value: "+15%", trend: "positive", subtitle: "Fleet expansion" },
+      { category: "ROI vs Lease", value: "+18%", trend: "positive", subtitle: "Over 36 months" }
+    ],
+    attachments: [
+      { name: "Caterpillar_Quote.pdf", size: "1.1 MB", type: "pdf" },
+      { name: "Lease_vs_Buy_Analysis.xlsx", size: "2.5 MB", type: "excel" }
+    ],
+    workflow: [
+      { step: "Capacity Analysis", actor: "Fleet Planning", time: "Oct 02, 09:00 AM", status: "completed" },
+      { step: "Procurement Review", actor: "Strategic Sourcing", time: "Oct 06, 02:45 PM", status: "completed" },
+      { step: "CFO Endorsement", actor: "Finance Control", time: "Oct 09, 10:15 AM", status: "completed" },
+      { step: "Executive Approval", actor: "Jasim", time: "Pending", status: "current" }
+    ]
   }
 ];
 
@@ -142,37 +358,40 @@ interface DecisionsWorkspaceProps {
   onBack: () => void;
   initialIndex: number;
   onNotify: (msg: string) => void;
-  sidebarCollapsed: boolean;
-  onToggleSidebar: () => void;
-}
-
-function SidebarToggleIcon({ collapsed }: { collapsed: boolean }) {
-  return (
-    <svg viewBox="0 0 18 18" aria-hidden="true">
-      <rect x="2.25" y="2.75" width="13.5" height="12.5" rx="2" />
-      <path d="M6.4 3.2v11.6" />
-      <path d={collapsed ? "m9 7 2 2-2 2" : "m12 7-2 2 2 2"} />
-    </svg>
-  );
 }
 
 export function DecisionsWorkspace({
   onBack,
   initialIndex = 0,
   onNotify,
-  sidebarCollapsed,
-  onToggleSidebar,
 }: DecisionsWorkspaceProps) {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
-  
-  // Keep index in bounds just in case
-  const safeIndex = selectedIndex >= 0 && selectedIndex < extendedDecisions.length ? selectedIndex : 0;
-  const selectedDecision = extendedDecisions[safeIndex];
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("All");
 
-  // Sync state if initialIndex changes via props
+  const filteredDecisions = useMemo(() => {
+    return extendedDecisions.filter(dec => {
+      const matchesSearch = dec.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            dec.shortTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            dec.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            dec.sourcePlatform.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            dec.requester.name.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesPriority = priorityFilter === "All" || dec.priority === priorityFilter;
+      
+      return matchesSearch && matchesPriority;
+    });
+  }, [searchQuery, priorityFilter]);
+
+  // Adjust selected index if filtering removes the currently selected item
+  const safeIndex = selectedIndex >= 0 && selectedIndex < filteredDecisions.length ? selectedIndex : 0;
+  const selectedDecision = filteredDecisions[safeIndex];
+
   useEffect(() => {
-    setSelectedIndex(initialIndex);
-  }, [initialIndex]);
+    if (initialIndex < filteredDecisions.length) {
+      setSelectedIndex(initialIndex);
+    }
+  }, [initialIndex, filteredDecisions.length]);
 
   const handleAction = (action: string) => {
     onNotify(`Action: ${action}`);
@@ -184,16 +403,6 @@ export function DecisionsWorkspace({
          <button type="button" onClick={onBack} className="back-btn" aria-label="Back to Glance" data-testid="button-back">
            <ArrowLeft size={16} /> Back
          </button>
-         <button
-           type="button"
-           className="sidebar-toggle-btn"
-           onClick={onToggleSidebar}
-           aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-           title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-           aria-pressed={sidebarCollapsed}
-         >
-           <SidebarToggleIcon collapsed={sidebarCollapsed} />
-         </button>
          <div className="decisions-heading">
            <span>Executive decision desk</span>
            <h1>Ready for your decision.</h1>
@@ -203,11 +412,47 @@ export function DecisionsWorkspace({
       <div className="decisions-layout">
         <aside className="decisions-queue" aria-label="Decision Queue">
           <div className="queue-header">
-            <h2>Requires Attention</h2>
-            <span className="queue-count">{extendedDecisions.length}</span>
+            <div className="queue-header-top">
+              <h2>Requires Attention</h2>
+              <span className="queue-count">{filteredDecisions.length}</span>
+            </div>
+            
+            <div className="queue-search">
+              <Search size={14} />
+              <input 
+                type="text" 
+                placeholder="Search requests..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            
+            <div className="queue-filters">
+              <button
+                type="button"
+                className={`queue-filter-btn ${priorityFilter === 'All' ? 'active' : ''}`}
+                onClick={() => setPriorityFilter('All')}
+              >
+                All Requests
+              </button>
+              <label className="priority-filter-select">
+                <span className="sr-only">Filter by priority</span>
+                <select
+                  value={priorityFilter === 'All' ? '' : priorityFilter}
+                  onChange={(event) => setPriorityFilter(event.target.value || 'All')}
+                  aria-label="Filter requests by priority"
+                >
+                  <option value="">Priority</option>
+                  <option value="High">High priority</option>
+                  <option value="Medium">Medium priority</option>
+                  <option value="Low">Low priority</option>
+                </select>
+              </label>
+            </div>
           </div>
+          
           <div className="queue-list">
-            {extendedDecisions.map((dec, i) => (
+            {filteredDecisions.length > 0 ? filteredDecisions.map((dec, i) => (
               <button 
                 key={dec.id}
                 type="button"
@@ -218,12 +463,21 @@ export function DecisionsWorkspace({
               >
                 <div className="queue-item-top">
                   <span className="queue-item-type">{dec.type}</span>
-                  <span className="queue-item-meta">{dec.meta}</span>
+                  <div className="queue-item-meta">
+                    <span className="queue-item-platform">{dec.sourcePlatform}</span>
+                    <span>{dec.meta}</span>
+                  </div>
                 </div>
                 <h3>{dec.shortTitle}</h3>
                 <p>{dec.description}</p>
+                <div className="queue-item-meta" style={{ marginTop: '8px', justifyContent: 'space-between', width: '100%' }}>
+                  <strong className={`priority-${dec.priority.toLowerCase()}`} style={{ fontSize: '11px' }}>{dec.priority} Priority</strong>
+                  <span className="queue-item-date">{dec.dueDate}</span>
+                </div>
               </button>
-            ))}
+            )) : (
+              <div className="empty-detail" style={{ padding: '24px', textAlign: 'center' }}>No requests match your filters.</div>
+            )}
           </div>
         </aside>
         
@@ -243,6 +497,16 @@ export function DecisionsWorkspace({
 }
 
 function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecisions[0], onAction: (a: string) => void }) {
+  const approvalFlow = [
+    {
+      step: "Submitted by",
+      actor: `${decision.requester.name} · ${decision.requester.role}`,
+      time: `Received ${decision.meta}`,
+      status: "completed",
+    },
+    ...decision.workflow,
+  ];
+
   return (
     <div className="decision-detail-inner animate-in fade-in slide-in-from-bottom-2 duration-300" key={decision.id}>
       <header className="detail-header">
@@ -259,6 +523,16 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
               <strong>{decision.requester.name}</strong>
               <span>{decision.requester.role}</span>
             </div>
+          </div>
+          <div className="meta-divider" />
+          <div className="priority-info">
+            <span className="meta-label">System</span>
+            <strong>{decision.sourcePlatform}</strong>
+          </div>
+          <div className="meta-divider" />
+          <div className="priority-info">
+            <span className="meta-label">Due Date</span>
+            <strong>{decision.dueDate}</strong>
           </div>
           <div className="meta-divider" />
           <div className="priority-info">
@@ -320,6 +594,21 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
               ))}
             </div>
           </section>
+
+          <div className="ask-pih-cta">
+            <div className="ask-pih-cta-info">
+              <div className="ask-pih-icon">
+                <Sparkles size={16} />
+              </div>
+              <div className="ask-pih-text">
+                <h4>Need more context?</h4>
+                <p>Ask Pulse to summarize policies, check budget availability, or analyze risk.</p>
+              </div>
+            </div>
+            <button type="button" className="btn-ask-pih" onClick={() => onAction("Ask PIH Assistant Opened")}>
+              Ask PIH
+            </button>
+          </div>
         </div>
 
         <div className="detail-side-col">
@@ -361,16 +650,16 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           </section>
 
           <section className="detail-section">
-            <h3>Audit Trail</h3>
+            <h3>Approvals &amp; Audit Trail</h3>
             <div className="workflow-timeline">
-              {decision.workflow.map((step, i) => (
+              {approvalFlow.map((step, i) => (
                 <div key={i} className={`workflow-step status-${step.status}`}>
                   <div className="step-indicator">
                     {step.status === 'completed' ? <Check size={12} /> : step.status === 'current' ? <Clock size={12} /> : <div className="dot" />}
                   </div>
                   <div className="step-content">
                     <div className="step-header">
-                      <strong>{step.step}</strong>
+                      <strong><span className="step-order">{String(i + 1).padStart(2, "0")}</span>{step.step}</strong>
                       <span className="step-time">{step.time}</span>
                     </div>
                     <div className="step-actor">{step.actor}</div>

@@ -1,0 +1,25 @@
+Please refine the View All Decisions screen and the Decision Detail screen with the following updates. Keep the overall Pulse design consistent, clean, and compact.
+
+For the sidebar, keep the Expand / Collapse button attached to the vertical divider, positioned just above Settings. When the sidebar is collapsed, hide the Settings text label as well and show only the Settings icon. The collapsed state should be minimal and should give more width to the main Decisions content.
+
+For the Requires Attention section, reduce its overall width slightly so the page feels better balanced. Add a search bar and filters for All Requests and Priority. Each request card should also clearly show the source platform/system, priority status, due date, and the other important metadata shown in the reference design. Some of these details are currently missing, so please review the reference carefully and bring them back.
+
+Please populate the list with at least 10 realistic requests so the screen looks complete and usable rather than like a small demo.
+
+Also review the typography across the Ready for Decision / View All screen. Some font sizes are currently too large and make the interface feel oversized. Bring them back to a standard enterprise dashboard size with a clear hierarchy, but avoid excessively large text.
+
+For the Decision Detail screen, add the same missing request information, including platform/source, priority, due date, request metadata, and relevant card details. Keep the screen full-page, not a popup, and maintain the same header structure as the other Pulse screens with the Back button.
+
+Add an Ask PIH CTA below the request information so the user can ask questions specifically about that request through the assistant.
+
+In the Audit Trail / Approvals section, make the approval flow more complete. Add:
+
+Submitted by
+additional approvers
+approver names and sequence/order
+status for each approver
+timestamps where appropriate
+
+Do not keep Mr. Jasim as the first or second approver every time. In some requests, keep Mr. Jasim as the 3rd approver, and in others as the 4th approver, with other named approvers appearing before him. This will make the workflow feel more realistic.
+
+Please review the reference design carefully because several details from the original screen are still missing. The goal is to recreate the same level of information richness and structure, while keeping everything aligned to the Pulse theme and avoiding oversized fonts or unnecessary empty space.
