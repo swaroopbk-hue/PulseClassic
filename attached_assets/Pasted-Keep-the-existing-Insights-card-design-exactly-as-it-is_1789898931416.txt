@@ -1,0 +1,35 @@
+Keep the existing Insights card design exactly as it is. Do not redesign, resize, reposition, or change any text, background, typography, spacing, border radius, or the bottom carousel indicators.
+
+There are 5 Insights, and I want the transition between them to behave like turning pages in a premium book.
+
+Animation behaviour:
+
+Automatically move to the next Insight every 12 seconds.
+The transition should look like a realistic 3D book page turning from right to left.
+The current Insight should feel like the top page of a book: the right edge lifts first, bends/rotates toward the left, and reveals the next Insight underneath.
+Use a subtle 3D perspective, page depth, soft shadow and slight lighting shift during the flip so it feels physical and premium.
+The next Insight must already be underneath the current page and should be gradually revealed as the page turns.
+Avoid a simple horizontal slide, fade, cube rotation, or full-card spinning effect.
+The outer Insights container should remain completely stable. Only the content/page inside it should animate.
+Keep the animation smooth and elegant, around 800–1200 ms per page turn with natural easing.
+Do not make the animation aggressive or overly dramatic. This is a premium corporate analytics dashboard.
+
+Carousel indicators:
+
+Keep the existing bottom dash indicators exactly as designed.
+Do not add arrows, next/previous buttons, play/pause controls, or any additional UI.
+The active dash should update automatically as each Insight changes.
+Clicking any carousel dash should immediately navigate to that corresponding Insight using the same book page-turn animation, not a different transition.
+If the user selects a later Insight, animate forward like turning pages forward.
+If the user selects an earlier Insight, reverse the animation naturally, like turning a book page back from left to right.
+
+Auto-play behaviour:
+
+Insight 1 → 2 → 3 → 4 → 5 automatically.
+After Insight 5, smoothly continue back to Insight 1 and repeat indefinitely.
+Reset the 12-second timer whenever the user manually selects an Insight using the carousel dash.
+Do not trigger overlapping animations if the user clicks repeatedly while a transition is already happening.
+
+Important: The visual design shown in the current Insights component is already approved. Do not modify the design. Only implement the page-turn animation and automatic carousel behaviour.
+
+The final experience should feel like someone is slowly flipping through five premium insight pages of a book, while retaining the exact existing Insights card UI.

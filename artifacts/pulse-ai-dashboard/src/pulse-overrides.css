@@ -220,6 +220,133 @@
   max-width: 88%;
 }
 
+.masthead-insight .insight-track {
+  display: block;
+  width: 100%;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform: none;
+  transition: none;
+  overflow: visible;
+}
+
+.masthead-insight .insight-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: rotateY(0deg) translateZ(0);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  background:
+    linear-gradient(110deg, rgba(5, 20, 40, .34), rgba(9, 29, 48, .18) 48%, rgba(44, 22, 15, .3)),
+    url("/__mockup/images/pulse-insights-background.png") center / cover no-repeat;
+}
+
+.masthead-insight .insight-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+}
+
+.masthead-insight .insight-slide.is-incoming {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+}
+
+.masthead-insight .insight-slide.is-turning {
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+}
+
+.masthead-insight .insight-slide.is-turning::before,
+.masthead-insight .insight-slide.is-turning::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.masthead-insight .insight-slide.is-turning-forward {
+  transform-origin: left center;
+  animation: insightPageForward 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+.masthead-insight .insight-slide.is-turning-forward::before {
+  background: linear-gradient(90deg, transparent 56%, rgba(255,255,255,.16) 82%, rgba(255,255,255,.3));
+  animation: insightPageLight 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+.masthead-insight .insight-slide.is-turning-forward::after {
+  background: linear-gradient(90deg, transparent 52%, rgba(2,10,18,.48));
+  animation: insightPageShadow 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+.masthead-insight .insight-slide.is-turning-reverse {
+  transform-origin: right center;
+  animation: insightPageReverse 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+.masthead-insight .insight-slide.is-turning-reverse::before {
+  background: linear-gradient(270deg, transparent 56%, rgba(255,255,255,.16) 82%, rgba(255,255,255,.3));
+  animation: insightPageLight 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+.masthead-insight .insight-slide.is-turning-reverse::after {
+  background: linear-gradient(270deg, transparent 52%, rgba(2,10,18,.48));
+  animation: insightPageShadow 1000ms cubic-bezier(.77, 0, .175, 1) both;
+}
+
+@keyframes insightPageForward {
+  0% { transform: rotateY(0deg) translateZ(1px); }
+  38% { transform: rotateY(-38deg) translateZ(8px); }
+  72% { transform: rotateY(-112deg) translateZ(5px); }
+  100% { transform: rotateY(-178deg) translateZ(1px); }
+}
+
+@keyframes insightPageReverse {
+  0% { transform: rotateY(0deg) translateZ(1px); }
+  38% { transform: rotateY(38deg) translateZ(8px); }
+  72% { transform: rotateY(112deg) translateZ(5px); }
+  100% { transform: rotateY(178deg) translateZ(1px); }
+}
+
+@keyframes insightPageLight {
+  0%, 100% { opacity: 0; }
+  42% { opacity: .62; }
+  68% { opacity: .28; }
+}
+
+@keyframes insightPageShadow {
+  0%, 100% { opacity: 0; }
+  48% { opacity: .66; }
+  74% { opacity: .24; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead-insight .insight-slide.is-turning-forward,
+  .masthead-insight .insight-slide.is-turning-reverse {
+    transform: none;
+    animation: insightPageReduced 200ms cubic-bezier(.23, 1, .32, 1) both;
+  }
+
+  .masthead-insight .insight-slide.is-turning::before,
+  .masthead-insight .insight-slide.is-turning::after {
+    display: none;
+  }
+}
+
+@keyframes insightPageReduced {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .exe-metrics-section {
   padding: 0 4vw;
   max-width: 1600px;

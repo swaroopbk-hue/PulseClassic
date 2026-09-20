@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
@@ -93,6 +93,13 @@ export function PulseReference3DDark() {
   const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
   const [insightIndex, setInsightIndex] = useState(0);
+  const [insightTransition, setInsightTransition] = useState<{
+    from: number;
+    to: number;
+    direction: "forward" | "reverse";
+  } | null>(null);
+  const insightAnimatingRef = useRef(false);
+  const insightTransitionTimerRef = useRef<number | null>(null);
   const [groupIndex, setGroupIndex] = useState(2);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groupChatOpen, setGroupChatOpen] = useState(true);
@@ -102,6 +109,38 @@ export function PulseReference3DDark() {
   const [decisionsViewAll, setDecisionsViewAll] = useState(false);
   const enterprise = enterprisePerformance[period];
   const groupPerformance = groupPerformanceByPeriod[period];
+
+  const turnInsightPage = useCallback((targetIndex: number, direction?: "forward" | "reverse") => {
+    if (insightAnimatingRef.current || targetIndex === insightIndex) return;
+
+    insightAnimatingRef.current = true;
+    setInsightTransition({
+      from: insightIndex,
+      to: targetIndex,
+      direction: direction ?? (targetIndex > insightIndex ? "forward" : "reverse"),
+    });
+    setInsightIndex(targetIndex);
+
+    insightTransitionTimerRef.current = window.setTimeout(() => {
+      setInsightTransition(null);
+      insightAnimatingRef.current = false;
+      insightTransitionTimerRef.current = null;
+    }, 1000);
+  }, [insightIndex]);
+
+  useEffect(() => {
+    const autoplayTimer = window.setTimeout(() => {
+      turnInsightPage((insightIndex + 1) % insightSlides.length, "forward");
+    }, 12000);
+
+    return () => window.clearTimeout(autoplayTimer);
+  }, [insightIndex, turnInsightPage]);
+
+  useEffect(() => () => {
+    if (insightTransitionTimerRef.current !== null) {
+      window.clearTimeout(insightTransitionTimerRef.current);
+    }
+  }, []);
 
   const notify = (message: string) => {
     setToast(message);
@@ -165,9 +204,24 @@ export function PulseReference3DDark() {
               </p>
             </div>
             <section className="insight-card masthead-insight" aria-label="Pulse Insights carousel">
-              <div className="insight-track" style={{ transform: `translateX(-${insightIndex * 20}%)` }}>
-                {insightSlides.map((slide, index) => (
-                  <article className="insight-slide" key={`${slide.group}-${index}`}>
+              <div className="insight-track">
+                {insightSlides.map((slide, index) => {
+                  const isRestingPage = !insightTransition && index === insightIndex;
+                  const isOutgoingPage = insightTransition?.from === index;
+                  const isIncomingPage = insightTransition?.to === index;
+                  const transitionDirection = isOutgoingPage ? insightTransition.direction : "";
+
+                  return (
+                  <article
+                    className={[
+                      "insight-slide",
+                      isRestingPage ? "is-active" : "",
+                      isIncomingPage ? "is-incoming" : "",
+                      isOutgoingPage ? `is-turning is-turning-${transitionDirection}` : "",
+                    ].filter(Boolean).join(" ")}
+                    key={`${slide.group}-${index}`}
+                    aria-hidden={!isRestingPage && !isIncomingPage && !isOutgoingPage}
+                  >
                     <div className="insight-topline">
                       <span className="insights-badge"><Sparkles size={9} /> Insights</span>
                       <span className="insight-group">{slide.group}</span>
@@ -177,14 +231,15 @@ export function PulseReference3DDark() {
                     <p>{slide.body}</p>
                     {slide.note && <small>{slide.note}</small>}
                   </article>
-                ))}
+                  );
+                })}
               </div>
               <div className="insight-progress" role="tablist" aria-label="Insight slides">
                 {insightSlides.map((slide, index) => (
                   <button
                     key={`${slide.group}-${index}`}
                     className={index === insightIndex ? "active" : ""}
-                    onClick={() => setInsightIndex(index)}
+                    onClick={() => turnInsightPage(index)}
                     aria-label={`Show insight ${index + 1}: ${slide.group}`}
                     aria-selected={index === insightIndex}
                     role="tab"
