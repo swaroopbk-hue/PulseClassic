@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun, Plus, Eye, Folder, LayoutGrid, Link as LinkIcon, Brain, Box, Settings, Menu, X, ArrowUp, LayoutTemplate, Layout, Smartphone, Table, BarChart3, Telescope, BarChart2, Globe, DollarSign, ShieldCheck, Users, Truck, PenTool, AlertTriangle, Briefcase, Monitor, ChevronDown } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
@@ -262,7 +262,9 @@ const recentTasks = [
 ];
 
 export function PulseReference3DDark() {
-  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [theme, setTheme] = useState<"dark" | "light">(() =>
+    window.matchMedia("(max-width: 640px)").matches ? "dark" : "light"
+  );
   const [profile, setProfile] = useState(false);
   const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
@@ -805,7 +807,9 @@ export function PulseReference3DDark() {
                        <strong>{group.value}</strong>
                        <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : group.direction === "down" ? "↓" : "→"} {group.change}</span>
                      </div>
-                    <span className="group-bar-wrap"><i style={{ height: `${group.height}%` }} /></span>
+                     <span className="group-bar-wrap">
+                       <i style={{ "--group-revenue-size": `${group.height}%` } as CSSProperties} />
+                     </span>
                     {hoveredGroup === index && (
                       <div className="group-hover-tooltip" role="status">
                         <span>Budget: <strong>{group.budget}</strong></span>
