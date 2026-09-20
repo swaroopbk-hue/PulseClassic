@@ -959,6 +959,28 @@ export function PulseReference3DDark() {
         )}
       </main>
       </div>
+      {activeNav !== "ask-pulse" && (
+        <button
+          type="button"
+          className="ask-pulse-fab"
+          onClick={() => {
+            setActiveNav("ask-pulse");
+            setSidebarOpen(false);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            notify("Ask Pulse opened");
+          }}
+          aria-label="Open Ask Pulse"
+          title="Ask Pulse"
+        >
+          <span className="ask-pulse-fab-mark" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+        </button>
+      )}
       {toast && <div className="toast">{toast}</div>}
     </div>
   );
