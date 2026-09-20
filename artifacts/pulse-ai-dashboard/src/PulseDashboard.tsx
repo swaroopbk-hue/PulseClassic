@@ -3,6 +3,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun,
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
+import { DecisionsWorkspace } from "./DecisionsWorkspace";
 
 const periods = ["Today", "MTD", "YTD"] as const;
 type Period = (typeof periods)[number];
@@ -279,7 +280,6 @@ export function PulseReference3DDark() {
   const [groupQuestion, setGroupQuestion] = useState("");
   const [groupView, setGroupView] = useState<"bars" | "orbit">("bars");
   const [decisionIndex, setDecisionIndex] = useState(0);
-  const [decisionsViewAll, setDecisionsViewAll] = useState(false);
   const enterprise = enterprisePerformance[period];
   const groupPerformance = groupPerformanceByPeriod[period];
 
@@ -321,7 +321,9 @@ export function PulseReference3DDark() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState("glance");
+  const [activeNav, setActiveNav] = useState(() => (
+    new URLSearchParams(window.location.search).get("view") === "decisions" ? "decisions" : "glance"
+  ));
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuCloseRef = useRef<HTMLButtonElement>(null);
   const sidebarWasOpenRef = useRef(false);
@@ -356,6 +358,16 @@ export function PulseReference3DDark() {
       document.body.style.overflow = "";
     };
   }, [sidebarOpen]);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (activeNav === "decisions") {
+      url.searchParams.set("view", "decisions");
+    } else {
+      url.searchParams.delete("view");
+    }
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [activeNav]);
 
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -540,6 +552,12 @@ export function PulseReference3DDark() {
         <main className="exe-main">
         {activeNav === 'ask-pulse' ? (
           <AskPulseView onNotify={notify} />
+        ) : activeNav === 'decisions' ? (
+          <DecisionsWorkspace 
+            onBack={() => setActiveNav('glance')} 
+            initialIndex={decisionIndex} 
+            onNotify={notify} 
+          />
         ) : (
           <div className="exe-content-wrapper">
             <div className="exe-masthead">
@@ -794,63 +812,25 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="ref-bottom">
-             <section className={`ref-card stat-card decisions-card ${decisionsViewAll ? "decisions-all" : ""}`} aria-label="Executive decisions">
-               {decisionsViewAll ? (
-                 <div className="decisions-workspace">
-                   <header className="decisions-workspace-head">
-                     <button className="decisions-back" onClick={() => setDecisionsViewAll(false)}><ArrowLeft size={14} /> Back</button>
-                     <div>
-                       <span>Decision desk · Tuesday, 18 June 2024</span>
-                       <h2>What needs your call?</h2>
-                       <p>Four signals surfaced from across the enterprise. One clear queue for the day.</p>
-                     </div>
-                   </header>
-                   <div className="decisions-workspace-body">
-                     <aside className="decision-queue">
-                       <div className="decision-queue-title"><strong>Decision queue</strong><span>{decisions.length} open items</span></div>
-                       {decisions.map((decision, index) => (
-                         <button key={decision.title} className={`decision-queue-item ${decision.tone} ${decisionIndex === index ? "active" : ""}`} onClick={() => setDecisionIndex(index)}>
-                           <span className="decision-dot" />
-                           <span>
-                             <small>{decision.type} · {decision.meta}</small>
-                             <strong>{decision.shortTitle}</strong>
-                             <em>{decision.description}</em>
-                           </span>
-                         </button>
-                       ))}
-                     </aside>
-                     <article className="decision-detail">
-                       <small>{decisions[decisionIndex].type} · High priority</small>
-                       <h3>{decisions[decisionIndex].shortTitle}</h3>
-                       <span>{decisions[decisionIndex].title}</span>
-                       <p>{decisions[decisionIndex].detail}</p>
-                       <div className="decision-recommendation"><span>Recommended next step</span><strong>{decisions[decisionIndex].action} decision</strong></div>
-                       <button className="decision-primary-action" onClick={() => notify(`${decisions[decisionIndex].action} opened`)}>{decisions[decisionIndex].action}</button>
-                     </article>
-                   </div>
-                 </div>
-               ) : (
-                 <>
-                   <div className="card-head decisions-head">
-                     <div><h2>Decisions</h2><span>{decisions.length} items</span></div>
-                     <button className="decisions-view-all" onClick={() => setDecisionsViewAll(true)}>View All</button>
-                   </div>
-                   <div className="decision-slider">
-                     <button className="decision-arrow previous" onClick={() => setDecisionIndex((decisionIndex - 1 + decisions.length) % decisions.length)} aria-label="Previous decision"><ChevronLeft size={15} /></button>
-                     <article className={`decision-slide ${decisions[decisionIndex].tone}`}>
-                       <span className="decision-dot" />
-                       <div><h3>{decisions[decisionIndex].title}</h3><p>{decisions[decisionIndex].description}</p></div>
-                       <button onClick={() => notify(`${decisions[decisionIndex].action} opened`)}>{decisions[decisionIndex].action}</button>
-                     </article>
-                     <button className="decision-arrow next" onClick={() => setDecisionIndex((decisionIndex + 1) % decisions.length)} aria-label="Next decision"><ChevronRight size={15} /></button>
-                   </div>
-                   <div className="decision-pagination" aria-label={`Decision ${decisionIndex + 1} of ${decisions.length}`}>
-                     <span>{String(decisionIndex + 1).padStart(2, "0")}</span>
-                     <i><b style={{ width: `${((decisionIndex + 1) / decisions.length) * 100}%` }} /></i>
-                     <span>{String(decisions.length).padStart(2, "0")}</span>
-                   </div>
-                 </>
-               )}
+             <section className="ref-card stat-card decisions-card" aria-label="Executive decisions">
+               <div className="card-head decisions-head">
+                 <div><h2>Decisions</h2><span>{decisions.length} items</span></div>
+                 <button className="decisions-view-all" onClick={() => { setDecisionIndex(0); setActiveNav('decisions'); }}>View All</button>
+               </div>
+               <div className="decision-slider">
+                 <button className="decision-arrow previous" onClick={() => setDecisionIndex((decisionIndex - 1 + decisions.length) % decisions.length)} aria-label="Previous decision"><ChevronLeft size={15} /></button>
+                 <article className={`decision-slide ${decisions[decisionIndex].tone}`}>
+                   <span className="decision-dot" />
+                   <div><h3>{decisions[decisionIndex].title}</h3><p>{decisions[decisionIndex].description}</p></div>
+                   <button onClick={() => { setActiveNav('decisions'); }}>{decisions[decisionIndex].action}</button>
+                 </article>
+                 <button className="decision-arrow next" onClick={() => setDecisionIndex((decisionIndex + 1) % decisions.length)} aria-label="Next decision"><ChevronRight size={15} /></button>
+               </div>
+               <div className="decision-pagination" aria-label={`Decision ${decisionIndex + 1} of ${decisions.length}`}>
+                 <span>{String(decisionIndex + 1).padStart(2, "0")}</span>
+                 <i><b style={{ width: `${((decisionIndex + 1) / decisions.length) * 100}%` }} /></i>
+                 <span>{String(decisions.length).padStart(2, "0")}</span>
+               </div>
              </section>
           </div>
 
