@@ -620,42 +620,6 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
         </div>
       </header>
 
-      <section className="mobile-decision-actions" aria-label="Decision actions">
-        {decision.type === 'Approval' ? (
-          <>
-            <button type="button" className="btn-approve" onClick={() => onAction('Approved Request')}>
-              <CheckCircle2 size={17} /> Approve Request
-            </button>
-            <div>
-              <button type="button" className="btn-reject" onClick={() => onAction('Declined Request')}>
-                <XCircle size={16} /> Decline
-              </button>
-              <button type="button" className="btn-secondary" onClick={() => onAction('Requested Info')}>
-                <MessageSquare size={16} /> Request Info
-              </button>
-            </div>
-          </>
-        ) : decision.type === 'Risk' ? (
-          <>
-            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Risk')}>
-              <AlertCircle size={17} /> Acknowledge Risk
-            </button>
-            <button type="button" className="btn-secondary" onClick={() => onAction('Escalated to Board')}>
-              <Share size={16} /> Escalate to Board
-            </button>
-          </>
-        ) : (
-          <>
-            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Signal')}>
-              <ThumbsUp size={17} /> Acknowledge
-            </button>
-            <button type="button" className="btn-secondary" onClick={() => onAction('Reassigned')}>
-              <Share size={16} /> Reassign
-            </button>
-          </>
-        )}
-      </section>
-
       <div className="detail-content-grid">
         <div className="detail-main-col">
           <section className="detail-section">
@@ -762,6 +726,40 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           </section>
         </div>
       </div>
+
+      <section className="mobile-decision-actions" aria-label="Decision actions">
+        {decision.type === 'Approval' ? (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Approved Request')}>
+              <CheckCircle2 size={17} /> Approve Request
+            </button>
+            <button type="button" className="btn-reject" onClick={() => onAction('Declined Request')}>
+              <XCircle size={16} /> Decline
+            </button>
+            <button type="button" className="btn-secondary mobile-request-info" onClick={() => onAction('Requested Info')}>
+              <MessageSquare size={16} /> Request Info
+            </button>
+          </>
+        ) : decision.type === 'Risk' ? (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Risk')}>
+              <AlertCircle size={17} /> Acknowledge Risk
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => onAction('Escalated to Board')}>
+              <Share size={16} /> Escalate to Board
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" className="btn-approve" onClick={() => onAction('Acknowledged Signal')}>
+              <ThumbsUp size={17} /> Acknowledge
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => onAction('Reassigned')}>
+              <Share size={16} /> Reassign
+            </button>
+          </>
+        )}
+      </section>
 
       <section className={`ask-pulse-context ${assistantOpen ? "is-open" : ""}`} aria-label={`Ask Pulse.AI about ${decision.title}`}>
         <button

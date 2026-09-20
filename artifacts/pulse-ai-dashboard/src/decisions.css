@@ -1382,19 +1382,19 @@
 
   .decision-detail-inner {
     max-width: none;
-    padding: 18px 14px 16px;
-    border: 1px solid var(--exe-line);
-    border-radius: 18px;
-    background: color-mix(in srgb, var(--card) 96%, var(--exe-bg));
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+    padding: 20px 16px 18px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .detail-header {
-    margin-bottom: 18px;
+    margin-bottom: 28px;
   }
 
   .detail-header-top {
-    margin-bottom: 13px;
+    margin-bottom: 12px;
   }
 
   .detail-badge {
@@ -1408,79 +1408,74 @@
   }
 
   .detail-title {
-    margin-bottom: 18px;
-    font-size: 25px;
-    line-height: 1.13;
+    margin-bottom: 20px;
+    font-size: clamp(24px, 7vw, 28px);
+    line-height: 1.16;
   }
 
   .detail-meta-row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-    padding: 0;
+    gap: 16px 12px;
+    padding: 16px;
     border: 1px solid var(--exe-line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: color-mix(in srgb, var(--exe-bg) 48%, var(--card));
+    border-radius: 14px;
+    background: var(--card);
   }
 
   .requester-info,
   .priority-info,
   .amount-info {
     min-width: 0;
-    padding: 12px;
-    border-right: 1px solid var(--exe-line);
-    border-bottom: 1px solid var(--exe-line);
+    padding: 0;
+    border: 0;
   }
 
   .requester-info {
     grid-column: 1 / -1;
-  }
-
-  .priority-info:nth-of-type(even),
-  .amount-info {
-    border-right: 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--exe-line);
   }
 
   .requester-avatar {
-    width: 38px;
-    height: 38px;
-    font-size: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 13px;
   }
 
   .requester-details strong,
   .priority-info strong,
   .amount-info strong {
-    font-size: 12px;
-    line-height: 1.3;
+    font-size: 13px;
+    line-height: 1.35;
     overflow-wrap: anywhere;
   }
 
   .requester-details span,
   .meta-label {
-    font-size: 10px;
-    line-height: 1.3;
+    font-size: 11px;
+    line-height: 1.35;
   }
 
   .mobile-decision-actions {
     display: flex;
-    margin-bottom: 24px;
+    margin: 2px 0 24px;
+    padding-top: 4px;
     flex-direction: column;
-    gap: 9px;
+    gap: 10px;
   }
 
   .mobile-decision-actions > button,
   .mobile-decision-actions > div button {
-    min-height: 48px;
+    width: 100%;
+    min-height: 50px;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 11px;
     font-size: 14px;
   }
 
-  .mobile-decision-actions > div {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
+  .mobile-decision-actions .mobile-request-info {
+    margin-top: 2px;
   }
 
   .detail-content-grid {
@@ -1494,37 +1489,54 @@
   }
 
   .detail-section {
-    margin-bottom: 26px;
+    margin-bottom: 30px;
   }
 
   .detail-section h3 {
-    margin-bottom: 13px;
+    margin-bottom: 14px;
+    padding-bottom: 9px;
     font-size: 13px;
   }
 
   .context-blocks p {
-    font-size: 13px;
-    line-height: 1.55;
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.58;
   }
 
   .impact-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .impact-card {
+    display: grid;
+    grid-template-columns: minmax(88px, .7fr) minmax(80px, .55fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
     min-width: 0;
-    padding: 11px 9px;
+    min-height: 64px;
+    padding: 12px 13px;
+    border-radius: 10px;
   }
 
-  .impact-label,
+  .impact-label {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
   .impact-sub {
-    font-size: 9px;
-    line-height: 1.3;
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.4;
   }
 
   .impact-value-row strong {
-    font-size: 15px;
+    font-family: var(--app-font);
+    font-size: 14px;
+    font-weight: 700;
   }
 
   .attachment-item {
@@ -1556,7 +1568,7 @@
   }
 
   .ask-pulse-context {
-    margin-top: 2px;
+    margin-top: 0;
   }
 
   .ask-pulse-context-trigger {
