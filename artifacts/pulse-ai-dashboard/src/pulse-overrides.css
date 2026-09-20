@@ -1144,6 +1144,45 @@
   display: flex;
   flex-direction: column;
   background: var(--exe-bg);
+  transition: width 240ms cubic-bezier(.23, 1, .32, 1);
+}
+
+@media (min-width: 1025px) {
+  .exe-layout .exe-sidebar.desktop-only.is-compact {
+    width: 72px;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .exe-sidebar-inner {
+    padding-inline: 10px;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .exe-sidebar-ask,
+  .exe-sidebar.desktop-only.is-compact .exe-sidebar-item {
+    justify-content: center;
+    padding-inline: 10px;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .ask-left {
+    gap: 0;
+    font-size: 0;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .ask-kbd,
+  .exe-sidebar.desktop-only.is-compact .item-left span,
+  .exe-sidebar.desktop-only.is-compact .item-count,
+  .exe-sidebar.desktop-only.is-compact .exe-sidebar-label {
+    display: none;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .item-left {
+    flex: 0 0 auto;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .exe-sidebar.desktop-only.is-compact .exe-sidebar-section {
+    margin-top: 22px;
+  }
 }
 
 .exe-sidebar.desktop-only {

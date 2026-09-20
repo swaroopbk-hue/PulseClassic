@@ -142,9 +142,27 @@ interface DecisionsWorkspaceProps {
   onBack: () => void;
   initialIndex: number;
   onNotify: (msg: string) => void;
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
 }
 
-export function DecisionsWorkspace({ onBack, initialIndex = 0, onNotify }: DecisionsWorkspaceProps) {
+function SidebarToggleIcon({ collapsed }: { collapsed: boolean }) {
+  return (
+    <svg viewBox="0 0 18 18" aria-hidden="true">
+      <rect x="2.25" y="2.75" width="13.5" height="12.5" rx="2" />
+      <path d="M6.4 3.2v11.6" />
+      <path d={collapsed ? "m9 7 2 2-2 2" : "m12 7-2 2 2 2"} />
+    </svg>
+  );
+}
+
+export function DecisionsWorkspace({
+  onBack,
+  initialIndex = 0,
+  onNotify,
+  sidebarCollapsed,
+  onToggleSidebar,
+}: DecisionsWorkspaceProps) {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   
   // Keep index in bounds just in case
@@ -165,6 +183,16 @@ export function DecisionsWorkspace({ onBack, initialIndex = 0, onNotify }: Decis
       <div className="decisions-header">
          <button type="button" onClick={onBack} className="back-btn" aria-label="Back to Glance" data-testid="button-back">
            <ArrowLeft size={16} /> Back
+         </button>
+         <button
+           type="button"
+           className="sidebar-toggle-btn"
+           onClick={onToggleSidebar}
+           aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+           title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+           aria-pressed={sidebarCollapsed}
+         >
+           <SidebarToggleIcon collapsed={sidebarCollapsed} />
          </button>
          <div className="decisions-heading">
            <span>Executive decision desk</span>

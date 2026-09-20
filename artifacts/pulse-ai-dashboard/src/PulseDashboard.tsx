@@ -321,6 +321,7 @@ export function PulseReference3DDark() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [decisionsSidebarCollapsed, setDecisionsSidebarCollapsed] = useState(false);
   const [activeNav, setActiveNav] = useState(() => (
     new URLSearchParams(window.location.search).get("view") === "decisions" ? "decisions" : "glance"
   ));
@@ -526,8 +527,8 @@ export function PulseReference3DDark() {
         </div>
       )}
 
-      <div className="exe-layout">
-        <aside className="exe-sidebar desktop-only">
+      <div className={`exe-layout ${activeNav === "decisions" && decisionsSidebarCollapsed ? "decisions-sidebar-collapsed" : ""}`}>
+        <aside className={`exe-sidebar desktop-only ${activeNav === "decisions" && decisionsSidebarCollapsed ? "is-compact" : ""}`}>
           <SidebarContent />
         </aside>
 
@@ -557,6 +558,8 @@ export function PulseReference3DDark() {
             onBack={() => setActiveNav('glance')} 
             initialIndex={decisionIndex} 
             onNotify={notify} 
+            sidebarCollapsed={decisionsSidebarCollapsed}
+            onToggleSidebar={() => setDecisionsSidebarCollapsed((collapsed) => !collapsed)}
           />
         ) : (
           <div className="exe-content-wrapper">

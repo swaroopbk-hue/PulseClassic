@@ -38,6 +38,52 @@
   background: color-mix(in srgb, var(--exe-line) 40%, transparent);
 }
 
+.sidebar-toggle-btn {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--exe-line);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  color: var(--exe-ink-light);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.sidebar-toggle-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sidebar-toggle-btn:hover {
+  color: var(--exe-blue-dark);
+  border-color: color-mix(in srgb, var(--exe-blue-dark) 30%, var(--exe-line));
+  background: color-mix(in srgb, var(--exe-blue-dark) 6%, var(--card));
+}
+
+.sidebar-toggle-btn:active {
+  transform: scale(.96);
+}
+
+.sidebar-toggle-btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--exe-blue-dark) 45%, transparent);
+  outline-offset: 2px;
+}
+
+.pulse-ref3d.dark .sidebar-toggle-btn:hover {
+  color: #fff;
+  border-color: rgba(142, 179, 214, .4);
+  background: rgba(255, 255, 255, .06);
+}
+
 .decisions-heading {
   border-left: 1px solid var(--exe-line);
   padding-left: 16px;
@@ -74,6 +120,10 @@
 }
 
 @media (max-width: 900px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+
   .decisions-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr);
