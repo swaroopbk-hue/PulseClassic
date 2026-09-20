@@ -86,123 +86,29 @@ const pulseAgents = [
   { id: 10, name: "IT Support", desc: "System diagnostics", icon: Monitor },
 ];
 
-function AgentCarousel({ onNotify, ariaLabel }: { onNotify: (msg: string) => void; ariaLabel: string }) {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const rotationRef = useRef(0);
-  const draggingRef = useRef(false);
-  const lastPointerXRef = useRef(0);
-  const lastPointerTimeRef = useRef(0);
-  const velocityRef = useRef(0);
-  const resumeAtRef = useRef(0);
-  const suppressClickRef = useRef(false);
-
-  useEffect(() => {
-    const ring = ringRef.current;
-    if (!ring) return;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) {
-      ring.style.transform = "rotateY(0deg)";
-      return;
-    }
-
-    let frame = 0;
-    let previousTime = performance.now();
-    resumeAtRef.current = previousTime + 2400;
-
-    const animate = (time: number) => {
-      const elapsed = Math.min(time - previousTime, 32);
-      previousTime = time;
-
-      if (!draggingRef.current && time >= resumeAtRef.current) {
-        rotationRef.current += (360 / 26000) * elapsed + velocityRef.current * elapsed;
-        velocityRef.current *= Math.pow(0.92, elapsed / 16);
-      }
-
-      ring.style.transform = `rotateY(${rotationRef.current}deg)`;
-      frame = window.requestAnimationFrame(animate);
-    };
-
-    frame = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    draggingRef.current = true;
-    lastPointerXRef.current = event.clientX;
-    lastPointerTimeRef.current = performance.now();
-    velocityRef.current = 0;
-    suppressClickRef.current = false;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    stageRef.current?.classList.add("is-dragging");
-  };
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current || !ringRef.current) return;
-    const time = performance.now();
-    const deltaX = event.clientX - lastPointerXRef.current;
-    const elapsed = Math.max(time - lastPointerTimeRef.current, 1);
-    const rotationDelta = deltaX * 0.2;
-    if (Math.abs(deltaX) > 3) suppressClickRef.current = true;
-    rotationRef.current += rotationDelta;
-    velocityRef.current = Math.max(-0.12, Math.min(0.12, rotationDelta / elapsed));
-    ringRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
-    lastPointerXRef.current = event.clientX;
-    lastPointerTimeRef.current = time;
-  };
-
-  const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return;
-    draggingRef.current = false;
-    resumeAtRef.current = performance.now() + 650;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-    stageRef.current?.classList.remove("is-dragging");
-  };
-
+function LandingAgentLoop({ onNotify }: { onNotify: (msg: string) => void }) {
+  const loopAgents = [...pulseAgents, ...pulseAgents];
   return (
-    <div
-      ref={stageRef}
-      className="agent-carousel"
-      role="region"
-      aria-label={ariaLabel}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      onPointerCancel={handlePointerEnd}
-    >
-      <div ref={ringRef} className="agent-carousel-ring">
-        {pulseAgents.map((agent, index) => (
+    <section className="landing-agent-loop" aria-label="Glance agents">
+      <div className="landing-agent-track">
+        {loopAgents.map((agent, index) => (
           <button
             type="button"
-            className="agent-carousel-card"
-            key={agent.id}
-            style={{
-              "--agent-angle": `${index * (360 / pulseAgents.length)}deg`,
-              "--agent-index": index,
-              "--intro-x": `${((index % 5) - 2) * 42}px`,
-              "--intro-y": `${(index % 2 === 0 ? -1 : 1) * (34 + (index % 3) * 12)}px`,
-            } as React.CSSProperties}
-            onClick={() => {
-              if (suppressClickRef.current) {
-                suppressClickRef.current = false;
-                return;
-              }
-              onNotify(`${agent.name} selected`);
-            }}
+            className="landing-agent-card"
+            key={`${agent.id}-${index}`}
+            aria-hidden={index >= pulseAgents.length}
+            tabIndex={index >= pulseAgents.length ? -1 : 0}
+            onClick={() => onNotify(`${agent.name} selected`)}
           >
-            <span className="agent-carousel-icon"><agent.icon size={18} /></span>
-            <span className="agent-carousel-copy">
+            <span className="landing-agent-icon"><agent.icon size={16} /></span>
+            <span className="landing-agent-copy">
               <strong>{agent.name}</strong>
               <small>{agent.desc}</small>
             </span>
           </button>
         ))}
       </div>
-      <span className="agent-carousel-hint">Drag to explore</span>
-    </div>
+    </section>
   );
 }
 
@@ -303,7 +209,21 @@ function AskPulseView({ onNotify }: { onNotify: (msg: string) => void }) {
       
       <div className="ask-pulse-agents">
         <h3>Our Agents</h3>
-        <AgentCarousel onNotify={onNotify} ariaLabel="Ask Pulse agents" />
+        <div className="marquee-container">
+          <div className="marquee-track">
+            {[...pulseAgents, ...pulseAgents].map((agent, index) => (
+              <button type="button" key={`${agent.id}-${index}`} className="marquee-card" onClick={() => onNotify(`${agent.name} selected`)}>
+                <div className="marquee-icon">
+                  <agent.icon size={16} />
+                </div>
+                <div className="marquee-info">
+                  <strong>{agent.name}</strong>
+                  <span>{agent.desc}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -945,7 +865,7 @@ export function PulseReference3DDark() {
             <div className="exe-section-line"></div>
           </div>
 
-          <AgentCarousel onNotify={notify} ariaLabel="Glance agents" />
+          <LandingAgentLoop onNotify={notify} />
         </div>
         </div>
         )}
