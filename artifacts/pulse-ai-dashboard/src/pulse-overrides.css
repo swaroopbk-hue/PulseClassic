@@ -440,19 +440,19 @@
 }
 
 @keyframes insightRightPageTurn {
-  0% { transform: rotateY(0deg) translateZ(1px) skewY(0deg) scaleX(1); }
-  24% { transform: rotateY(-20deg) rotateX(-1.2deg) translateY(-1px) translateZ(9px) skewY(.28deg) scaleX(1.055) scaleY(1.012); }
-  52% { transform: rotateY(-84deg) rotateX(-2deg) translateY(-2px) translateZ(18px) skewY(.85deg) scaleX(1.085) scaleY(1.026); }
-  78% { transform: rotateY(-145deg) rotateX(-.8deg) translateY(-1px) translateZ(8px) skewY(.28deg) scaleX(1.026) scaleY(1.01); }
-  100% { transform: rotateY(-180deg) translateZ(1px) skewY(0deg) scaleX(1); }
+  0% { transform: rotateY(0deg) translateZ(1px) skewY(0deg); }
+  24% { transform: rotateY(-20deg) translateZ(9px) skewY(.16deg); }
+  52% { transform: rotateY(-84deg) translateZ(18px) skewY(.42deg); }
+  78% { transform: rotateY(-145deg) translateZ(8px) skewY(.14deg); }
+  100% { transform: rotateY(-180deg) translateZ(1px) skewY(0deg); }
 }
 
 @keyframes insightLeftPageTurn {
-  0% { transform: rotateY(0deg) translateZ(1px) skewY(0deg) scaleX(1); }
-  24% { transform: rotateY(20deg) rotateX(-1.2deg) translateY(-1px) translateZ(9px) skewY(-.28deg) scaleX(1.055) scaleY(1.012); }
-  52% { transform: rotateY(84deg) rotateX(-2deg) translateY(-2px) translateZ(18px) skewY(-.85deg) scaleX(1.085) scaleY(1.026); }
-  78% { transform: rotateY(145deg) rotateX(-.8deg) translateY(-1px) translateZ(8px) skewY(-.28deg) scaleX(1.026) scaleY(1.01); }
-  100% { transform: rotateY(180deg) translateZ(1px) skewY(0deg) scaleX(1); }
+  0% { transform: rotateY(0deg) translateZ(1px) skewY(0deg); }
+  24% { transform: rotateY(20deg) translateZ(9px) skewY(-.16deg); }
+  52% { transform: rotateY(84deg) translateZ(18px) skewY(-.42deg); }
+  78% { transform: rotateY(145deg) translateZ(8px) skewY(-.14deg); }
+  100% { transform: rotateY(180deg) translateZ(1px) skewY(0deg); }
 }
 
 @keyframes insightFixedHalfRelease {
@@ -475,17 +475,17 @@
 }
 
 @keyframes insightOuterEdgeForward {
-  0%, 100% { opacity: 0; transform: scaleX(.25); }
-  22% { opacity: .36; transform: scaleX(.7); }
-  54% { opacity: .92; transform: scaleX(1.8); }
-  80% { opacity: .42; transform: scaleX(.8); }
+  0%, 100% { opacity: 0; transform: scaleX(.25) scaleY(1); }
+  22% { opacity: .36; transform: scaleX(.7) scaleY(1.012); }
+  54% { opacity: .92; transform: scaleX(1.8) scaleY(1.075); }
+  80% { opacity: .42; transform: scaleX(.8) scaleY(1.018); }
 }
 
 @keyframes insightOuterEdgeReverse {
-  0%, 100% { opacity: 0; transform: scaleX(.25); }
-  22% { opacity: .36; transform: scaleX(.7); }
-  54% { opacity: .92; transform: scaleX(1.8); }
-  80% { opacity: .42; transform: scaleX(.8); }
+  0%, 100% { opacity: 0; transform: scaleX(.25) scaleY(1); }
+  22% { opacity: .36; transform: scaleX(.7) scaleY(1.012); }
+  54% { opacity: .92; transform: scaleX(1.8) scaleY(1.075); }
+  80% { opacity: .42; transform: scaleX(.8) scaleY(1.018); }
 }
 
 @media (prefers-reduced-motion: reduce) {
