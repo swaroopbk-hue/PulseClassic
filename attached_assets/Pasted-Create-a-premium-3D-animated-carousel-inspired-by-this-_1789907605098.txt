@@ -1,0 +1,219 @@
+Create a premium **3D animated carousel inspired by this reference animation:**
+https://veloxthemes.com/components/3d-animated-carousel
+
+I want the **motion behavior, 3D depth, entrance sequence, spacing, perspective and continuous rotation feel** to closely match the reference. Do not create a normal horizontal slider or simple cover-flow carousel.
+
+### Core 3D Structure
+
+Build the cards as a true **3D circular/radial carousel**.
+
+* Cards must be positioned around an invisible horizontal 3D ring.
+* Use real perspective and depth using `perspective`, `transform-style: preserve-3d`, `rotateY()` and `translateZ()` or an equivalent proper 3D implementation.
+* The cards should appear to physically travel around the user rather than simply slide left and right.
+* The front card should naturally appear larger and clearer.
+* Cards travelling toward the sides should progressively rotate away from the viewer.
+* Rear cards should become smaller/subtler because of their Z-depth.
+* Maintain convincing perspective throughout the complete rotation.
+* Do not flatten the carousel into 2D.
+
+### Cinematic Entrance Animation
+
+The initial page-load animation is extremely important.
+
+When the component first appears:
+
+1. Cards should begin from a **widely spread / exploded arrangement**.
+2. Give the cards noticeable spacing and depth rather than immediately placing them in their final positions.
+3. Cards should smoothly fly inward toward the centre.
+4. At the same time, gradually establish their correct `rotateY` angle and `translateZ` position.
+5. The cards should converge into a perfectly spaced 3D carousel ring.
+6. Use smooth acceleration/deceleration instead of linear motion.
+7. The entrance should feel cinematic and premium — not like cards suddenly popping into position.
+8. Once the cards have settled, seamlessly transition into the continuous carousel rotation.
+
+There must be **no visible jump** between the intro animation and normal rotation.
+
+Suggested intro duration: approximately **1.8–2.5 seconds**.
+
+Use an elegant easing curve such as a premium cubic-bezier / spring with very little bounce.
+
+### Continuous Rotation
+
+After the entrance:
+
+* Automatically rotate the entire 3D ring continuously.
+* Rotation should be very slow, controlled and elegant.
+* Movement must remain fluid at all times.
+* Use requestAnimationFrame or GPU-accelerated transforms rather than repeatedly changing layout properties.
+* Rotation should loop infinitely with no restart point or visible snap.
+* Default direction: left-to-right, but make direction configurable.
+* Do not pause after each card.
+* This is a continuous rotating 3D object, not an autoplay slider that jumps between slides.
+
+Target roughly **20–30 seconds for one complete revolution**, depending on card count.
+
+### Card Behaviour
+
+Each card should:
+
+* Have a premium rounded rectangle shape.
+* Preserve the supplied image/content aspect ratio.
+* Use subtle shadows appropriate to its depth.
+* Keep text/images sharp on the front-facing card.
+* Avoid excessive glow.
+* Avoid large borders.
+* Avoid unnecessary UI decoration.
+* Remain part of the 3D ring rather than individually floating.
+
+Use approximately:
+
+* Border radius: `18–24px`
+* Card width: responsive, approximately `260–340px` desktop
+* Consistent card height/aspect ratio
+* Large enough carousel radius so the cards do not overlap.
+
+### Depth
+
+Depth is one of the most important parts of this animation.
+
+Use a substantial `translateZ` radius so that there is clearly visible space between:
+
+* front cards
+* side cards
+* rear cards
+
+The carousel should feel like an actual **3D installation floating in space**.
+
+Do not fake depth only with `scale()`.
+
+Perspective should be roughly in the range:
+
+`900px – 1400px`
+
+and the carousel radius should be calculated dynamically based on:
+
+* number of cards
+* card width
+* viewport width
+
+### Visual Hierarchy
+
+The card closest to the viewer should have the highest visual prominence.
+
+As cards travel away:
+
+* slightly reduce visual emphasis
+* allow perspective to naturally reduce apparent size
+* optionally reduce opacity very subtly on cards furthest behind
+
+Do not dramatically blur or darken side cards.
+
+The complete carousel should remain visible as one elegant 3D composition.
+
+### Interaction
+
+Add desktop interaction without damaging the automatic animation.
+
+* Allow click-and-drag horizontal rotation.
+* Cursor should change to grab/grabbing.
+* Dragging should rotate the entire ring.
+* Add natural inertia after releasing.
+* Temporarily reduce/stop auto-rotation while dragging.
+* Smoothly resume auto-rotation afterwards.
+* Touch swipe should work on mobile.
+
+Do not allow dragging to produce uncontrolled spinning.
+
+### Hover
+
+When hovering a front/visible card:
+
+* Give it only a subtle visual lift/emphasis.
+* Do not remove it from its 3D position.
+* Do not interrupt the carousel geometry.
+* Do not introduce excessive zooming.
+
+The animation itself should remain the hero.
+
+### Responsive Behaviour
+
+Desktop:
+
+* Show the full cinematic 3D ring.
+* Maintain substantial depth.
+
+Tablet:
+
+* Reduce card width and carousel radius proportionally.
+
+Mobile:
+
+* Keep the 3D concept.
+* Reduce radius and number of simultaneously prominent cards if necessary.
+* Do not replace it with a completely different basic slider unless performance absolutely requires it.
+
+### Performance
+
+The animation needs to feel exceptionally smooth.
+
+Prioritize:
+
+* `transform`
+* `opacity`
+* `will-change: transform`
+* GPU-accelerated animation
+* `requestAnimationFrame`
+
+Avoid frequently updating:
+
+* width
+* margin
+* left/right
+* DOM layout
+
+Aim for **60fps**.
+
+### Accessibility
+
+Respect `prefers-reduced-motion`.
+
+For reduced-motion users:
+
+* skip the dramatic fly-in
+* significantly reduce or disable continuous rotation
+* keep the carousel usable
+
+### Configuration
+
+Make the component reusable and expose:
+
+* cards / images
+* item count
+* autoRotate
+* rotationSpeed
+* direction
+* carouselRadius / distance
+* cardWidth
+* cardHeight
+* cornerRadius
+* introAnimation
+* introDelay
+* introDuration
+* introStartGap
+* introEndGap
+* introStartSpeed
+* introEndSpeed
+
+### Important
+
+The reference must be interpreted as a **rotating 3D ring**, not a carousel with one active card and two cards beside it.
+
+The most important sequence is:
+
+**scattered/spread cards → cinematic convergence → cards form a 3D ring → seamless continuous rotation**
+
+The result should feel sophisticated, smooth, spatial and expensive.
+
+Do not redesign the surrounding page or change my existing content, typography, colours or sections. Only introduce this carousel and its motion behaviour into the specified area.
+
+If implementing this in React, create it as a reusable component and use CSS 3D transforms with Framer Motion only where useful for the intro/interaction. Avoid unnecessary animation libraries and keep the implementation production-quality.
