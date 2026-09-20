@@ -17,9 +17,9 @@ const extendedDecisions = [
     meta: "12 min ago",
     tone: "approval",
     amount: "QAR 42,000,000",
-    priority: "High",
+    isPriority: true,
     status: "Pending",
-    sourcePlatform: "SAP Ariba",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Today",
     requester: { name: "Khalid Al-Mahmoud", role: "VP Infrastructure", initials: "KA" },
     context: [
@@ -53,9 +53,9 @@ const extendedDecisions = [
     action: "Analyse",
     meta: "38 min ago",
     tone: "risk",
-    priority: "High",
+    isPriority: true,
     status: "Pending",
-    sourcePlatform: "Oracle ERP",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Tomorrow",
     requester: { name: "Sarah Jenkins", role: "Director, Hospitality", initials: "SJ" },
     context: [
@@ -88,9 +88,9 @@ const extendedDecisions = [
     meta: "1 hr ago",
     tone: "approval",
     amount: "QAR 18,000,000",
-    priority: "Medium",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "Salesforce",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Thursday",
     requester: { name: "Ahmed Hassan", role: "Commercial Director", initials: "AH" },
     context: [
@@ -122,9 +122,9 @@ const extendedDecisions = [
     action: "Open",
     meta: "2 hrs ago",
     tone: "signal",
-    priority: "Low",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "Power BI",
+    sourcePlatform: "Signature.ai",
     dueDate: "No Action Required",
     requester: { name: "Pulse.ai", role: "Automated Insight", initials: "AI" },
     context: [
@@ -155,9 +155,9 @@ const extendedDecisions = [
     meta: "3 hrs ago",
     tone: "approval",
     amount: "QAR 340,000",
-    priority: "Medium",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "Workday",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Friday",
     requester: { name: "Fatima Al-Thani", role: "Investor Relations", initials: "FA" },
     context: [
@@ -189,9 +189,9 @@ const extendedDecisions = [
     meta: "4 hrs ago",
     tone: "approval",
     amount: "USD 210,000",
-    priority: "Low",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "ServiceNow",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Next Week",
     requester: { name: "Omar Siddiqui", role: "CTO", initials: "OS" },
     context: [
@@ -225,9 +225,9 @@ const extendedDecisions = [
     meta: "5 hrs ago",
     tone: "approval",
     amount: "QAR 1,200,000",
-    priority: "Medium",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "SAP Ariba",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Tomorrow",
     requester: { name: "Lina Marwan", role: "CMO", initials: "LM" },
     context: [
@@ -258,9 +258,9 @@ const extendedDecisions = [
     action: "Analyse",
     meta: "1 d ago",
     tone: "risk",
-    priority: "High",
+    isPriority: true,
     status: "Pending",
-    sourcePlatform: "Splunk",
+    sourcePlatform: "Signature.ai",
     dueDate: "Immediate",
     requester: { name: "Tariq Ali", role: "CISO", initials: "TA" },
     context: [
@@ -292,9 +292,9 @@ const extendedDecisions = [
     meta: "1 d ago",
     tone: "approval",
     amount: "QAR 85,000",
-    priority: "Low",
+    isPriority: false,
     status: "Pending",
-    sourcePlatform: "Workday",
+    sourcePlatform: "Signature.ai",
     dueDate: "Next Payroll",
     requester: { name: "Nadia Youssef", role: "CHRO", initials: "NY" },
     context: [
@@ -327,9 +327,9 @@ const extendedDecisions = [
     meta: "2 d ago",
     tone: "approval",
     amount: "QAR 4,800,000",
-    priority: "High",
+    isPriority: true,
     status: "Pending",
-    sourcePlatform: "Oracle ERP",
+    sourcePlatform: "Signature.ai",
     dueDate: "Due Today",
     requester: { name: "Hassan Ibrahim", role: "Fleet Director", initials: "HI" },
     context: [
@@ -367,7 +367,7 @@ export function DecisionsWorkspace({
 }: DecisionsWorkspaceProps) {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   const [searchQuery, setSearchQuery] = useState("");
-  const [priorityFilter, setPriorityFilter] = useState("All");
+  const [priorityOnly, setPriorityOnly] = useState(false);
 
   const filteredDecisions = useMemo(() => {
     return extendedDecisions.filter(dec => {
@@ -377,11 +377,11 @@ export function DecisionsWorkspace({
                             dec.sourcePlatform.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             dec.requester.name.toLowerCase().includes(searchQuery.toLowerCase());
       
-      const matchesPriority = priorityFilter === "All" || dec.priority === priorityFilter;
+      const matchesPriority = !priorityOnly || dec.isPriority;
       
       return matchesSearch && matchesPriority;
     });
-  }, [searchQuery, priorityFilter]);
+  }, [searchQuery, priorityOnly]);
 
   // Adjust selected index if filtering removes the currently selected item
   const safeIndex = selectedIndex >= 0 && selectedIndex < filteredDecisions.length ? selectedIndex : 0;
@@ -430,24 +430,18 @@ export function DecisionsWorkspace({
             <div className="queue-filters">
               <button
                 type="button"
-                className={`queue-filter-btn ${priorityFilter === 'All' ? 'active' : ''}`}
-                onClick={() => setPriorityFilter('All')}
+                className={`queue-filter-btn ${!priorityOnly ? 'active' : ''}`}
+                onClick={() => setPriorityOnly(false)}
               >
                 All Requests
               </button>
-              <label className="priority-filter-select">
-                <span className="sr-only">Filter by priority</span>
-                <select
-                  value={priorityFilter === 'All' ? '' : priorityFilter}
-                  onChange={(event) => setPriorityFilter(event.target.value || 'All')}
-                  aria-label="Filter requests by priority"
-                >
-                  <option value="">Priority</option>
-                  <option value="High">High priority</option>
-                  <option value="Medium">Medium priority</option>
-                  <option value="Low">Low priority</option>
-                </select>
-              </label>
+              <button
+                type="button"
+                className={`queue-filter-btn ${priorityOnly ? 'active' : ''}`}
+                onClick={() => setPriorityOnly(true)}
+              >
+                Priority
+              </button>
             </div>
           </div>
           
@@ -471,7 +465,7 @@ export function DecisionsWorkspace({
                 <h3>{dec.shortTitle}</h3>
                 <p>{dec.description}</p>
                 <div className="queue-item-meta" style={{ marginTop: '8px', justifyContent: 'space-between', width: '100%' }}>
-                  <strong className={`priority-${dec.priority.toLowerCase()}`} style={{ fontSize: '11px' }}>{dec.priority} Priority</strong>
+                  {dec.isPriority ? <strong className="priority-status">• Priority</strong> : <span />}
                   <span className="queue-item-date">{dec.dueDate}</span>
                 </div>
               </button>
@@ -526,7 +520,7 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           </div>
           <div className="meta-divider" />
           <div className="priority-info">
-            <span className="meta-label">System</span>
+            <span className="meta-label">Approver Request Platform</span>
             <strong>{decision.sourcePlatform}</strong>
           </div>
           <div className="meta-divider" />
@@ -537,7 +531,9 @@ function DecisionDetail({ decision, onAction }: { decision: typeof extendedDecis
           <div className="meta-divider" />
           <div className="priority-info">
             <span className="meta-label">Priority</span>
-            <strong className={`priority-${decision.priority.toLowerCase()}`}>{decision.priority}</strong>
+            <strong className={decision.isPriority ? "priority-status" : undefined}>
+              {decision.isPriority ? "Priority" : "Standard"}
+            </strong>
           </div>
           {decision.amount && (
             <>
