@@ -250,6 +250,10 @@
 .orbit-node-5 { bottom: 18px; left: 8%; animation-delay: -1.1s; }
 .orbit-node-6 { top: 78px; right: 5%; animation-delay: -2.1s; }
 
+.orbit-mobile-navigation {
+  display: none;
+}
+
 @keyframes orbitDrift { from { transform: translate(-50%, -50%) rotate(-12deg) scale(.98); } to { transform: translate(-50%, -50%) rotate(8deg) scale(1.02); } }
 @keyframes orbitFloat { from { margin-top: 0; } to { margin-top: -4px; } }
 

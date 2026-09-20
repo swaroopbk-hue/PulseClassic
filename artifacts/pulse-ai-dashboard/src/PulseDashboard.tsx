@@ -262,9 +262,11 @@ const recentTasks = [
 ];
 
 export function PulseReference3DDark() {
-  const [theme, setTheme] = useState<"dark" | "light">(() =>
-    window.matchMedia("(max-width: 640px)").matches ? "dark" : "light"
-  );
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    const requestedTheme = new URLSearchParams(window.location.search).get("theme");
+    if (requestedTheme === "light" || requestedTheme === "dark") return requestedTheme;
+    return window.matchMedia("(max-width: 640px)").matches ? "dark" : "light";
+  });
   const [profile, setProfile] = useState(false);
   const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
@@ -767,14 +769,27 @@ export function PulseReference3DDark() {
                  {groupPerformance.map((group, index) => {
                     const isNegative = group.height === lowestRevenueHeight;
                     const isHighestPositive = group.height === highestRevenueHeight;
+                    const previousIndex = (groupIndex - 1 + groupPerformance.length) % groupPerformance.length;
+                    const nextIndex = (groupIndex + 1) % groupPerformance.length;
+                    const mobilePosition = index === groupIndex
+                      ? "orbit-node-current"
+                      : index === previousIndex
+                        ? "orbit-node-previous"
+                        : index === nextIndex
+                          ? "orbit-node-next"
+                          : "orbit-node-hidden";
                    return (
                      <button
                        data-testid={`button-orbit-node-${group.short.toLowerCase().replace(/\s+/g, '-')}`}
-                       className={`orbit-node orbit-node-${index} ${isNegative ? 'negative' : ''} ${isHighestPositive ? 'highest-positive' : ''}`}
+                        className={`orbit-node orbit-node-${index} ${mobilePosition} ${isNegative ? 'negative' : ''} ${isHighestPositive ? 'highest-positive' : ''}`}
                        key={group.name}
                        onMouseEnter={() => setGroupIndex(index)}
                        onFocus={() => setGroupIndex(index)}
-                       onClick={() => notify(`${group.name} selected`)}
+                        onClick={() => {
+                          setGroupIndex(index);
+                          notify(`${group.name} selected`);
+                        }}
+                        aria-pressed={groupIndex === index}
                      >
                        <span className="orbit-node-name">{group.name}</span>
                        <strong className="orbit-node-value">QAR {group.value}</strong>
@@ -784,6 +799,37 @@ export function PulseReference3DDark() {
                      </button>
                    );
                  })}
+                  <div className="orbit-mobile-navigation" aria-label="Orbit business navigation">
+                    <button
+                      className="orbit-mobile-arrow"
+                      type="button"
+                      aria-label="Previous business"
+                      onClick={() => setGroupIndex((groupIndex - 1 + groupPerformance.length) % groupPerformance.length)}
+                    >
+                      ‹
+                    </button>
+                    <div className="orbit-mobile-dots" role="tablist" aria-label="Businesses">
+                      {groupPerformance.map((group, index) => (
+                        <button
+                          type="button"
+                          role="tab"
+                          aria-label={`Show ${group.name}`}
+                          aria-selected={groupIndex === index}
+                          className={groupIndex === index ? "active" : ""}
+                          key={group.name}
+                          onClick={() => setGroupIndex(index)}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      className="orbit-mobile-arrow"
+                      type="button"
+                      aria-label="Next business"
+                      onClick={() => setGroupIndex((groupIndex + 1) % groupPerformance.length)}
+                    >
+                      ›
+                    </button>
+                  </div>
                </div>
              ) : (
              <div className="group-chart">
