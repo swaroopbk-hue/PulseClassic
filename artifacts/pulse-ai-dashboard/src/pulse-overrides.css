@@ -1260,7 +1260,7 @@
   background: color-mix(in srgb, var(--exe-blue-dark) 4%, transparent);
   border-radius: 8px;
   color: var(--exe-blue-dark);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
@@ -1314,7 +1314,7 @@
   background: transparent;
   border-radius: 6px;
   color: var(--exe-ink-light);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 200ms ease, color 200ms ease;
@@ -1336,8 +1336,17 @@
 }
 
 .exe-sidebar-item.is-long-label {
-  font-size: 11px;
+  font-size: 13px;
+  padding-inline: 8px;
   letter-spacing: -.01em;
+}
+
+.exe-sidebar-item.is-long-label .item-left {
+  gap: 8px;
+}
+
+.exe-sidebar-item.is-long-label .item-count {
+  margin-left: 4px;
 }
 .pulse-ref3d.dark .exe-sidebar-item.active {
   color: #fff;
@@ -2255,7 +2264,7 @@
 .pulse-ref3d .exe-sidebar .exe-sidebar-ask,
 .pulse-ref3d .exe-sidebar .exe-sidebar-item,
 .pulse-ref3d .exe-sidebar .exe-sidebar-item.is-long-label {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 @media (max-width: 640px) {

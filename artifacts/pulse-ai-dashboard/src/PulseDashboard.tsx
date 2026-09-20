@@ -374,7 +374,7 @@ export function PulseReference3DDark() {
     { id: 'tasks', label: 'Scheduled Tasks', icon: Clock },
     { id: 'dashboards', label: 'Dashboards', icon: LayoutGrid, count: 5 },
     { id: 'artifacts', label: 'Live Artifacts', icon: Sparkles, count: 4 },
-    { id: 'apps', label: 'Connected Apps and Data', icon: LinkIcon, count: 5 },
+    { id: 'apps', label: 'Connected Apps & Data', icon: LinkIcon, count: 5 },
   ];
 
   const agentItems = [
