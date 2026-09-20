@@ -282,6 +282,8 @@ export function PulseReference3DDark() {
   const [decisionIndex, setDecisionIndex] = useState(0);
   const enterprise = enterprisePerformance[period];
   const groupPerformance = groupPerformanceByPeriod[period];
+  const highestRevenueHeight = Math.max(...groupPerformance.map(group => group.height));
+  const lowestRevenueHeight = Math.min(...groupPerformance.map(group => group.height));
 
   const turnInsightPage = useCallback((targetIndex: number, direction?: "forward" | "reverse") => {
     if (insightAnimatingRef.current || targetIndex === insightIndex) return;
@@ -323,9 +325,10 @@ export function PulseReference3DDark() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarPreferenceCollapsed, setSidebarPreferenceCollapsed] = useState(false);
   const [decisionSidebarExpanded, setDecisionSidebarExpanded] = useState(false);
-  const [activeNav, setActiveNav] = useState(() => (
-    new URLSearchParams(window.location.search).get("view") === "decisions" ? "decisions" : "glance"
-  ));
+  const [activeNav, setActiveNav] = useState(() => {
+    const requestedView = new URLSearchParams(window.location.search).get("view");
+    return requestedView === "decisions" || requestedView === "ask-pulse" ? requestedView : "glance";
+  });
   const desktopSidebarCollapsed = activeNav === "decisions"
     ? !decisionSidebarExpanded
     : sidebarPreferenceCollapsed;
@@ -690,22 +693,22 @@ export function PulseReference3DDark() {
             <div className="metric-cell">
                <span className="metric-label">Consolidated revenue</span>
                <div className="metric-value-large">{enterprise.revenue}<span className="unit">{enterprise.revenueUnit}</span></div>
-               <div className="metric-sub">{enterprise.revenueDetail}</div>
+               <div className="metric-sub positive">{enterprise.revenueDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">EBITDA / profit</span>
                <div className="metric-value-large">{enterprise.ebitda}</div>
-               <div className="metric-sub">{enterprise.ebitdaDetail}</div>
+               <div className="metric-sub positive">{enterprise.ebitdaDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Budget achievement</span>
                <div className="metric-value-large">{enterprise.budgetAchievement}</div>
-               <div className="metric-sub">{enterprise.budgetDetail} <span className="dim">{enterprise.budgetPlan}</span></div>
+               <div className="metric-sub negative">{enterprise.budgetDetail} <span className="dim">{enterprise.budgetPlan}</span></div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Full-year forecast</span>
                <div className="metric-value-large">{enterprise.forecast}</div>
-               <div className="metric-sub">{enterprise.forecastDetail}</div>
+               <div className="metric-sub positive">{enterprise.forecastDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Time vs achievement</span>
@@ -721,7 +724,7 @@ export function PulseReference3DDark() {
                     <span className="metric-achieved-marker" />
                   </div>
                </div>
-                <div className="metric-sub">{enterprise.pace}</div>
+                <div className="metric-sub positive">{enterprise.pace}</div>
             </div>
           </div>
         </section>
@@ -783,7 +786,13 @@ export function PulseReference3DDark() {
               <div className="group-columns">
                 {groupPerformance.map((group, index) => (
                   <div
-                    className="group-column"
+                    className={`group-column ${
+                      group.height === highestRevenueHeight
+                        ? "highest-revenue"
+                        : group.height === lowestRevenueHeight
+                          ? "lowest-revenue"
+                          : ""
+                    }`}
                     key={group.name}
                     onMouseEnter={() => {
                       setGroupIndex(index);

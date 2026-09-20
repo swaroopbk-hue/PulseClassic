@@ -78,45 +78,6 @@
   min-height: 0; /* Important for scrollable areas in grid to work */
 }
 
-@media (max-width: 900px) {
-  .sidebar-toggle-btn {
-    display: none;
-  }
-
-  .decisions-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-  }
-  .decisions-queue {
-    display: block;
-    max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    border-right: 0;
-    border-bottom: 1px solid var(--exe-line);
-  }
-  .queue-header {
-    padding: 12px 18px 8px;
-    border-bottom: 0;
-  }
-  .queue-list {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(230px, 72vw);
-    overflow-x: auto;
-    padding: 8px 18px 14px;
-    scroll-snap-type: x proximity;
-  }
-  .queue-item {
-    scroll-snap-align: start;
-    padding: 12px;
-  }
-  .decisions-detail.scrollable {
-    max-height: none;
-    padding: 28px 5vw;
-  }
-}
-
 @media (max-width: 560px) {
   .decisions-header {
     gap: 10px;
@@ -1141,32 +1102,40 @@
   }
 
   .decisions-workspace .decisions-queue {
-    display: block;
+    display: flex;
+    flex-direction: column;
     max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
     border-right: 0;
     border-bottom: 1px solid var(--exe-line);
+    overflow: visible;
+  }
+
+  .decisions-workspace .queue-header {
+    padding: 16px 5vw 8px;
+    border-bottom: 0;
   }
 
   .decisions-workspace .queue-list {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(230px, 72vw);
-    gap: 8px;
+    grid-auto-columns: minmax(260px, 72vw);
+    gap: 12px;
     overflow-x: auto;
-    padding: 8px 18px 14px;
+    overflow-y: hidden;
+    padding: 8px 5vw 20px;
     scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
   }
 
   .decisions-workspace .queue-item {
     width: 100%;
     margin: 0;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
 
   .decisions-workspace .decisions-detail.scrollable {
     max-height: none;
     overflow: visible;
+    padding: 32px 5vw;
   }
 }
