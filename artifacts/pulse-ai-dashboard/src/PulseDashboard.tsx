@@ -135,7 +135,7 @@ export function PulseReference3DDark() {
           </div>
           <div className="masthead-content">
             <h1 className="masthead-headline">
-              The enterprise is <strong>ahead</strong> of its morning pace.
+              Good Morning, Jasim
             </h1>
             <p className="masthead-subhead">
               Revenue is tracking at <strong>QAR 18.4B</strong>, 5 pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
