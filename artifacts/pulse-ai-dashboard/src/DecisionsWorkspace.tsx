@@ -369,7 +369,7 @@ export function DecisionsWorkspace({
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   const [searchQuery, setSearchQuery] = useState("");
   const [priorityOnly, setPriorityOnly] = useState(false);
-  const [mobileDetailOpen, setMobileDetailOpen] = useState(true);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
   const filteredDecisions = useMemo(() => {
     return extendedDecisions.filter(dec => {
@@ -413,9 +413,19 @@ export function DecisionsWorkspace({
       
       <div className="decisions-layout">
         <aside className="decisions-queue" aria-label="Decision Queue">
+          <div className="mobile-request-list-toolbar">
+            <button type="button" onClick={onBack} aria-label="Back to Glance">
+              <ArrowLeft size={18} />
+            </button>
+            <strong>Request List</strong>
+            <span aria-hidden="true" />
+          </div>
           <div className="queue-header">
             <div className="queue-header-top">
-              <h2>Requires Attention</h2>
+              <div>
+                <span className="mobile-queue-eyebrow">Executive Decision Desk</span>
+                <h2>Requires Attention</h2>
+              </div>
               <span className="queue-count">{filteredDecisions.length}</span>
             </div>
             
@@ -473,6 +483,7 @@ export function DecisionsWorkspace({
                   {dec.isPriority ? <strong className="priority-status">• Priority</strong> : <span />}
                   <span className="queue-item-date">{dec.dueDate}</span>
                 </div>
+                <span className="mobile-request-chevron" aria-hidden="true"><ChevronRight size={18} /></span>
               </button>
             )) : (
               <div className="empty-detail" style={{ padding: '24px', textAlign: 'center' }}>No requests match your filters.</div>
