@@ -4,7 +4,46 @@ import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
 
-const periods = ["MTD", "QTD", "YTD"];
+const periods = ["Today", "MTD", "YTD"] as const;
+type Period = (typeof periods)[number];
+
+const enterprisePerformance: Record<Period, {
+  revenue: string;
+  revenueUnit: string;
+  revenueDetail: string;
+  ebitda: string;
+  ebitdaDetail: string;
+  budgetAchievement: string;
+  budgetDetail: string;
+  budgetPlan: string;
+  forecast: string;
+  forecastDetail: string;
+  elapsed: number;
+  achieved: number;
+  pace: string;
+}> = {
+  Today: {
+    revenue: "2.4", revenueUnit: "B QAR", revenueDetail: "↗ 3.1% vs daily plan · 97% target",
+    ebitda: "486M", ebitdaDetail: "20.2% margin · +2.8% vs plan",
+    budgetAchievement: "97.0%", budgetDetail: "QAR 2.4B", budgetPlan: "vs 2.5B plan",
+    forecast: "2.6B", forecastDetail: "+1.8% vs daily plan",
+    elapsed: 42, achieved: 47, pace: "5% ahead of today’s expected pace",
+  },
+  MTD: {
+    revenue: "18.4", revenueUnit: "B QAR", revenueDetail: "↗ 8.2% vs prior month · 94% target",
+    ebitda: "3.76B", ebitdaDetail: "20.4% margin · +6.9% vs prior month",
+    budgetAchievement: "94.0%", budgetDetail: "QAR 18.4B", budgetPlan: "vs 19.6B plan",
+    forecast: "21.2B", forecastDetail: "+2.4% vs monthly plan",
+    elapsed: 58, achieved: 64, pace: "6% ahead of expected monthly pace",
+  },
+  YTD: {
+    revenue: "612", revenueUnit: "B QAR", revenueDetail: "↗ 8.2% YoY · 96% target",
+    ebitda: "132B", ebitdaDetail: "21.6% margin · +9.4% YoY",
+    budgetAchievement: "96.0%", budgetDetail: "QAR 612B", budgetPlan: "vs 638B plan",
+    forecast: "710B", forecastDetail: "+3.8% vs full-year plan",
+    elapsed: 71, achieved: 76, pace: "5% ahead of expected annual pace",
+  },
+};
 const decisions = [
   { type: "Approval", title: "UCC Infrastructure · QAR 42M", shortTitle: "Release infrastructure capital", description: "Capital release awaiting your review.", detail: "Phase two contractor release is ready. Holding it moves the Lusail handover by an estimated 9 days.", action: "Review", meta: "12 min ago", tone: "approval" },
   { type: "Risk", title: "Hospitality occupancy", shortTitle: "Hospitality occupancy gap", description: "Projected 4.2% below seasonal plan.", detail: "Forward bookings are below the seasonal plan across two priority properties and require a response before the next forecast.", action: "Analyse", meta: "38 min ago", tone: "risk" },
@@ -25,22 +64,42 @@ const insightSlides = [
   { group: "UCC", value: "QAR 61M", title: "UCC won QAR 61M in new contract awards this month.", body: "New contracting wins and QAR 22M in procurement savings are offsetting QAR 14M in schedule delays across two sites, keeping UCC on track at 96% of its YTD target. Full-year forecast has been raised to QAR 6.0B.", note: "", tone: "mint" },
   { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet" },
 ];
-const groupPerformance = [
-  { name: "Power International", short: "Power International", value: "65.2K", change: "+12%", direction: "up", height: 92 },
-  { name: "UCC Holding", short: "UCC Holding", value: "49.4K", change: "−3.8%", direction: "down", height: 68 },
-  { name: "Estithmar Holding", short: "Estithmar Holding", value: "57.8K", change: "+6.4%", direction: "up", height: 80 },
-  { name: "Baladna", short: "Baladna", value: "38.3K", change: "+0.6%", direction: "stable", height: 52 },
-  { name: "TMT", short: "TMT", value: "44.6K", change: "+9.1%", direction: "up", height: 62 },
-  { name: "Assets Group", short: "Assets Group", value: "29.7K", change: "−5.2%", direction: "down", height: 41 },
-  { name: "Aura Group", short: "Aura Group", value: "35.1K", change: "+1.1%", direction: "stable", height: 48 },
-];
+const groupPerformanceByPeriod = {
+  Today: [
+    { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", lastYear: "+3.7%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "365M", change: "−1.4%", direction: "down", height: 68, budget: "91%", lastYear: "−0.8%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "398M", change: "+3.8%", direction: "up", height: 73, budget: "95%", lastYear: "+3.2%" },
+    { name: "Baladna", short: "Baladna", value: "284M", change: "+1.2%", direction: "up", height: 52, budget: "98%", lastYear: "+1.0%" },
+    { name: "TMT", short: "TMT", value: "312M", change: "+2.6%", direction: "up", height: 58, budget: "94%", lastYear: "+2.1%" },
+    { name: "Assets Group", short: "Assets Group", value: "216M", change: "−2.1%", direction: "down", height: 40, budget: "88%", lastYear: "−1.7%" },
+    { name: "Aura Group", short: "Aura Group", value: "247M", change: "+0.8%", direction: "stable", height: 46, budget: "93%", lastYear: "+0.6%" },
+  ],
+  MTD: [
+    { name: "Power International", short: "Power International", value: "12.8B", change: "+8.4%", direction: "up", height: 88, budget: "97%", lastYear: "+7.9%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "9.6B", change: "−2.8%", direction: "down", height: 66, budget: "90%", lastYear: "−2.1%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "11.4B", change: "+5.7%", direction: "up", height: 79, budget: "96%", lastYear: "+5.1%" },
+    { name: "Baladna", short: "Baladna", value: "7.2B", change: "+1.9%", direction: "up", height: 50, budget: "99%", lastYear: "+1.5%" },
+    { name: "TMT", short: "TMT", value: "8.9B", change: "+6.3%", direction: "up", height: 62, budget: "95%", lastYear: "+5.8%" },
+    { name: "Assets Group", short: "Assets Group", value: "5.8B", change: "−4.1%", direction: "down", height: 40, budget: "87%", lastYear: "−3.6%" },
+    { name: "Aura Group", short: "Aura Group", value: "6.7B", change: "+1.4%", direction: "stable", height: 46, budget: "92%", lastYear: "+1.1%" },
+  ],
+  YTD: [
+    { name: "Power International", short: "Power International", value: "132B", change: "+12%", direction: "up", height: 91, budget: "98%", lastYear: "+11.2%" },
+    { name: "UCC Holding", short: "UCC Holding", value: "118B", change: "−3.8%", direction: "down", height: 81, budget: "91%", lastYear: "−3.1%" },
+    { name: "Estithmar Holding", short: "Estithmar Holding", value: "145B", change: "+6.4%", direction: "up", height: 100, budget: "97%", lastYear: "+5.9%" },
+    { name: "Baladna", short: "Baladna", value: "96B", change: "+11.4%", direction: "up", height: 66, budget: "104%", lastYear: "+10.7%" },
+    { name: "TMT", short: "TMT", value: "84B", change: "+9.1%", direction: "up", height: 58, budget: "96%", lastYear: "+8.6%" },
+    { name: "Assets Group", short: "Assets Group", value: "72B", change: "−5.2%", direction: "down", height: 50, budget: "88%", lastYear: "−4.8%" },
+    { name: "Aura Group", short: "Aura Group", value: "65B", change: "+1.1%", direction: "stable", height: 45, budget: "93%", lastYear: "+0.9%" },
+  ],
+} satisfies Record<Period, Array<{ name: string; short: string; value: string; change: string; direction: string; height: number; budget: string; lastYear: string }>>;
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
   const [profile, setProfile] = useState(false);
-  const [period, setPeriod] = useState("YTD");
+  const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
   const [insightIndex, setInsightIndex] = useState(0);
@@ -52,6 +111,8 @@ export function PulseReference3DDark() {
   const [assistantExpanded, setAssistantExpanded] = useState(false);
   const [decisionIndex, setDecisionIndex] = useState(0);
   const [decisionsViewAll, setDecisionsViewAll] = useState(false);
+  const enterprise = enterprisePerformance[period];
+  const groupPerformance = groupPerformanceByPeriod[period];
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -138,7 +199,7 @@ export function PulseReference3DDark() {
               Good Morning, Jasim
             </h1>
             <p className="masthead-subhead">
-              Revenue is tracking at <strong>QAR 18.4B</strong>, 5 pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
+               Revenue is tracking at <strong>QAR {enterprise.revenue}{enterprise.revenueUnit.startsWith("B") ? "B" : ""}</strong>, {enterprise.achieved - enterprise.elapsed} pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
             </p>
           </div>
         </div>
@@ -147,45 +208,45 @@ export function PulseReference3DDark() {
           <div className="exe-section-header">
             <h2><span>01</span> Enterprise position</h2>
             <div className="exe-section-line"></div>
-            <span className="exe-section-meta">YTD &middot; FY24 plan</span>
+            <span className="exe-section-meta">{period} &middot; FY24 plan</span>
           </div>
 
           <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
             <div className="metric-cell">
                <span className="metric-label">Consolidated revenue</span>
-               <div className="metric-value-large">18.4<span className="unit">B QAR</span></div>
-               <div className="metric-sub">↗ 8.2% YoY &middot; 94% target</div>
+               <div className="metric-value-large">{enterprise.revenue}<span className="unit">{enterprise.revenueUnit}</span></div>
+               <div className="metric-sub">{enterprise.revenueDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">EBITDA / profit</span>
-               <div className="metric-value-large">3.76B</div>
-               <div className="metric-sub">20.4% margin <span className="positive">+6.9% YoY</span></div>
+               <div className="metric-value-large">{enterprise.ebitda}</div>
+               <div className="metric-sub">{enterprise.ebitdaDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Budget achievement</span>
-               <div className="metric-value-large">94.0%</div>
-               <div className="metric-sub">QAR 18.4B <span className="dim">vs 19.6B plan</span></div>
+               <div className="metric-value-large">{enterprise.budgetAchievement}</div>
+               <div className="metric-sub">{enterprise.budgetDetail} <span className="dim">{enterprise.budgetPlan}</span></div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Full-year forecast</span>
-               <div className="metric-value-large">98.1%</div>
-               <div className="metric-sub">18.9B expected <span className="dim">−1.9% vs plan</span></div>
+               <div className="metric-value-large">{enterprise.forecast}</div>
+               <div className="metric-sub">{enterprise.forecastDetail}</div>
             </div>
             <div className="metric-cell">
                <span className="metric-label">Time vs achievement</span>
                <div className="metric-split-labels">
-                 <div>71% <span>year elapsed</span></div>
-                 <div>76% <span>achieved</span></div>
+                  <div>{enterprise.elapsed}% <span>{period === "Today" ? "day" : period === "MTD" ? "month" : "year"} elapsed</span></div>
+                  <div>{enterprise.achieved}% <span>achieved</span></div>
                </div>
                <div className="metric-progress">
                   <div className="metric-progress-elapsed">
-                    <span className="metric-elapsed-marker" style={{ left: '71%' }} />
+                     <span className="metric-elapsed-marker" style={{ left: `${enterprise.elapsed}%` }} />
                   </div>
-                  <div className="metric-progress-achieved" style={{ width: '76%' }}>
+                   <div className="metric-progress-achieved" style={{ width: `${enterprise.achieved}%` }}>
                     <span className="metric-achieved-marker" />
                   </div>
                </div>
-               <div className="metric-sub">5% ahead of expected pace</div>
+                <div className="metric-sub">{enterprise.pace}</div>
             </div>
           </div>
         </section>
@@ -196,15 +257,29 @@ export function PulseReference3DDark() {
             <div className="exe-section-line"></div>
           </div>
 
-          <section className={`group-performance ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label="Enterprise group performance">
+          <section className={`group-performance period-${period.toLowerCase()} ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label="Enterprise group performance">
             <div className="group-performance-head">
-              <div>
+               <div>
                 <h2>Group Performance</h2>
-                <p>Revenue movement across the enterprise portfolio</p>
+                 <p>{period} revenue movement across the enterprise portfolio</p>
               </div>
-               <div className="group-view-actions" aria-label="Group performance views">
-                 <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
-                 <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
+                <div className="group-performance-controls">
+                  <div className="group-period-tabs" aria-label="Group performance period">
+                    {periods.map((item) => (
+                      <button
+                        data-testid={`button-group-period-${item.toLowerCase()}`}
+                        className={`group-period-tab ${period === item ? "active" : ""}`}
+                        onClick={() => setPeriod(item)}
+                        key={item}
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="group-view-actions" aria-label="Group performance views">
+                    <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
+                    <button data-testid="button-group-view-orbit" className={`group-view-button ${groupView === "orbit" ? "active" : ""}`} onClick={() => setGroupView("orbit")}>Orbit</button>
+                  </div>
                </div>
             </div>
              {groupView === "orbit" ? (
@@ -215,10 +290,10 @@ export function PulseReference3DDark() {
                  <div className="orbit-core">
                    <small>CONSOLIDATED<br />REVENUE</small>
                    <div className="orbit-core-value">
-                     <span>18.4</span><sub>B QAR</sub>
+                      <span>{enterprise.revenue}</span><sub>{enterprise.revenueUnit}</sub>
                    </div>
                    <div className="orbit-core-trend">
-                     ↗ 8.2% YoY
+                      {period === "YTD" ? "↗ 8.2% YoY" : period === "MTD" ? "↗ 6.1% MTD" : "↗ 3.1% today"}
                    </div>
                  </div>
                  {groupPerformance.map((group, index) => {
@@ -266,9 +341,9 @@ export function PulseReference3DDark() {
                         <b>{group.value}</b>
                          <span>Revenue</span>
                         <i />
-                         <span>Budget: <strong>{index === 2 ? "89%" : index % 2 === 0 ? "86%" : "82%"}</strong></span>
+                          <span>Budget: <strong>{group.budget}</strong></span>
                         <i />
-                          <span>LY: <strong>{group.direction === "down" ? "−11%" : group.direction === "stable" ? "+0.4%" : "+8%"}</strong></span>
+                           <span>{period === "Today" ? "Prior day" : period === "MTD" ? "Prior MTD" : "LY"}: <strong>{group.lastYear}</strong></span>
                       </div>
                       )}
                   </div>

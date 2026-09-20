@@ -432,6 +432,57 @@
   margin-top: 4px !important;
 }
 
+.group-performance-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.group-period-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.pulse-ref3d.dark .group-period-tabs {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(17, 24, 30, 0.4);
+}
+
+.group-period-tab {
+  min-height: 22px;
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--exe-ink-light);
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.group-period-tab.active {
+  background: #fff;
+  color: var(--exe-ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  font-weight: 600;
+}
+
+.pulse-ref3d.dark .group-period-tab.active {
+  background: #2a343d;
+  color: #fff;
+}
+
+.group-performance.period-ytd .group-value-row > strong {
+  font-size: 24px;
+}
+
 /* View Control Buttons (Orbit / Line Bar) */
 .group-view-actions {
   background: rgba(255, 255, 255, 0.4) !important;
