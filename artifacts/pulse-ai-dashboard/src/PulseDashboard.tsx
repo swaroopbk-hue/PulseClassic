@@ -147,7 +147,7 @@ export function PulseReference3DDark() {
   useEffect(() => {
     const autoplayTimer = window.setTimeout(() => {
       turnInsightPage((insightIndex + 1) % insightSlides.length, "forward");
-    }, 12000);
+    }, 8000);
 
     return () => window.clearTimeout(autoplayTimer);
   }, [insightIndex, turnInsightPage]);
