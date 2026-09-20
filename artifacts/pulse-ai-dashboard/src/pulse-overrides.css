@@ -1260,7 +1260,7 @@
   background: color-mix(in srgb, var(--exe-blue-dark) 4%, transparent);
   border-radius: 8px;
   color: var(--exe-blue-dark);
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
@@ -1314,7 +1314,7 @@
   background: transparent;
   border-radius: 6px;
   color: var(--exe-ink-light);
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 200ms ease, color 200ms ease;
@@ -1336,7 +1336,7 @@
 }
 
 .exe-sidebar-item.is-long-label {
-  font-size: 14px;
+  font-size: 11px;
   letter-spacing: -.01em;
 }
 .pulse-ref3d.dark .exe-sidebar-item.active {
