@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun, Plus, Eye, Folder, LayoutGrid, Link as LinkIcon, Brain, Box, Settings, Menu, X } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun, Plus, Eye, Folder, LayoutGrid, Link as LinkIcon, Brain, Box, Settings, Menu, X, ArrowUp, LayoutTemplate, Layout, Smartphone, Table, BarChart3, Telescope, BarChart2, Globe, DollarSign, ShieldCheck, Users, Truck, PenTool, AlertTriangle, Briefcase, Monitor, ChevronDown } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
@@ -73,6 +73,137 @@ function InsightPageContent({ slide }: { slide: (typeof insightSlides)[number] }
   );
 }
 
+function AskPulseView({ onNotify }: { onNotify: (msg: string) => void }) {
+  const [askPrompt, setAskPrompt] = useState("");
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  
+  const placeholders = [
+    "Hi Boss, how can I help you today?",
+    "Draft a project update for the team...",
+    "Analyze the latest Baladna forecast...",
+    "Create a new visualization dashboard..."
+  ];
+
+  useEffect(() => {
+    let fadeTimer: number | undefined;
+    const interval = setInterval(() => {
+      setIsFading(true);
+      fadeTimer = window.setTimeout(() => {
+        setPlaceholderIndex(prev => (prev + 1) % placeholders.length);
+        setIsFading(false);
+      }, 300);
+    }, 4000);
+    return () => {
+      clearInterval(interval);
+      if (fadeTimer !== undefined) window.clearTimeout(fadeTimer);
+    };
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (askPrompt.trim()) {
+      onNotify("Prompt submitted");
+      setAskPrompt("");
+    }
+  };
+
+  const suggestions = [
+    { label: "Create slides", icon: LayoutTemplate },
+    { label: "Build website", icon: Layout },
+    { label: "Develop apps", icon: Smartphone },
+    { label: "Spreadsheet", icon: Table },
+    { label: "Visualization", icon: BarChart3 },
+    { label: "Wide Research", icon: Telescope },
+    { label: "Pulse suggested", icon: Sparkles },
+  ];
+
+  const marqueeAgents = [
+    { id: 1, name: "Data Analyst", desc: "Query performance data", icon: BarChart2 },
+    { id: 2, name: "Market Researcher", desc: "Track competitor trends", icon: Globe },
+    { id: 3, name: "Financial Planner", desc: "Forecast budgeting", icon: DollarSign },
+    { id: 4, name: "Compliance Bot", desc: "Policy checks", icon: ShieldCheck },
+    { id: 5, name: "HR Assistant", desc: "Team sentiment", icon: Users },
+    { id: 6, name: "Operations", desc: "Supply chain alerts", icon: Truck },
+    { id: 7, name: "Creative Writer", desc: "Draft comms", icon: PenTool },
+    { id: 8, name: "Risk Manager", desc: "Identify exposure", icon: AlertTriangle },
+    { id: 9, name: "Legal Counsel", desc: "Contract summaries", icon: Briefcase },
+    { id: 10, name: "IT Support", desc: "System diagnostics", icon: Monitor },
+  ];
+  const marqueeItems = [...marqueeAgents, ...marqueeAgents];
+
+  return (
+    <div className="ask-pulse-view fade-in">
+      <div className="ask-pulse-container">
+        <h1 className="ask-pulse-heading">Let's knock something off your list</h1>
+        
+        <form className="ask-pulse-form" onSubmit={handleSubmit}>
+          <div className="ask-pulse-input-wrap">
+            <div className="ask-pulse-input-inner">
+              {!askPrompt && (
+                <div className={`ask-pulse-placeholder ${isFading ? 'fading' : ''}`}>
+                  {placeholders[placeholderIndex]}
+                </div>
+              )}
+              <input 
+                value={askPrompt}
+                onChange={e => setAskPrompt(e.target.value)}
+                aria-label="Ask Pulse input"
+              />
+            </div>
+            <div className="ask-pulse-input-footer">
+              <button type="button" className="ask-pulse-attach" onClick={() => onNotify("Attach file")} aria-label="Attach file">
+                <Plus size={16} />
+              </button>
+              <div className="ask-pulse-actions">
+                <button type="button" className="ask-pulse-model" onClick={() => onNotify("Model selected")}>
+                  <Sparkles size={14} /> Pulse GPT 5.6 Terra <ChevronDown size={14} />
+                </button>
+                <button type="submit" className="ask-pulse-submit" aria-label="Submit prompt">
+                  <ArrowUp size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div className="ask-pulse-project">
+          <button onClick={() => onNotify("Project selected")}>
+            <Folder size={14} /> Work in a project <ChevronDown size={14} />
+          </button>
+        </div>
+
+        <div className="ask-pulse-suggestions">
+          {suggestions.map(s => (
+            <button type="button" key={s.label} className="ask-pulse-chip" onClick={() => onNotify(`${s.label} template selected`)}>
+              <s.icon size={14} /> {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="ask-pulse-agents">
+        <h3>Our Agents</h3>
+        <div className="marquee-container">
+          <div className="marquee-track">
+            {marqueeItems.map((agent, i) => (
+              <button type="button" key={`${agent.id}-${i}`} className="marquee-card" onClick={() => onNotify(`${agent.name} selected`)}>
+                <div className="marquee-icon">
+                  <agent.icon size={16} />
+                </div>
+                <div className="marquee-info">
+                  <strong>{agent.name}</strong>
+                  <span>{agent.desc}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const groupPerformanceByPeriod = {
   Today: [
     { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", forecast: "98%", lastYear: "+3.7%" },
@@ -102,6 +233,13 @@ const groupPerformanceByPeriod = {
     { name: "Aura Group", short: "Aura Group", value: "65B", change: "+1.1%", direction: "stable", height: 45, budget: "93%", forecast: "95%", lastYear: "+0.9%" },
   ],
 } satisfies Record<Period, Array<{ name: string; short: string; value: string; change: string; direction: string; height: number; budget: string; forecast: string; lastYear: string }>>;
+
+const recentTasks = [
+  { id: 1, label: "give me top materials we have", time: "5m ago" },
+  { id: 2, label: "can you search recent PIH announcements", time: "Sep 8" },
+  { id: 3, label: "@itsd check my open IT support tickets", time: "Sep 8" },
+  { id: 4, label: "can you show me the last document", time: "Sep 8" },
+];
 
 export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
@@ -174,6 +312,8 @@ export function PulseReference3DDark() {
       if (e.key === "Escape" && sidebarOpen) setSidebarOpen(false);
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
+        setActiveNav("ask-pulse");
+        setSidebarOpen(false);
         notify("Ask Pulse opened");
       }
     };
@@ -226,7 +366,12 @@ export function PulseReference3DDark() {
   const SidebarContent = () => (
     <div className="exe-sidebar-inner">
       <div className="exe-sidebar-top">
-        <button type="button" className="exe-sidebar-ask" onClick={() => { setSidebarOpen(false); notify("Ask Pulse opened"); }}>
+        <button
+          type="button"
+          className={`exe-sidebar-ask ${activeNav === 'ask-pulse' ? 'active' : ''}`}
+          aria-current={activeNav === "ask-pulse" ? "page" : undefined}
+          onClick={() => { setActiveNav("ask-pulse"); setSidebarOpen(false); notify("Ask Pulse opened"); }}
+        >
           <div className="ask-left"><Plus size={15} /> Ask Pulse</div>
           <kbd className="ask-kbd">⌘K</kbd>
         </button>
@@ -268,6 +413,28 @@ export function PulseReference3DDark() {
             ))}
           </nav>
         </div>
+
+        {activeNav === 'ask-pulse' && (
+          <div className="exe-sidebar-section animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="exe-sidebar-label">RECENT TASKS</div>
+            <nav className="exe-sidebar-menu">
+              {recentTasks.map(task => (
+                <button 
+                  type="button"
+                  key={task.id} 
+                  className="exe-sidebar-item task-item"
+                  onClick={() => {
+                    notify(`Task opened: ${task.label}`);
+                    setSidebarOpen(false);
+                  }}
+                >
+                  <span className="task-label">{task.label}</span>
+                  <span className="task-time">{task.time}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        )}
       </div>
 
       <div className="exe-sidebar-bottom">
@@ -352,8 +519,12 @@ export function PulseReference3DDark() {
         )}
 
         <main className="exe-main">
-        <div className="exe-masthead">
-          <div className="masthead-top">
+        {activeNav === 'ask-pulse' ? (
+          <AskPulseView onNotify={notify} />
+        ) : (
+          <div className="exe-content-wrapper">
+            <div className="exe-masthead">
+              <div className="masthead-top">
             <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / QAR CONSOLIDATED VIEW</div>
           </div>
           <div className="masthead-grid">
@@ -678,6 +849,8 @@ export function PulseReference3DDark() {
             ))}
           </section>
         </div>
+        </div>
+        )}
       </main>
       </div>
       {toast && <div className="toast">{toast}</div>}
