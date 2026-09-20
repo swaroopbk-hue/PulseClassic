@@ -46,10 +46,10 @@ const enterprisePerformance: Record<Period, {
   },
 };
 const decisions = [
-  { type: "Approval", title: "UCC Infrastructure · QAR 42M", shortTitle: "Release infrastructure capital", description: "Capital release awaiting your review.", detail: "Phase two contractor release is ready. Holding it moves the Lusail handover by an estimated 9 days.", action: "Review", meta: "12 min ago", tone: "approval" },
-  { type: "Risk", title: "Hospitality occupancy", shortTitle: "Hospitality occupancy gap", description: "Projected 4.2% below seasonal plan.", detail: "Forward bookings are below the seasonal plan across two priority properties and require a response before the next forecast.", action: "Analyse", meta: "38 min ago", tone: "risk" },
-  { type: "Approval", title: "New contract wins", shortTitle: "Review new contract award", description: "QAR 18M · decision due this week.", detail: "A new QAR 18M contract award is ready for commercial review before the decision window closes this week.", action: "Open", meta: "1 hr ago", tone: "approval" },
-  { type: "Signal", title: "Baladna beat forecast", shortTitle: "Baladna forecast outperformance", description: "Performance is tracking +11.0% YTD.", detail: "Baladna is outperforming the current forecast, creating an opportunity to reassess the group outlook and near-term allocation.", action: "Open", meta: "2 hrs ago", tone: "signal" },
+  { type: "Approval", title: "Release infrastructure capital", description: "Phase two capital release for the Lusail infrastructure program.", action: "Review request", meta: "12 min ago", tone: "approval", sourcePlatform: "SAP S/4HANA", isPriority: true, dueDate: "Due today", status: "Awaiting executive approval", requester: "Khalid Al-Mahmoud", value: "QAR 42M" },
+  { type: "Risk", title: "Hospitality occupancy gap", description: "Forward bookings are projected 4.2% below the seasonal plan.", action: "Review risk", meta: "38 min ago", tone: "risk", sourcePlatform: "Signature.ai", isPriority: true, dueDate: "Due tomorrow", status: "Executive review pending", requester: "Sarah Jenkins", value: "QAR 8.5M at risk" },
+  { type: "Approval", title: "Review new contract award", description: "Commercial sign-off for the new Al Rayyan facilities contract.", action: "Review request", meta: "1 hr ago", tone: "approval", sourcePlatform: "SAP S/4HANA", isPriority: false, dueDate: "Due Thursday", status: "Awaiting final sign-off", requester: "Ahmed Hassan", value: "QAR 18M" },
+  { type: "Signal", title: "Baladna forecast outperformance", description: "Performance is tracking 11.0% above the current YTD forecast.", action: "Open insight", meta: "2 hrs ago", tone: "signal", sourcePlatform: "Signature.ai", isPriority: false, dueDate: "No action required", status: "Ready for executive review", requester: "Pulse.ai", value: "+11.0% YTD" },
 ] as const;
 const insightSlides = [
   { group: "UCC", value: "92%", title: "Occupancy momentum is holding above plan.", body: "Leisure demand and ADR are carrying the group through the summer booking curve.", note: "QAR 38M upside identified in the latest operating review.", tone: "blue" },
@@ -846,8 +846,23 @@ export function PulseReference3DDark() {
                <div className="decision-slider">
                  <button className="decision-arrow previous" onClick={() => setDecisionIndex((decisionIndex - 1 + decisions.length) % decisions.length)} aria-label="Previous decision"><ChevronLeft size={15} /></button>
                  <article className={`decision-slide ${decisions[decisionIndex].tone}`}>
-                   <span className="decision-dot" />
-                   <div><h3>{decisions[decisionIndex].title}</h3><p>{decisions[decisionIndex].description}</p></div>
+                   <div className="decision-summary">
+                     <div className="decision-summary-topline">
+                       <span className={`decision-kind ${decisions[decisionIndex].tone}`}>{decisions[decisionIndex].type}</span>
+                       <span className="decision-status">{decisions[decisionIndex].status}</span>
+                     </div>
+                     <h3>{decisions[decisionIndex].title}</h3>
+                     <p>{decisions[decisionIndex].description}</p>
+                     <div className="decision-summary-meta">
+                       <span>{decisions[decisionIndex].sourcePlatform}</span>
+                       {decisions[decisionIndex].isPriority && <strong>• Priority</strong>}
+                       <span>{decisions[decisionIndex].dueDate}</span>
+                     </div>
+                     <div className="decision-summary-footer">
+                       <span>{decisions[decisionIndex].requester} · {decisions[decisionIndex].meta}</span>
+                       <strong>{decisions[decisionIndex].value}</strong>
+                     </div>
+                   </div>
                    <button onClick={() => { setActiveNav('decisions'); }}>{decisions[decisionIndex].action}</button>
                  </article>
                  <button className="decision-arrow next" onClick={() => setDecisionIndex((decisionIndex + 1) % decisions.length)} aria-label="Next decision"><ChevronRight size={15} /></button>

@@ -1020,22 +1020,46 @@
 
 .ref-bottom > .decisions-card {
   width: 100%;
-  min-height: 210px;
+  min-height: 246px;
 }
 
 .ref-bottom > .decisions-card:not(.decisions-all) .decision-slider {
-  min-height: 122px;
-  padding-right: 48px;
-  padding-left: 48px;
+  min-height: 158px;
+  padding-right: 76px;
+  padding-left: 76px;
 }
 
 .ref-bottom > .decisions-card:not(.decisions-all) .decision-slide {
-  padding-right: 28px;
-  padding-left: 28px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .ref-bottom > .decisions-card:not(.decisions-all) .decision-pagination {
-  padding: 0 48px 18px;
+  padding: 0 76px 18px;
+}
+
+@media (max-width: 720px) {
+  .ref-bottom > .decisions-card:not(.decisions-all) .decision-slider {
+    padding-right: 46px;
+    padding-left: 46px;
+  }
+
+  .ref-bottom > .decisions-card:not(.decisions-all) .decision-pagination {
+    padding-right: 46px;
+    padding-left: 46px;
+  }
+
+  .decision-slide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .decision-slide > button {
+    justify-self: start;
+  }
+
+  .decision-arrow.previous { left: 10px; }
+  .decision-arrow.next { right: 10px; }
 }
 
 .agents-section-header {
