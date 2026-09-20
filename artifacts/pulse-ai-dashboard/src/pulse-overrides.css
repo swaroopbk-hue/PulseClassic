@@ -2234,3 +2234,23 @@
     display: none;
   }
 }
+
+/* Glance reuses the Ask Pulse marquee; only card scale is adapted. */
+.landing-agent-marquee .marquee-card {
+  width: 128px;
+  height: 128px;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.landing-agent-marquee .marquee-track {
+  padding-bottom: 24px;
+}
+
+@media (max-width: 640px) {
+  .landing-agent-marquee .marquee-card {
+    width: 118px;
+    height: 118px;
+    padding: 12px;
+  }
+}

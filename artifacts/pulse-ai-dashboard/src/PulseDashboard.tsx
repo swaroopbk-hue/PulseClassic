@@ -86,25 +86,19 @@ const pulseAgents = [
   { id: 10, name: "IT Support", desc: "System diagnostics", icon: Monitor },
 ];
 
-function LandingAgentLoop({ onNotify }: { onNotify: (msg: string) => void }) {
-  const loopAgents = [...pulseAgents, ...pulseAgents];
+function LandingAgentMarquee({ onNotify }: { onNotify: (msg: string) => void }) {
   return (
-    <section className="landing-agent-loop" aria-label="Glance agents">
-      <div className="landing-agent-track">
-        {loopAgents.map((agent, index) => (
-          <button
-            type="button"
-            className="landing-agent-card"
-            key={`${agent.id}-${index}`}
-            aria-hidden={index >= pulseAgents.length}
-            tabIndex={index >= pulseAgents.length ? -1 : 0}
-            onClick={() => onNotify(`${agent.name} selected`)}
-          >
-            <span className="landing-agent-icon"><agent.icon size={16} /></span>
-            <span className="landing-agent-copy">
+    <section className="marquee-container landing-agent-marquee" aria-label="Glance agents">
+      <div className="marquee-track">
+        {[...pulseAgents, ...pulseAgents].map((agent, index) => (
+          <button type="button" key={`${agent.id}-${index}`} className="marquee-card" onClick={() => onNotify(`${agent.name} selected`)}>
+            <div className="marquee-icon">
+              <agent.icon size={16} />
+            </div>
+            <div className="marquee-info">
               <strong>{agent.name}</strong>
-              <small>{agent.desc}</small>
-            </span>
+              <span>{agent.desc}</span>
+            </div>
           </button>
         ))}
       </div>
@@ -865,7 +859,7 @@ export function PulseReference3DDark() {
             <div className="exe-section-line"></div>
           </div>
 
-          <LandingAgentLoop onNotify={notify} />
+          <LandingAgentMarquee onNotify={notify} />
         </div>
         </div>
         )}
