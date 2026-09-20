@@ -113,6 +113,12 @@
   isolation: isolate;
 }
 
+@media (min-width: 769px) {
+  .group-orbit-view {
+    min-height: 320px;
+  }
+}
+
 .group-orbit-view::before {
   content: "";
   position: absolute;
