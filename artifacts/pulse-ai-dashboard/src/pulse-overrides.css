@@ -4287,6 +4287,10 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.business-dashboard .masthead-meta {
+  color: #86764f;
+}
+
 .business-group-performance .group-column-name {
   min-height: 34px;
 }

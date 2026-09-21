@@ -640,7 +640,7 @@ export function PulseReference3DDark() {
           <div className={`exe-content-wrapper ${isBusinessEdition ? "business-dashboard" : ""}`}>
             <div className="exe-masthead">
               <div className="masthead-top">
-            <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / {isBusinessEdition ? "UCC BUSINESS VIEW" : "QAR CONSOLIDATED VIEW"}</div>
+            <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / {isBusinessEdition ? "UCC BUSINESS VIEW" : "PIH CONSOLIDATED VIEW"}</div>
           </div>
           <div className="masthead-grid">
             <div className="masthead-content">
