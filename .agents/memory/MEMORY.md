@@ -1,1 +1,2 @@
 - [Orval and js-yaml compatibility](orval-js-yaml.md) — keep Orval on a patched js-yaml 4.x release until Orval supports js-yaml 5.
+- [Ask Pulse icon geometry](ask-pulse-icon-geometry.md) — preserve the approved rounded bubble, balanced tail, and centered three-dot geometry.
