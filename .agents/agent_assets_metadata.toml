@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "rirz6X9xNqyxwj44DGKw0"
+uri = "file://docs/PULSE_AI_DEVELOPER_HANDOVER.md"
+type = "text"
+title = "Pulse.ai Developer Handover"
+description = "Comprehensive 18-section project handover covering requirements, implementation status, screens, components, structure, stack, styling, responsiveness, data, backend, authentication, known gaps, and recommended next steps."
+logical_id = "2b0ee563-16f0-472e-adb1-2860c2503450"
+content_hash = "sha256:e496e4ea00d649e3d9003b31745ec462ccb4e8963c698748b72bb8e6b83fcb37"
+size = 39461
+mtime_ms = 1789993057739
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:94199b21-21aa-4077-8d88-8afe52d66acc/2b0ee563-16f0-472e-adb1-2860c2503450/62674787-36f6-4531-a6d6-651f3d2f6a64"
+storage_version_token = "1789993078762665"
+content_type = "text/markdown"
