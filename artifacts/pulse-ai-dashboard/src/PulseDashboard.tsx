@@ -224,6 +224,93 @@ function AskPulseView({ onNotify }: { onNotify: (msg: string) => void }) {
   );
 }
 
+function BusinessEditionView({ onNotify }: { onNotify: (msg: string) => void }) {
+  const [period, setPeriod] = useState<Period>("YTD");
+  const businessUnits = [
+    { name: "UCC Infrastructure", note: "Operating area" },
+    { name: "UCC Contracting", note: "Operating area" },
+    { name: "UCC Hospitality", note: "Operating area" },
+    { name: "UCC Services", note: "Operating area" },
+  ];
+
+  return (
+    <div className="business-edition-page fade-in">
+      <div className="business-masthead">
+        <div className="business-masthead-meta">UCC BUSINESS PULSE &middot; TUESDAY, 18 JUNE 2024</div>
+        <h1>Good morning, Jasim</h1>
+        <p>A clear view of UCC, its companies, and what needs a decision.</p>
+      </div>
+
+      <section className="business-section" aria-labelledby="business-glance-heading">
+        <div className="business-section-header">
+          <h2 id="business-glance-heading">UCC at a glance</h2>
+          <div className="business-period-tabs" aria-label="Business dashboard period">
+            {periods.map(item => (
+              <button
+                type="button"
+                key={item}
+                className={period === item ? "active" : ""}
+                onClick={() => setPeriod(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="business-kpi-empty">
+          <div className="business-kpi-empty-mark" aria-hidden="true"><Sparkles size={17} /></div>
+          <div>
+            <strong>UCC KPI view is ready</strong>
+            <p>The approved Business Edition KPI list will appear here once provided.</p>
+          </div>
+          <span>{period} view</span>
+        </div>
+      </section>
+
+      <section className="business-section" aria-labelledby="business-units-heading">
+        <div className="business-section-header">
+          <div>
+            <h2 id="business-units-heading">UCC companies &amp; business units</h2>
+            <p>4 operating areas &middot; Select to drill in</p>
+          </div>
+        </div>
+        <div className="business-unit-grid">
+          {businessUnits.map(unit => (
+            <button
+              type="button"
+              className="business-unit-card"
+              key={unit.name}
+              onClick={() => onNotify(`${unit.name} selected`)}
+            >
+              <span>{unit.note}</span>
+              <strong>{unit.name}</strong>
+              <small>Business detail <ChevronRight size={13} /></small>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="business-section business-readiness" aria-labelledby="business-readiness-heading">
+        <div className="business-section-header">
+          <h2 id="business-readiness-heading">Group performance workspace</h2>
+        </div>
+        <div className="business-readiness-grid">
+          <div>
+            <span className="business-readiness-number">01</span>
+            <strong>UCC</strong>
+            <p>One group selected for the first Business Edition release.</p>
+          </div>
+          <div>
+            <span className="business-readiness-number">02</span>
+            <strong>Next step</strong>
+            <p>Map the approved KPI list to the summary and unit drill-in modules.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 const groupPerformanceByPeriod = {
   Today: [
     { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", forecast: "98%", lastYear: "+3.7%" },
@@ -268,6 +355,9 @@ export function PulseReference3DDark() {
     return window.matchMedia("(max-width: 640px)").matches ? "dark" : "light";
   });
   const [profile, setProfile] = useState(false);
+  const [edition, setEdition] = useState<"executive" | "business">(() =>
+    new URLSearchParams(window.location.search).get("edition") === "business" ? "business" : "executive"
+  );
   const [period, setPeriod] = useState<Period>("YTD");
   const [toast, setToast] = useState("");
   const [insightIndex, setInsightIndex] = useState(0);
@@ -380,8 +470,13 @@ export function PulseReference3DDark() {
     } else {
       url.searchParams.delete("view");
     }
+    if (edition === "business") {
+      url.searchParams.set("edition", "business");
+    } else {
+      url.searchParams.delete("edition");
+    }
     window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
-  }, [activeNav]);
+  }, [activeNav, edition]);
 
   useEffect(() => {
     if (activeNav === "decisions") {
@@ -524,9 +619,21 @@ export function PulseReference3DDark() {
             alt="Pulse.ai"
             className="exe-logo"
           />
-          <span className="exe-edition">EXECUTIVE EDITION</span>
+           <span className="exe-edition">{edition === "business" ? "BUSINESS EDITION" : "EXECUTIVE EDITION"}</span>
         </div>
         <div className="exe-header-actions">
+          <button
+            type="button"
+            className="edition-switch-button"
+            onClick={() => {
+              setEdition(current => current === "executive" ? "business" : "executive");
+              setActiveNav("glance");
+              setSidebarOpen(false);
+              notify(`${edition === "executive" ? "Business" : "Executive"} Edition opened`);
+            }}
+          >
+            {edition === "executive" ? "Business" : "Executive"}
+          </button>
           <div className="exe-refresh">
             <Clock size={13} /> <span>Refreshed 08:42 AST</span>
           </div>
@@ -593,6 +700,8 @@ export function PulseReference3DDark() {
             initialIndex={decisionIndex} 
             onNotify={notify} 
           />
+        ) : edition === "business" ? (
+          <BusinessEditionView onNotify={notify} />
         ) : (
           <div className="exe-content-wrapper">
             <div className="exe-masthead">
