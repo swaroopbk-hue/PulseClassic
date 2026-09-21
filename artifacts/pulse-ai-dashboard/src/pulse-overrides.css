@@ -42,6 +42,21 @@
   filter: none;
 }
 
+.exe-business-logo-wrap {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding-left: 16px;
+  border-left: 1px solid var(--exe-line);
+}
+
+.exe-business-logo {
+  display: block;
+  width: auto;
+  height: 25px;
+  object-fit: contain;
+}
+
 .exe-edition {
   font-size: 11px;
   font-weight: 600;
@@ -50,6 +65,11 @@
   text-transform: uppercase;
   padding-left: 16px;
   border-left: 1px solid var(--exe-line);
+}
+
+.exe-edition.has-business-logo {
+  padding-left: 0;
+  border-left: 0;
 }
 
 .exe-header-actions {
@@ -4543,6 +4563,15 @@
     min-height: 31px;
     padding: 0 9px;
     font-size: 10px;
+  }
+
+  .exe-business-logo-wrap {
+    height: 22px;
+    padding-left: 9px;
+  }
+
+  .exe-business-logo {
+    height: 20px;
   }
 
   .business-group-performance .group-columns {

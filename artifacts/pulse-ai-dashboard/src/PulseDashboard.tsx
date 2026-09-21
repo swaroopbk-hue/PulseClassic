@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, Clock, Moon, Send, Sparkles, Sun, Plus, Eye, Folder, LayoutGrid, Link as LinkIcon, Brain, Box, Settings, Menu, X, ArrowUp, LayoutTemplate, Layout, Smartphone, Table, BarChart3, Telescope, BarChart2, Globe, DollarSign, ShieldCheck, Users, Truck, PenTool, AlertTriangle, Briefcase, Monitor, ChevronDown } from "lucide-react";
 import darkPulseLogo from "@assets/image_1789651667740.png";
+import uccLightLogo from "@assets/logo_1789974340423.png";
+import uccDarkLogo from "@assets/logo-white_1789974340423.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
 import { DecisionsWorkspace } from "./DecisionsWorkspace";
@@ -555,7 +557,16 @@ export function PulseReference3DDark() {
             alt="Pulse.ai"
             className="exe-logo"
           />
-           <span className="exe-edition">{edition === "business" ? "BUSINESS EDITION" : "EXECUTIVE EDITION"}</span>
+          {isBusinessEdition && (
+            <span className="exe-business-logo-wrap">
+              <img
+                src={theme === "dark" ? uccDarkLogo : uccLightLogo}
+                alt="UCC Holding"
+                className="exe-business-logo"
+              />
+            </span>
+          )}
+          <span className={`exe-edition ${isBusinessEdition ? "has-business-logo" : ""}`}>{isBusinessEdition ? "BUSINESS EDITION" : "EXECUTIVE EDITION"}</span>
         </div>
         <div className="exe-header-actions">
           <button
