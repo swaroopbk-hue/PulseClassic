@@ -743,18 +743,7 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
-            {isBusinessEdition ? (
-              businessUnitPerformance.map(unit => (
-                <div className="metric-cell business-unit-metric" key={unit.name}>
-                  <span className="metric-label">{unit.name}</span>
-                  <div className="metric-value-large"><span className="unit business-currency">QAR</span>{unit.value}</div>
-                  <div className={`metric-sub ${unit.direction === "down" ? "negative" : "positive"}`}>{unit.change}</div>
-                  <div className={`business-unit-status ${unit.direction === "down" ? "is-watch" : ""}`}>{unit.forecast}</div>
-                </div>
-              ))
-            ) : (
-              <>
-              <div className="metric-cell">
+            <div className="metric-cell">
                <span className="metric-label">Consolidated revenue</span>
                <div className="metric-value-large">{enterprise.revenue}<span className="unit">{enterprise.revenueUnit}</span></div>
                <div className="metric-sub positive">{enterprise.revenueDetail}</div>
@@ -789,9 +778,7 @@ export function PulseReference3DDark() {
                   </div>
                </div>
                 <div className="metric-sub positive">{enterprise.pace}</div>
-              </div>
-              </>
-            )}
+            </div>
           </div>
         </section>
 

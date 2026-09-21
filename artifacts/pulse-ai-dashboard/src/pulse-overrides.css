@@ -4283,44 +4283,8 @@
   outline-offset: 2px;
 }
 
-.business-dashboard .exe-metrics-grid,
 .business-group-performance .group-columns {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.business-dashboard .business-unit-metric {
-  min-width: 0;
-}
-
-.business-dashboard .business-currency {
-  margin-right: 5px;
-  margin-left: 0;
-}
-
-.business-unit-status {
-  display: inline-flex;
-  align-items: center;
-  min-height: 22px;
-  margin-top: 12px;
-  padding: 0 8px;
-  border-radius: 999px;
-  background: color-mix(in srgb, #25956f 10%, transparent);
-  color: #20805f;
-  font-size: 10px;
-  font-weight: 650;
-}
-
-.business-unit-status.is-watch {
-  background: color-mix(in srgb, #c88745 12%, transparent);
-  color: #a5622c;
-}
-
-.pulse-ref3d.dark .business-unit-status {
-  color: #71d9b2;
-}
-
-.pulse-ref3d.dark .business-unit-status.is-watch {
-  color: #efb879;
 }
 
 .business-group-performance .group-column-name {
@@ -4333,12 +4297,6 @@
 
 .business-group-performance .orbit-core-value span {
   font-size: clamp(23px, 2vw, 31px);
-}
-
-@media (max-width: 1024px) and (min-width: 769px) {
-  .business-dashboard .exe-metrics-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .business-edition-page {
@@ -4581,39 +4539,6 @@
     min-height: 31px;
     padding: 0 9px;
     font-size: 10px;
-  }
-
-  .business-dashboard .exe-metrics-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .business-dashboard .business-unit-metric {
-    min-height: 178px;
-    padding: 18px 12px;
-    border-bottom: 1px solid var(--exe-line);
-  }
-
-  .business-dashboard .business-unit-metric:nth-child(odd) {
-    border-right: 1px solid var(--exe-line);
-  }
-
-  .business-dashboard .business-unit-metric .metric-label {
-    min-height: 32px;
-    white-space: normal;
-  }
-
-  .business-dashboard .business-unit-metric .metric-value-large {
-    font-size: clamp(26px, 8vw, 34px);
-    white-space: nowrap;
-  }
-
-  .business-dashboard .business-unit-metric .metric-sub {
-    white-space: nowrap;
-  }
-
-  .business-dashboard .business-unit-status {
-    white-space: normal;
   }
 
   .business-group-performance .group-columns {
