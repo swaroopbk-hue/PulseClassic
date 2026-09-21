@@ -4196,13 +4196,13 @@
   height: 58px;
   padding: 0;
   place-items: center;
-  border: 3px solid #69b9e8;
+  border: 3px solid #36638d;
   border-radius: 50%;
-  background: #1674bd;
-  color: #fff;
+  background: #203b55;
+  color: #dce9f5;
   box-shadow:
     0 12px 28px rgba(4, 33, 54, .24),
-    0 0 0 4px color-mix(in srgb, #1674bd 12%, transparent),
+    0 0 0 4px color-mix(in srgb, #36638d 12%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, .24);
   cursor: pointer;
   transform: translateX(-50%);
@@ -4222,27 +4222,21 @@
 .ask-pulse-chat-bubble {
   position: relative;
   display: flex;
-  width: 31px;
-  height: 23px;
+  width: 34px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  border: 2px solid currentColor;
-  border-radius: 9px;
-  background: transparent;
+  padding-bottom: 3px;
 }
 
-.ask-pulse-chat-bubble::after {
+.ask-pulse-chat-bubble::before {
   position: absolute;
-  bottom: -6px;
-  left: 5px;
-  width: 8px;
-  height: 8px;
-  border-bottom: 2px solid currentColor;
-  border-left: 2px solid currentColor;
-  background: #1674bd;
+  inset: 0;
+  background: currentColor;
   content: "";
-  transform: skewY(-34deg);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 32'%3E%3Cpath d='M10 3.5h16a7 7 0 0 1 7 7v6.5a7 7 0 0 1-7 7H15l-7.5 5 2.2-5A7 7 0 0 1 3 17v-6.5a7 7 0 0 1 7-7Z' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 32'%3E%3Cpath d='M10 3.5h16a7 7 0 0 1 7 7v6.5a7 7 0 0 1-7 7H15l-7.5 5 2.2-5A7 7 0 0 1 3 17v-6.5a7 7 0 0 1 7-7Z' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .ask-pulse-chat-bubble i {
@@ -4252,8 +4246,8 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #8ce3dc;
-  box-shadow: 0 0 7px rgba(140, 227, 220, .35);
+  background: #9ab8d3;
+  box-shadow: 0 0 6px rgba(154, 184, 211, .28);
 }
 
 .ask-pulse-chat-bubble i:nth-child(1) {
@@ -4291,20 +4285,30 @@
 
 .ask-pulse-fab:hover {
   transform: translate(-50%, -2px);
-  background: #1e7dcc;
+  background: #1e3658;
   box-shadow:
     0 16px 32px rgba(4, 33, 54, .3),
-    0 0 0 5px color-mix(in srgb, #2e92d6 16%, transparent),
+    0 0 0 5px color-mix(in srgb, #36638d 18%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, .28);
 }
 
-.ask-pulse-fab:hover .ask-pulse-chat-bubble::after {
-  background: #1e7dcc;
+.ask-pulse-fab:focus-visible {
+  outline: 3px solid color-mix(in srgb, #36638d 65%, transparent);
+  outline-offset: 3px;
 }
 
-.ask-pulse-fab:focus-visible {
-  outline: 3px solid color-mix(in srgb, #62b9ed 55%, transparent);
-  outline-offset: 3px;
+.pulse-ref3d.dark .ask-pulse-fab {
+  border-color: #4d739a;
+  background: #1e3658;
+  color: #edf4fa;
+  box-shadow:
+    0 12px 30px rgba(0, 8, 18, .42),
+    0 0 0 4px color-mix(in srgb, #36638d 18%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+
+.pulse-ref3d.dark .ask-pulse-chat-bubble i {
+  background: #a9c3da;
 }
 
 .ask-pulse-fab:active {
@@ -4320,7 +4324,7 @@
     border-width: 3px;
     box-shadow:
       0 10px 24px rgba(4, 33, 54, .3),
-      0 0 0 4px color-mix(in srgb, #1674bd 12%, transparent),
+      0 0 0 4px color-mix(in srgb, #36638d 12%, transparent),
       inset 0 1px 0 rgba(255, 255, 255, .22);
   }
 
