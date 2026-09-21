@@ -867,6 +867,21 @@
 
 .group-performance .group-change {
   color: var(--exe-ink-light);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.group-performance .group-change.up {
+  color: #2b9b6f;
+}
+
+.group-performance .group-change.down {
+  color: #cf4358;
+}
+
+.group-performance .group-change.stable {
+  color: #36638d;
 }
 
 .group-performance .group-column.highest-revenue .group-value-row > strong,
@@ -915,6 +930,18 @@
 .pulse-ref3d.dark .group-performance .group-column.lowest-revenue .group-value-row > strong,
 .pulse-ref3d.dark .group-performance .group-column.lowest-revenue .group-change {
   color: #f06d7f;
+}
+
+.pulse-ref3d.dark .group-performance .group-change.up {
+  color: #55c995;
+}
+
+.pulse-ref3d.dark .group-performance .group-change.down {
+  color: #f06d7f;
+}
+
+.pulse-ref3d.dark .group-performance .group-change.stable {
+  color: #7fa9ce;
 }
 
 .group-performance-head h2 {
@@ -2847,7 +2874,7 @@
     font-size: 18px;
   }
 
-  .group-change { font-size: 8px; }
+  .group-change { font-size: 10px; }
 
   .group-bar-wrap {
     grid-column: 2;
@@ -4380,7 +4407,7 @@
 }
 
 .business-group-performance .group-change {
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .business-group-performance .orbit-core-value span {
