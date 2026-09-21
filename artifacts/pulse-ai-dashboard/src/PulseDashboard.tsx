@@ -1030,11 +1030,11 @@ export function PulseReference3DDark() {
           title="Ask Pulse"
         >
           <span className="ask-pulse-fab-mark" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
+            <span className="ask-pulse-chat-bubble">
+              <i />
+              <i />
+              <i />
+            </span>
           </span>
         </button>
       )}
