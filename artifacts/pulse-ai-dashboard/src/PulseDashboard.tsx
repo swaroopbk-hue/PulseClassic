@@ -59,6 +59,13 @@ const insightSlides = [
   { group: "Baladna", value: "111%", title: "Baladna is outperforming its YTD target by 11.4%.", body: "Domestic sales grew sharply and export volumes rose 18% year over year, keeping Baladna ahead of every other business group this quarter. Operating margin slipped 3.1 pts on feed costs — worth watching even as revenue outperforms.", note: "", tone: "violet", performance: "positive" },
 ];
 
+const businessInsightSlides = [
+  { group: "UCC Infrastructure", value: "98%", title: "Infrastructure is close to target.", body: "UCC Infrastructure is reporting QAR 2.42B and is currently at 98% of target.", note: "On track", tone: "blue", performance: "positive" },
+  { group: "UCC Contracting", value: "96%", title: "Contracting remains on track.", body: "UCC Contracting is reporting QAR 1.87B and is currently at 96% of target.", note: "On track", tone: "mint", performance: "positive" },
+  { group: "UCC Hospitality", value: "89%", title: "Hospitality requires attention.", body: "UCC Hospitality is reporting QAR 0.93B and is currently at 89% of target.", note: "Watch", tone: "coral", performance: "negative" },
+  { group: "UCC Services", value: "103%", title: "Services is ahead of plan.", body: "UCC Services is reporting QAR 0.60B and is currently at 103% of target.", note: "Ahead of plan", tone: "violet", performance: "positive" },
+];
+
 function InsightPageContent({ slide }: { slide: (typeof insightSlides)[number] }) {
   return (
     <div className={`insight-page-content performance-${slide.performance}`}>
@@ -224,93 +231,6 @@ function AskPulseView({ onNotify }: { onNotify: (msg: string) => void }) {
   );
 }
 
-function BusinessEditionView({ onNotify }: { onNotify: (msg: string) => void }) {
-  const [period, setPeriod] = useState<Period>("YTD");
-  const businessUnits = [
-    { name: "UCC Infrastructure", note: "Operating area" },
-    { name: "UCC Contracting", note: "Operating area" },
-    { name: "UCC Hospitality", note: "Operating area" },
-    { name: "UCC Services", note: "Operating area" },
-  ];
-
-  return (
-    <div className="business-edition-page fade-in">
-      <div className="business-masthead">
-        <div className="business-masthead-meta">UCC BUSINESS PULSE &middot; TUESDAY, 18 JUNE 2024</div>
-        <h1>Good morning, Jasim</h1>
-        <p>A clear view of UCC, its companies, and what needs a decision.</p>
-      </div>
-
-      <section className="business-section" aria-labelledby="business-glance-heading">
-        <div className="business-section-header">
-          <h2 id="business-glance-heading">UCC at a glance</h2>
-          <div className="business-period-tabs" aria-label="Business dashboard period">
-            {periods.map(item => (
-              <button
-                type="button"
-                key={item}
-                className={period === item ? "active" : ""}
-                onClick={() => setPeriod(item)}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="business-kpi-empty">
-          <div className="business-kpi-empty-mark" aria-hidden="true"><Sparkles size={17} /></div>
-          <div>
-            <strong>UCC KPI view is ready</strong>
-            <p>The approved Business Edition KPI list will appear here once provided.</p>
-          </div>
-          <span>{period} view</span>
-        </div>
-      </section>
-
-      <section className="business-section" aria-labelledby="business-units-heading">
-        <div className="business-section-header">
-          <div>
-            <h2 id="business-units-heading">UCC companies &amp; business units</h2>
-            <p>4 operating areas &middot; Select to drill in</p>
-          </div>
-        </div>
-        <div className="business-unit-grid">
-          {businessUnits.map(unit => (
-            <button
-              type="button"
-              className="business-unit-card"
-              key={unit.name}
-              onClick={() => onNotify(`${unit.name} selected`)}
-            >
-              <span>{unit.note}</span>
-              <strong>{unit.name}</strong>
-              <small>Business detail <ChevronRight size={13} /></small>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="business-section business-readiness" aria-labelledby="business-readiness-heading">
-        <div className="business-section-header">
-          <h2 id="business-readiness-heading">Group performance workspace</h2>
-        </div>
-        <div className="business-readiness-grid">
-          <div>
-            <span className="business-readiness-number">01</span>
-            <strong>UCC</strong>
-            <p>One group selected for the first Business Edition release.</p>
-          </div>
-          <div>
-            <span className="business-readiness-number">02</span>
-            <strong>Next step</strong>
-            <p>Map the approved KPI list to the summary and unit drill-in modules.</p>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
 const groupPerformanceByPeriod = {
   Today: [
     { name: "Power International", short: "Power International", value: "420M", change: "+4.2%", direction: "up", height: 78, budget: "96%", forecast: "98%", lastYear: "+3.7%" },
@@ -340,6 +260,13 @@ const groupPerformanceByPeriod = {
     { name: "Aura Group", short: "Aura Group", value: "65B", change: "+1.1%", direction: "stable", height: 45, budget: "93%", forecast: "95%", lastYear: "+0.9%" },
   ],
 } satisfies Record<Period, Array<{ name: string; short: string; value: string; change: string; direction: string; height: number; budget: string; forecast: string; lastYear: string }>>;
+
+const businessUnitPerformance = [
+  { name: "UCC Infrastructure", short: "UCC Infrastructure", value: "2.42B", change: "98% of target", direction: "up", height: 100, budget: "98%", forecast: "On track", lastYear: "—" },
+  { name: "UCC Contracting", short: "UCC Contracting", value: "1.87B", change: "96% of target", direction: "up", height: 77, budget: "96%", forecast: "On track", lastYear: "—" },
+  { name: "UCC Hospitality", short: "UCC Hospitality", value: "0.93B", change: "89% of target", direction: "down", height: 38, budget: "89%", forecast: "Watch", lastYear: "—" },
+  { name: "UCC Services", short: "UCC Services", value: "0.60B", change: "103% of target", direction: "up", height: 25, budget: "103%", forecast: "Ahead of plan", lastYear: "—" },
+];
 
 const recentTasks = [
   { id: 1, label: "give me top materials we have", time: "5m ago" },
@@ -377,7 +304,9 @@ export function PulseReference3DDark() {
   );
   const [decisionIndex, setDecisionIndex] = useState(0);
   const enterprise = enterprisePerformance[period];
-  const groupPerformance = groupPerformanceByPeriod[period];
+  const isBusinessEdition = edition === "business";
+  const activeInsightSlides = isBusinessEdition ? businessInsightSlides : insightSlides;
+  const groupPerformance = isBusinessEdition ? businessUnitPerformance : groupPerformanceByPeriod[period];
   const highestRevenueHeight = Math.max(...groupPerformance.map(group => group.height));
   const lowestRevenueHeight = Math.min(...groupPerformance.map(group => group.height));
 
@@ -401,11 +330,18 @@ export function PulseReference3DDark() {
 
   useEffect(() => {
     const autoplayTimer = window.setTimeout(() => {
-      turnInsightPage((insightIndex + 1) % insightSlides.length, "forward");
+      turnInsightPage((insightIndex + 1) % activeInsightSlides.length, "forward");
     }, 8000);
 
     return () => window.clearTimeout(autoplayTimer);
-  }, [insightIndex, turnInsightPage]);
+  }, [activeInsightSlides.length, insightIndex, turnInsightPage]);
+
+  useEffect(() => {
+    setInsightIndex(0);
+    setInsightTransition(null);
+    insightAnimatingRef.current = false;
+    setGroupIndex(0);
+  }, [edition]);
 
   useEffect(() => () => {
     if (insightTransitionTimerRef.current !== null) {
@@ -640,14 +576,14 @@ export function PulseReference3DDark() {
           <button data-testid="button-theme-toggle" className="exe-icon-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
             {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
           </button>
-          <button data-testid="button-account" className="exe-avatar-btn" onClick={() => setProfile(!profile)} aria-label="Open account">JJ</button>
+          <button data-testid="button-account" className="exe-avatar-btn" onClick={() => setProfile(!profile)} aria-label="Open account">{isBusinessEdition ? "BM" : "JJ"}</button>
         </div>
       </header>
 
       {profile && (
         <div className="profile-pop exe-profile-pop">
-          <strong>Mr. Jasim</strong>
-          <span>President &middot; Secure executive access</span>
+          <strong>{isBusinessEdition ? "Boyd Merrett" : "Mr. Jasim"}</strong>
+          <span>{isBusinessEdition ? "UCC Business Edition" : "President"} &middot; Secure access</span>
           <button onClick={() => notify("Preferences opened")}>Profile &amp; preferences</button>
           <button onClick={() => setProfile(false)}>Close account menu</button>
         </div>
@@ -700,32 +636,34 @@ export function PulseReference3DDark() {
             initialIndex={decisionIndex} 
             onNotify={notify} 
           />
-        ) : edition === "business" ? (
-          <BusinessEditionView onNotify={notify} />
         ) : (
-          <div className="exe-content-wrapper">
+          <div className={`exe-content-wrapper ${isBusinessEdition ? "business-dashboard" : ""}`}>
             <div className="exe-masthead">
               <div className="masthead-top">
-            <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / QAR CONSOLIDATED VIEW</div>
+            <div className="masthead-meta">TUESDAY &middot; 18 JUNE 2024 / {isBusinessEdition ? "UCC BUSINESS VIEW" : "QAR CONSOLIDATED VIEW"}</div>
           </div>
           <div className="masthead-grid">
             <div className="masthead-content">
               <h1 className="masthead-headline">
-                Good Morning, Jasim
+                Good Morning, {isBusinessEdition ? "Boyd Merrett" : "Jasim"}
               </h1>
               <p className="masthead-subhead">
-                 Revenue is tracking at <strong>QAR {enterprise.revenue}{enterprise.revenueUnit.startsWith("B") ? "B" : ""}</strong>, {enterprise.achieved - enterprise.elapsed} pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.
+                {isBusinessEdition ? (
+                  <>UCC Infrastructure leads at <strong>QAR 2.42B</strong> and is on track at 98% of target. UCC Services is ahead of plan at 103%, while UCC Hospitality is the current watch item at 89% of target.</>
+                ) : (
+                  <>Revenue is tracking at <strong>QAR {enterprise.revenue}{enterprise.revenueUnit.startsWith("B") ? "B" : ""}</strong>, {enterprise.achieved - enterprise.elapsed} pts ahead of time elapsed. Baladna and Estithmar are creating the lift; Assets is the one position that merits a decision before noon.</>
+                )}
               </p>
             </div>
             <section className="insight-card masthead-insight" aria-label="Pulse Insights carousel">
               <div className="insight-track">
-                {insightSlides.map((slide, index) => {
+                {activeInsightSlides.map((slide, index) => {
                   const isRestingPage = !insightTransition && index === insightIndex;
                   const isOutgoingPage = insightTransition?.from === index;
                   const isIncomingPage = insightTransition?.to === index;
                   const transitionDirection = isOutgoingPage ? insightTransition.direction : "";
                   const reverseSideSlide = isOutgoingPage && insightTransition
-                    ? insightSlides[insightTransition.to]
+                    ? activeInsightSlides[insightTransition.to]
                     : slide;
 
                   return (
@@ -771,7 +709,7 @@ export function PulseReference3DDark() {
                 })}
               </div>
               <div className="insight-progress" role="tablist" aria-label="Insight slides">
-                {insightSlides.map((slide, index) => (
+                {activeInsightSlides.map((slide, index) => (
                   <button
                     key={`${slide.group}-${index}`}
                     className={index === insightIndex ? "active" : ""}
@@ -786,9 +724,9 @@ export function PulseReference3DDark() {
           </div>
         </div>
 
-        <section className="exe-metrics-section" aria-label="Enterprise position">
+        <section className="exe-metrics-section" aria-label={isBusinessEdition ? "UCC at a Glance" : "Enterprise position"}>
           <div className="exe-section-header">
-            <h2><span>01</span> Enterprise position</h2>
+            <h2><span>01</span> {isBusinessEdition ? "UCC at a Glance" : "Enterprise position"}</h2>
             <div className="exe-section-line"></div>
             <div className="period-tabs" aria-label="Dashboard period">
               {periods.map((item) => (
@@ -805,7 +743,18 @@ export function PulseReference3DDark() {
           </div>
 
           <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
-            <div className="metric-cell">
+            {isBusinessEdition ? (
+              businessUnitPerformance.map(unit => (
+                <div className="metric-cell business-unit-metric" key={unit.name}>
+                  <span className="metric-label">{unit.name}</span>
+                  <div className="metric-value-large"><span className="unit business-currency">QAR</span>{unit.value}</div>
+                  <div className={`metric-sub ${unit.direction === "down" ? "negative" : "positive"}`}>{unit.change}</div>
+                  <div className={`business-unit-status ${unit.direction === "down" ? "is-watch" : ""}`}>{unit.forecast}</div>
+                </div>
+              ))
+            ) : (
+              <>
+              <div className="metric-cell">
                <span className="metric-label">Consolidated revenue</span>
                <div className="metric-value-large">{enterprise.revenue}<span className="unit">{enterprise.revenueUnit}</span></div>
                <div className="metric-sub positive">{enterprise.revenueDetail}</div>
@@ -840,21 +789,23 @@ export function PulseReference3DDark() {
                   </div>
                </div>
                 <div className="metric-sub positive">{enterprise.pace}</div>
-            </div>
+              </div>
+              </>
+            )}
           </div>
         </section>
 
         <div className="exe-content">
           <div className="exe-section-header group-header-adjustment">
-            <h2><span>02</span> Seven businesses, one connected pulse</h2>
+            <h2><span>02</span> {isBusinessEdition ? "Companies and Business Units" : "Seven businesses, one connected pulse"}</h2>
             <div className="exe-section-line"></div>
           </div>
 
-          <section className={`group-performance period-${period.toLowerCase()} ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label="Enterprise group performance">
+          <section className={`group-performance period-${period.toLowerCase()} ${isBusinessEdition ? "business-group-performance" : ""} ${groupChatOpen ? "chat-open" : "chat-collapsed"}`} aria-label={isBusinessEdition ? "UCC companies and business units performance" : "Enterprise group performance"}>
             <div className="group-performance-head">
                <div>
-                <h2>Group Performance</h2>
-                 <p>{period} revenue movement across the enterprise portfolio</p>
+                <h2>{isBusinessEdition ? "UCC Performance" : "Group Performance"}</h2>
+                 <p>{isBusinessEdition ? `${period} performance across UCC companies and business units` : `${period} revenue movement across the enterprise portfolio`}</p>
               </div>
                 <div className="group-view-actions" aria-label="Group performance views">
                   <button data-testid="button-group-view-bars" className={`group-view-button ${groupView === "bars" ? "active" : ""}`} onClick={() => setGroupView("bars")}>Line Bar</button>
@@ -867,17 +818,17 @@ export function PulseReference3DDark() {
                  <div className="orbit-ring orbit-ring-two" />
                  <div className="orbit-ring orbit-ring-three" />
                  <div className="orbit-core">
-                   <small>CONSOLIDATED<br />REVENUE</small>
+                    <small>{isBusinessEdition ? <>UCC<br />PERFORMANCE</> : <>CONSOLIDATED<br />REVENUE</>}</small>
                    <div className="orbit-core-value">
-                      <span>{enterprise.revenue}</span><sub>{enterprise.revenueUnit}</sub>
+                      {isBusinessEdition ? <span>UCC</span> : <><span>{enterprise.revenue}</span><sub>{enterprise.revenueUnit}</sub></>}
                    </div>
                    <div className="orbit-core-trend">
-                      {period === "YTD" ? "↗ 8.2% YoY" : period === "MTD" ? "↗ 6.1% MTD" : "↗ 3.1% today"}
+                      {isBusinessEdition ? "Companies & business units" : period === "YTD" ? "↗ 8.2% YoY" : period === "MTD" ? "↗ 6.1% MTD" : "↗ 3.1% today"}
                    </div>
                  </div>
                  {groupPerformance.map((group, index) => {
-                    const isNegative = group.height === lowestRevenueHeight;
-                    const isHighestPositive = group.height === highestRevenueHeight;
+                    const isNegative = isBusinessEdition ? group.direction === "down" : group.height === lowestRevenueHeight;
+                    const isHighestPositive = isBusinessEdition ? group.forecast === "Ahead of plan" : group.height === highestRevenueHeight;
                     const previousIndex = (groupIndex - 1 + groupPerformance.length) % groupPerformance.length;
                     const nextIndex = (groupIndex + 1) % groupPerformance.length;
                     const mobilePosition = index === groupIndex
@@ -903,7 +854,7 @@ export function PulseReference3DDark() {
                        <span className="orbit-node-name">{group.name}</span>
                        <strong className="orbit-node-value">QAR {group.value}</strong>
                        <div className="orbit-node-trend">
-                         <span className="trend-indicator">{isNegative ? '↘' : (group.direction === "up" ? '↗' : '→')}</span> {group.change} YoY
+                          <span className="trend-indicator">{isNegative ? '↘' : (group.direction === "up" ? '↗' : '→')}</span> {group.change}{isBusinessEdition ? "" : " YoY"}
                        </div>
                      </button>
                    );
@@ -946,9 +897,9 @@ export function PulseReference3DDark() {
                 {groupPerformance.map((group, index) => (
                   <div
                     className={`group-column ${
-                      group.height === highestRevenueHeight
+                      (isBusinessEdition ? group.forecast === "Ahead of plan" : group.height === highestRevenueHeight)
                         ? "highest-revenue"
-                        : group.height === lowestRevenueHeight
+                        : (isBusinessEdition ? group.direction === "down" : group.height === lowestRevenueHeight)
                           ? "lowest-revenue"
                           : ""
                      } ${groupIndex === index ? "is-selected" : ""}`}
@@ -973,19 +924,18 @@ export function PulseReference3DDark() {
                   >
                     <span className="group-column-name">{group.short}</span>
                      <div className="group-value-row">
-                       <strong>{group.value}</strong>
-                       <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : group.direction === "down" ? "↓" : "→"} {group.change}</span>
+                        <strong>{isBusinessEdition ? "QAR " : ""}{group.value}</strong>
+                        <span className={`group-change ${group.direction}`}>{group.direction === "up" ? "↑" : group.direction === "down" ? "↓" : "→"} {group.change}</span>
                      </div>
                      <span className="group-bar-wrap">
                        <i style={{ "--group-revenue-size": `${group.height}%` } as CSSProperties} />
                      </span>
                     {hoveredGroup === index && (
                       <div className="group-hover-tooltip" role="status">
-                        <span>Budget: <strong>{group.budget}</strong></span>
+                        <span>{isBusinessEdition ? "Target" : "Budget"}: <strong>{group.budget}</strong></span>
                         <i />
-                        <span>Forecast: <strong>{group.forecast}</strong></span>
-                        <i />
-                        <span>LY: <strong>{group.lastYear}</strong></span>
+                        <span>{isBusinessEdition ? "Status" : "Forecast"}: <strong>{group.forecast}</strong></span>
+                        {!isBusinessEdition && <><i /><span>LY: <strong>{group.lastYear}</strong></span></>}
                       </div>
                       )}
                   </div>
@@ -996,7 +946,7 @@ export function PulseReference3DDark() {
             <div className="group-chat">
               <button className="group-chat-prompt" onClick={() => setGroupChatOpen(!groupChatOpen)} aria-expanded={groupChatOpen}>
                 <Sparkles size={14} />
-                <span>{groupChatOpen ? "Would you like to explore revenue, budget, or last year comparison?" : "Ask Pulse about group performance"}</span>
+                <span>{groupChatOpen ? (isBusinessEdition ? "Would you like to explore UCC revenue, target, or status?" : "Would you like to explore revenue, budget, or last year comparison?") : `Ask Pulse about ${isBusinessEdition ? "UCC" : "group"} performance`}</span>
                 <ChevronRight className={groupChatOpen ? "chat-chevron open" : "chat-chevron"} size={15} />
               </button>
               {groupChatOpen && (
