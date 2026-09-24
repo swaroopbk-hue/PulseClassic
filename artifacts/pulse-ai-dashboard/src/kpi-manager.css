@@ -3,6 +3,7 @@
   display: inline-flex;
   align-self: center;
   flex: none;
+  margin-left: 18px;
 }
 .kpi-manage-button {
   display: inline-flex;
@@ -211,7 +212,11 @@
   .exe-metrics-grid.kpi-expanded .metric-cell:nth-child(n + 4) { padding-top: 20px; border-top: 1px solid var(--exe-line); }
 }
 @media (max-width: 768px) {
-  .exe-metrics-section .exe-section-header .kpi-manage-wrap { grid-column: 1 / -1; justify-self: start; }
+  .exe-metrics-section .exe-section-header .kpi-manage-wrap {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin: 6px 0 0;
+  }
   .exe-metrics-grid.kpi-expanded .metric-cell:nth-child(n) {
     padding: 18px 0;
     border: 0;
