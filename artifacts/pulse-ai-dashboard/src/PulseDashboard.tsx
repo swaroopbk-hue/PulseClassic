@@ -5,7 +5,10 @@ import uccLightLogo from "@assets/logo_1789974340423.png";
 import uccDarkLogo from "@assets/logo-white_1789974340423.png";
 import "./pulse.css";
 import "./pulse-overrides.css";
+import "./kpi-manager.css";
 import { DecisionsWorkspace } from "./DecisionsWorkspace";
+import { KpiMetric } from "./KpiMetric";
+import { ManageKpis, ManageKpisButton, loadKpis, saveKpis, type KpiId } from "./KpiManager";
 
 const periods = ["Today", "MTD", "YTD"] as const;
 type Period = (typeof periods)[number];
@@ -288,6 +291,11 @@ export function PulseReference3DDark() {
     new URLSearchParams(window.location.search).get("edition") === "business" ? "business" : "executive"
   );
   const [period, setPeriod] = useState<Period>("YTD");
+  const [kpiSelections, setKpiSelections] = useState<Record<"executive" | "business", KpiId[]>>(() => ({
+    executive: loadKpis("executive"),
+    business: loadKpis("business"),
+  }));
+  const [kpiManagerOpen, setKpiManagerOpen] = useState(false);
   const [toast, setToast] = useState("");
   const [insightIndex, setInsightIndex] = useState(0);
   const [insightTransition, setInsightTransition] = useState<{
@@ -751,46 +759,22 @@ export function PulseReference3DDark() {
                 </button>
               ))}
             </div>
+            <ManageKpisButton onClick={() => setKpiManagerOpen(true)} />
           </div>
 
-          <div className="exe-metrics-grid" data-testid="metrics-at-a-glance">
-            <div className="metric-cell">
-               <span className="metric-label">Consolidated revenue</span>
-               <div className="metric-value-large">{enterprise.revenue}<span className="unit">{enterprise.revenueUnit}</span></div>
-               <div className="metric-sub positive">{enterprise.revenueDetail}</div>
-            </div>
-            <div className="metric-cell">
-               <span className="metric-label">EBITDA / profit</span>
-               <div className="metric-value-large">{enterprise.ebitda}</div>
-               <div className="metric-sub positive">{enterprise.ebitdaDetail}</div>
-            </div>
-            <div className="metric-cell">
-               <span className="metric-label">Budget achievement</span>
-               <div className="metric-value-large">{enterprise.budgetAchievement}</div>
-               <div className="metric-sub negative">{enterprise.budgetDetail} <span className="dim">{enterprise.budgetPlan}</span></div>
-            </div>
-            <div className="metric-cell">
-               <span className="metric-label">Full-year forecast</span>
-               <div className="metric-value-large">{enterprise.forecast}</div>
-               <div className="metric-sub positive">{enterprise.forecastDetail}</div>
-            </div>
-            <div className="metric-cell">
-               <span className="metric-label">Time vs achievement</span>
-               <div className="metric-split-labels">
-                  <div>{enterprise.elapsed}% <span>{period === "Today" ? "day" : period === "MTD" ? "month" : "year"} elapsed</span></div>
-                  <div>{enterprise.achieved}% <span>achieved</span></div>
-               </div>
-               <div className="metric-progress">
-                  <div className="metric-progress-elapsed">
-                     <span className="metric-elapsed-marker" style={{ left: `${enterprise.elapsed}%` }} />
-                  </div>
-                   <div className="metric-progress-achieved" style={{ width: `${enterprise.achieved}%` }}>
-                    <span className="metric-achieved-marker" />
-                  </div>
-               </div>
-                <div className="metric-sub positive">{enterprise.pace}</div>
-            </div>
+          <div className={`exe-metrics-grid ${kpiSelections[edition].length > 5 ? "kpi-expanded" : ""}`} data-testid="metrics-at-a-glance">
+            {kpiSelections[edition].map((id) => <KpiMetric key={id} id={id} enterprise={enterprise} period={period} />)}
           </div>
+          <ManageKpis
+            open={kpiManagerOpen}
+            onOpenChange={setKpiManagerOpen}
+            selected={kpiSelections[edition]}
+            theme={theme}
+            onApply={(ids) => {
+              setKpiSelections((current) => ({ ...current, [edition]: ids }));
+              saveKpis(edition, ids);
+            }}
+          />
         </section>
 
         <div className="exe-content">

@@ -1,0 +1,50 @@
+Please update the Enterprise Position section to support customizable KPIs while keeping the current design language, spacing, typography, colors, and overall layout unchanged.
+
+Add a “Manage KPIs” button with an appropriate settings/filter-style icon before the Today / MTD / YTD filter. On web, when the user hovers over the button, display the tooltip:
+
+“Add, remove or reorder KPIs.”
+
+Manage KPIs interaction
+
+When the user clicks Manage KPIs, open a clean modal, drawer, or bottom sheet depending on the screen size.
+
+The following 5 existing KPIs should be selected by default:
+
+Consolidated Revenue
+EBITDA / Profit
+Budget Achievement
+Full-Year Forecast
+Time vs Achievement
+
+Provide 10 additional relevant enterprise/business KPIs that the user can optionally select:
+
+Gross Profit
+Operating Profit
+Net Profit Margin
+Revenue Growth
+EBITDA Margin
+Operating Cash Flow
+Budget Variance
+Forecast Accuracy
+Return on Investment (ROI)
+Working Capital
+
+The user should be able to select, deselect, and reorder KPIs.
+
+A minimum of 5 KPIs must always remain selected, and a maximum of 10 KPIs can be selected at one time. Display a small helper message inside the Manage KPIs interface:
+
+Select a minimum of 5 and a maximum of 10 KPIs.
+
+Prevent the user from deselecting additional KPIs once only 5 remain. Similarly, once 10 KPIs are selected, disable or prevent additional selections and clearly indicate that the maximum has been reached.
+
+Add clear actions such as Cancel and Apply. When the user clicks Apply, immediately update the Enterprise Position section to display the selected KPIs in the chosen order.
+
+The selected KPI configuration should be retained so that when the user returns to the page, their customized KPI selection and order remain available.
+
+Responsive behaviour
+
+Implement the same functionality for web and mobile.
+
+On web, use a modal or side panel and support drag-and-drop reordering where appropriate. On mobile, use a responsive bottom sheet or full-screen selection interface with touch-friendly controls and an easy way to reorder the KPIs.
+
+Do not redesign the existing Enterprise Position section. The customization functionality should feel like a natural extension of the current UI.
