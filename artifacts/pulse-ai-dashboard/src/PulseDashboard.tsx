@@ -284,7 +284,7 @@ export function PulseReference3DDark() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const requestedTheme = new URLSearchParams(window.location.search).get("theme");
     if (requestedTheme === "light" || requestedTheme === "dark") return requestedTheme;
-    return window.matchMedia("(max-width: 640px)").matches ? "dark" : "light";
+    return "dark";
   });
   const [profile, setProfile] = useState(false);
   const [edition, setEdition] = useState<"executive" | "business">(() =>
